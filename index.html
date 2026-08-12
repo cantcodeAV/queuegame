@@ -1,1325 +1,1003 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Queue Master - Interactive Data Structure Learning Game</title>
-  
+  <title>Queue Master - Flux Health Dashboard UI Edition</title>
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
-      darkMode: 'class',
       theme: {
         extend: {
           colors: {
-            brand: {
-              dark: '#0a0f1d',
-              card: '#131b2e',
-              border: '#1e293b',
-              cyan: '#06b6d4',
-              magenta: '#ec4899',
-              emerald: '#10b981',
-              amber: '#f59e0b',
-              rose: '#f43f5e'
+            flux: {
+              lime: '#c8f53e',
+              limeDark: '#a3e635',
+              dark: '#18181b',
+              darker: '#121214',
+              grayCard: '#27272a',
+              lightBg: '#f4f4f6',
+              lavender: '#c4b5fd',
+              purpleBg: '#8b5cf6'
             }
           },
           fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            mono: ['JetBrains Mono', 'Courier New', 'monospace']
+            sans: ['Inter', 'Manrope', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
           }
         }
       }
     }
   </script>
-  
-  <!-- Google Fonts -->
+
+  <!-- Google Fonts & Lucide Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Manrope:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
-    /* Custom Keyframe Animations & Utilities */
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #060913;
-      color: #f1f5f9;
-      background-image: 
-        radial-gradient(circle at 15% 20%, rgba(6, 182, 212, 0.08) 0%, transparent 40%),
-        radial-gradient(circle at 85% 80%, rgba(236, 72, 153, 0.08) 0%, transparent 40%);
-      background-attachment: fixed;
+      background-color: #c8f53e;
+      color: #18181b;
     }
 
-    /* Conveyor belt animation */
-    @keyframes moveStripes {
-      0% { background-position: 0 0; }
-      100% { background-position: 40px 0; }
-    }
-    
-    .conveyor-belt {
-      background: linear-gradient(90deg, #1e293b 25%, #0f172a 25%, #0f172a 50%, #1e293b 50%, #1e293b 75%, #0f172a 75%, #0f172a 100%);
-      background-size: 40px 100%;
-      animation: moveStripes 1.5s linear infinite;
-    }
-    .conveyor-paused {
-      animation-play-state: paused;
-    }
-
-    /* Pulse Glows */
-    @keyframes pulseGlowCyan {
-      0%, 100% { box-shadow: 0 0 15px rgba(6, 182, 212, 0.4), 0 0 30px rgba(6, 182, 212, 0.2); }
-      50% { box-shadow: 0 0 25px rgba(6, 182, 212, 0.8), 0 0 45px rgba(6, 182, 212, 0.4); }
-    }
-
-    @keyframes pulseGlowMagenta {
-      0%, 100% { box-shadow: 0 0 15px rgba(236, 72, 153, 0.4); }
-      50% { box-shadow: 0 0 30px rgba(236, 72, 153, 0.8); }
-    }
-
-    @keyframes shakeError {
-      0%, 100% { transform: translateX(0); }
-      20%, 60% { transform: translateX(-8px); }
-      40%, 80% { transform: translateX(8px); }
-    }
-
-    .glow-cyan { animation: pulseGlowCyan 2s infinite; }
-    .glow-magenta { animation: pulseGlowMagenta 2s infinite; }
-    .shake-error { animation: shakeError 0.4s ease-in-out; }
-
-    /* Custom Scrollbar for Terminal */
+    /* Custom Scrollbar */
     .custom-scrollbar::-webkit-scrollbar {
       width: 6px;
+      height: 6px;
     }
     .custom-scrollbar::-webkit-scrollbar-track {
-      background: #0f172a;
+      background: rgba(0,0,0,0.05);
+      border-radius: 4px;
     }
     .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: #334155;
-      border-radius: 3px;
+      background: #a1a1aa;
+      border-radius: 4px;
     }
     .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-      background: #06b6d4;
+      background: #71717a;
     }
 
-    /* Queue Slide Animations */
+    /* Queue Animations */
     .queue-item-enter {
-      animation: slideInRight 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-    }
-    .queue-item-exit {
-      animation: slideOutLeft 0.4s ease-in forwards;
-    }
-    .queue-item-jump {
-      animation: jumpForward 0.5s ease-out forwards;
+      animation: popIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
     }
 
-    @keyframes slideInRight {
-      from { opacity: 0; transform: translateX(40px) scale(0.8); }
-      to { opacity: 1; transform: translateX(0) scale(1); }
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.7) translateY(12px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
     }
 
-    @keyframes slideOutLeft {
-      from { opacity: 1; transform: translateX(0) scale(1); }
-      to { opacity: 0; transform: translateX(-50px) scale(0.6); }
+    @keyframes softPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.04); }
+    }
+    @keyframes shakeError {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
     }
 
-    @keyframes jumpForward {
-      0% { transform: translateY(-20px) scale(1.1); }
-      100% { transform: translateY(0) scale(1); }
+    .bounce-pulse { animation: softPulse 2.5s infinite ease-in-out; }
+
+    @keyframes confettiFall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(105vh) rotate(720deg); opacity: 0; }
+    }
+
+    .shake-error { animation: shakeError 0.4s ease-in-out; }
+
+    /* Conveyor Belt stripes */
+    @keyframes moveStripes {
+      0% { background-position: 0 0; }
+      100% { background-position: 36px 0; }
+    }
+
+    .conveyor-belt {
+      background: repeating-linear-gradient(45deg, #e4e4e7, #e4e4e7 12px, #d4d4d8 12px, #d4d4d8 24px);
+      background-size: 34px 100%;
+      animation: moveStripes 1.5s linear infinite;
     }
 
     /* Ring Layout for Circular Queue */
     .ring-container {
       position: relative;
-      width: 280px;
-      height: 280px;
+      width: 270px;
+      height: 270px;
       margin: 0 auto;
+    }
+
+    /* Tactile Flux Buttons */
+    .btn-flux-lime {
+      background-color: #c8f53e;
+      color: #18181b;
+      font-weight: 700;
+      transition: all 0.15s ease;
+    }
+    .btn-flux-lime:hover {
+      background-color: #b0e322;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(200, 245, 62, 0.4);
+    }
+    .btn-flux-lime:active {
+      transform: translateY(1px);
+    }
+
+    .btn-flux-dark {
+      background-color: #18181b;
+      color: #ffffff;
+      font-weight: 600;
+      transition: all 0.15s ease;
+    }
+    .btn-flux-dark:hover {
+      background-color: #27272a;
+      transform: translateY(-1px);
+    }
+
+    .btn-flux-light {
+      background-color: #ffffff;
+      color: #18181b;
+      border: 1px solid #e4e4e7;
+      font-weight: 600;
+      transition: all 0.15s ease;
+    }
+    .btn-flux-light:hover {
+      background-color: #f4f4f5;
+      border-color: #d4d4d8;
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between text-slate-100 antialiased selection:bg-cyan-500 selection:text-black">
+<body class="p-2 sm:p-4 min-h-screen flex items-center justify-center selection:bg-slate-900 selection:text-[#c8f53e]">
 
-  <!-- TOP HEADER / NAV -->
-  <header class="border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-md sticky top-0 z-40">
-    <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
-      
-      <!-- Brand Logo -->
-      <div class="flex items-center space-x-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-magenta-500 p-0.5 shadow-lg shadow-cyan-500/20">
-          <div class="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
-            <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
-            </svg>
+  <!-- FLUX SAAS MAIN APPLICATION WINDOW FRAME -->
+  <div class="w-full max-w-[1550px] min-h-[92vh] bg-[#18181b] rounded-[28px] overflow-hidden flex flex-col lg:flex-row shadow-2xl border border-[#27272a]">
+
+    <!-- ========================================== -->
+    <!-- LEFT SIDEBAR NAVIGATION (FLUX DARK THEME)  -->
+    <!-- ========================================== -->
+    <aside class="w-full lg:w-72 bg-[#18181b] text-white p-6 flex flex-col justify-between border-r border-[#27272a] flex-shrink-0">
+
+      <div class="space-y-6">
+        <!-- App Logo Header -->
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-2xl bg-[#c8f53e] text-slate-950 flex items-center justify-center font-black text-xl shadow-md">
+              ⚡
+            </div>
+            <div>
+              <h1 class="text-lg font-extrabold tracking-tight text-white flex items-center gap-1.5">
+                Queue Master <span class="text-[#c8f53e] font-bold text-xs">Academy</span>
+              </h1>
+              <p class="text-[11px] text-zinc-400 font-medium">Interactive Data Structure Platform</p>
+            </div>
           </div>
+          <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-[#c8f53e] text-slate-950">PRO</span>
         </div>
-        <div>
-          <h1 class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-cyan-400 via-teal-300 to-magenta-400 bg-clip-text text-transparent">
-            QUEUE MASTER
-          </h1>
-          <p class="text-xs text-slate-400 font-medium">Interactive Data Structure Academy</p>
-        </div>
+
+        <!-- Navigation Tabs List -->
+        <nav class="space-y-1.5 pt-2">
+          <div class="text-[10px] font-bold text-zinc-500 uppercase tracking-wider px-3 mb-2">Queue Modules</div>
+
+          <button type="button" id="nav-lvl1" onclick="switchLevel(1)" class="w-full px-4 py-3 rounded-2xl transition-all flex items-center justify-between bg-[#27272a] text-white font-bold border border-[#3f3f46] shadow-sm">
+            <span class="flex items-center space-x-3">
+              <i data-lucide="factory" class="w-4 h-4 text-[#c8f53e]"></i>
+              <span class="text-sm">L1: FIFO Factory</span>
+            </span>
+            <span class="w-2 h-2 rounded-full bg-[#c8f53e]"></span>
+          </button>
+
+          <button type="button" id="nav-lvl2" onclick="switchLevel(2)" class="w-full px-4 py-3 rounded-2xl transition-all flex items-center justify-between text-zinc-400 hover:text-white hover:bg-[#27272a]/50 font-medium">
+            <span class="flex items-center space-x-3">
+              <i data-lucide="ticket" class="w-4 h-4"></i>
+              <span class="text-sm">L2: Theme Park</span>
+            </span>
+          </button>
+
+          <button type="button" id="nav-lvl3" onclick="switchLevel(3)" class="w-full px-4 py-3 rounded-2xl transition-all flex items-center justify-between text-zinc-400 hover:text-white hover:bg-[#27272a]/50 font-medium">
+            <span class="flex items-center space-x-3">
+              <i data-lucide="traffic-cone" class="w-4 h-4"></i>
+              <span class="text-sm">L3: Traffic Control</span>
+            </span>
+          </button>
+
+          <button type="button" id="nav-lvl4" onclick="switchLevel(4)" class="w-full px-4 py-3 rounded-2xl transition-all flex items-center justify-between text-zinc-400 hover:text-white hover:bg-[#27272a]/50 font-medium">
+            <span class="flex items-center space-x-3">
+              <i data-lucide="train" class="w-4 h-4"></i>
+              <span class="text-sm">L4: Train Deque</span>
+            </span>
+          </button>
+
+          <button type="button" id="nav-lvl5" onclick="switchLevel(5)" class="w-full px-4 py-3 rounded-2xl transition-all flex items-center justify-between text-zinc-400 hover:text-white hover:bg-[#27272a]/50 font-medium">
+            <span class="flex items-center space-x-3">
+              <i data-lucide="gamepad-2" class="w-4 h-4 text-amber-400"></i>
+              <span class="text-sm">L5: Arcade Quiz</span>
+            </span>
+            <span class="px-2 py-0.5 rounded-full text-[9px] font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30">BOSS</span>
+          </button>
+        </nav>
       </div>
 
-      <!-- Level Selector Tabs -->
-      <nav class="flex items-center bg-slate-900/90 p-1.5 rounded-xl border border-slate-800 text-xs font-semibold overflow-x-auto custom-scrollbar">
-        <button id="nav-lvl1" onclick="switchLevel(1)" class="px-3.5 py-2 rounded-lg transition-all flex items-center space-x-2 bg-cyan-500 text-slate-950 shadow-md font-bold whitespace-nowrap">
-          <span>🏭 L1: FIFO Factory</span>
-        </button>
-        <button id="nav-lvl2" onclick="switchLevel(2)" class="px-3.5 py-2 rounded-lg transition-all flex items-center space-x-2 text-slate-400 hover:text-white hover:bg-slate-800 whitespace-nowrap">
-          <span>🎟️ L2: Theme Park</span>
-        </button>
-        <button id="nav-lvl3" onclick="switchLevel(3)" class="px-3.5 py-2 rounded-lg transition-all flex items-center space-x-2 text-slate-400 hover:text-white hover:bg-slate-800 whitespace-nowrap">
-          <span>🚦 L3: Traffic Control</span>
-        </button>
-        <button id="nav-lvl4" onclick="switchLevel(4)" class="px-3.5 py-2 rounded-lg transition-all flex items-center space-x-2 text-slate-400 hover:text-white hover:bg-slate-800 whitespace-nowrap">
-          <span>🚂 L4: Train Deque</span>
-        </button>
-        <button id="nav-lvl5" onclick="switchLevel(5)" class="px-3.5 py-2 rounded-lg transition-all flex items-center space-x-2 text-amber-400 hover:text-amber-300 hover:bg-amber-500/10 font-bold border border-amber-500/30 whitespace-nowrap">
-          <span>🎮 Mini Game Quiz</span>
-        </button>
-      </nav>
-
-      <!-- Right Controls: Sound FX & Cheatsheet & Reset -->
-      <div class="flex items-center space-x-2">
-        <button id="sound-btn" onclick="toggleAudio()" title="Toggle Sound Effects" class="p-2 rounded-lg bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-cyan-400 transition">
-          <svg id="sound-icon-on" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072M18.364 5.636a9 9 0 010 12.728M11 5L6 9H2v6h4l5 4V5z"></path>
-          </svg>
-          <svg id="sound-icon-off" class="w-5 h-5 hidden text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" clip-rule="evenodd"></path>
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"></path>
-          </svg>
-        </button>
-
-        <button onclick="openConceptModal()" class="px-3 py-2 text-xs font-semibold rounded-lg bg-slate-900 border border-slate-800 hover:border-emerald-500/50 text-emerald-400 transition flex items-center space-x-1.5 shadow-sm">
-          <span>🎓 Concept Guide</span>
-        </button>
-
-        <button onclick="toggleCheatsheet()" class="px-3 py-2 text-xs font-semibold rounded-lg bg-slate-900 border border-slate-800 hover:border-cyan-500/50 text-cyan-400 transition flex items-center space-x-1.5">
-          <span>📖 Cheatsheet</span>
-        </button>
-
-        <button onclick="resetCurrentLevel()" class="px-3 py-2 text-xs font-semibold rounded-lg bg-slate-900 border border-slate-800 hover:border-rose-500/50 text-rose-400 transition flex items-center space-x-1">
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-          <span>Reset</span>
-        </button>
-      </div>
-
-    </div>
-  </header>
-
-  <!-- MAIN LEVEL CONTENT CONTAINER -->
-  <main class="max-w-7xl mx-auto px-4 py-6 flex-1 w-full">
-
-    <!-- ========================================== -->
-    <!-- LEVEL 1: FIFO FACTORY                      -->
-    <!-- ========================================== -->
-    <section id="level-1" class="space-y-6">
-      
-      <!-- Level Banner & Instructions -->
-      <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 backdrop-blur shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <div class="flex items-center space-x-3 mb-1">
-            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-cyan-500/20 text-cyan-400 border border-cyan-500/40">LEVEL 1</span>
-            <h2 class="text-xl font-bold text-white">FIFO Factory (First-In, First-Out)</h2>
-            <button onclick="openConceptModal(1)" class="px-2.5 py-1 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/20 text-xs font-bold transition flex items-center space-x-1">
-              <span>💡 Explain Concept</span>
+      <!-- Bottom Sidebar Card ("Upgrade to Pro" / "Cheatsheet") -->
+      <div class="mt-6 pt-6 border-t border-[#27272a]">
+        <div class="bg-gradient-to-tr from-[#c8f53e] to-[#a3e635] text-slate-950 p-5 rounded-2xl shadow-lg relative overflow-hidden group">
+          <div class="absolute -right-4 -bottom-4 w-20 h-20 bg-black/10 rounded-full blur-sm"></div>
+          <div class="relative z-10 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-black uppercase tracking-wider bg-slate-950 text-[#c8f53e] px-2.5 py-0.5 rounded-full">DS GUIDE</span>
+              <span class="text-lg">🚀</span>
+            </div>
+            <div>
+              <h4 class="font-black text-base leading-tight">Cheatsheet &amp; Rules</h4>
+              <p class="text-xs text-slate-800 font-medium mt-1">Quick reference for Time &amp; Space complexity.</p>
+            </div>
+            <button type="button" onclick="toggleCheatsheet()" class="w-full py-2.5 bg-slate-950 text-white rounded-xl text-xs font-bold hover:bg-slate-900 transition flex items-center justify-center space-x-1.5 shadow-md">
+              <i data-lucide="file-text" class="w-3.5 h-3.5 text-[#c8f53e]"></i>
+              <span>Open Cheatsheet</span>
             </button>
           </div>
-          <p class="text-sm text-slate-300">
-            Items enter on the right and exit on the left into the delivery truck. Click <strong class="text-cyan-400">"Ship Front Package"</strong> or click packages directly to process them. Remember: You can <em class="underline decoration-rose-500">ONLY</em> remove the package at the <strong>FRONT</strong>!
-          </p>
-        </div>
-        
-        <!-- Progress Counter -->
-        <div class="flex items-center bg-slate-950 px-4 py-2.5 rounded-xl border border-slate-800 space-x-3 min-w-[200px] justify-between">
-          <span class="text-xs font-semibold text-slate-400">Items Shipped:</span>
-          <span id="l1-progress-text" class="text-lg font-mono font-bold text-emerald-400">0 / 5</span>
         </div>
       </div>
 
-      <!-- Factory Conveyor Belt Simulation Screen -->
-      <div class="relative bg-slate-950 border border-slate-800 rounded-2xl p-6 shadow-2xl overflow-hidden min-h-[380px] flex flex-col justify-between">
-        
-        <!-- Overhead Factory Lights / Ambience -->
-        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-500 via-magenta-500 to-emerald-500 opacity-60"></div>
-        
-        <!-- Status Header inside Simulation -->
-        <div class="flex items-center justify-between text-xs font-mono mb-4 text-slate-400 border-b border-slate-900 pb-3">
+    </aside>
+
+
+    <!-- ========================================== -->
+    <!-- RIGHT MAIN CONTENT PANEL (FLUX LIGHT THEME) -->
+    <!-- ========================================== -->
+    <main class="flex-1 bg-[#f4f4f6] text-slate-900 p-6 flex flex-col justify-between overflow-y-auto custom-scrollbar">
+
+      <div class="space-y-6">
+
+        <!-- Streamlined Queue Dashboard Top Header Bar -->
+        <header class="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white p-4 rounded-3xl border border-slate-200/80 shadow-sm">
+          <div>
+            <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
+              Queue Dashboard
+              <span class="text-[10px] font-mono font-bold bg-[#c8f53e] text-slate-950 px-2 py-0.5 rounded-full">Academy Edition</span>
+            </h2>
+            <p class="text-xs text-slate-500 font-medium">Interactive Data Structure Learning &amp; Visualizer</p>
+          </div>
+
+          <!-- Controls Toolbar -->
           <div class="flex items-center space-x-2">
-            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
-            <span class="text-emerald-400 font-bold">SYSTEM ACTIVE</span>
-            <span>| Mode: Strictly Enforced FIFO</span>
-          </div>
-          <div class="text-right">
-            <span>Entry Chute: <strong class="text-cyan-400">RIGHT (REAR)</strong></span>
-            <span class="mx-2">➔</span>
-            <span>Exit Bay: <strong class="text-magenta-400">LEFT (FRONT)</strong></span>
-          </div>
-        </div>
 
-        <!-- Conveyor Stage Layout -->
-        <div class="relative flex items-center justify-between my-auto py-8">
-          
-          <!-- LEFT: Delivery Truck (Exit Bay) -->
-          <div class="relative z-10 flex flex-col items-center">
-            <div class="w-32 h-28 bg-slate-900 border-2 border-magenta-500/60 rounded-xl flex flex-col items-center justify-center p-3 shadow-lg shadow-magenta-500/10 text-center relative overflow-hidden group">
-              <div class="absolute top-0 left-0 right-0 bg-magenta-500/20 text-[10px] font-bold text-magenta-300 py-0.5">
-                DELIVERY TRUCK
-              </div>
-              <svg class="w-12 h-12 text-magenta-400 mt-3 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 100-4 2 2 0 000 4zm10 0a2 2 0 100-4 2 2 0 000 4z"></path>
+            <!-- Sound FX Toggle -->
+            <button type="button" id="sound-btn" onclick="toggleAudio()" title="Toggle Sound FX" aria-label="Toggle Sound FX" class="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition flex items-center justify-center">
+              <svg id="sound-icon-on" class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072M18.364 5.636a9 9 0 010 12.728M11 5L6 9H2v6h4l5 4V5z"></path>
               </svg>
-              <span class="text-[10px] text-slate-400 font-mono mt-1">EXIT POINT</span>
-            </div>
-            <div class="mt-2 text-xs font-bold text-magenta-400 flex items-center space-x-1">
-              <span>⬅️ DEQUEUE HERE</span>
-            </div>
-          </div>
-
-          <!-- CENTER: Animated Conveyor Belt with Package Items -->
-          <div class="flex-1 mx-6 relative">
-            
-            <!-- Floating Directional Arrow Guides -->
-            <div class="absolute -top-7 left-0 right-0 flex justify-between px-4 text-[11px] font-mono font-bold text-slate-500">
-              <span class="text-cyan-400 animate-pulse">👈 FRONT Pointer (Next to Exit)</span>
-              <span class="text-slate-400">Queue Flow ⬅️ ⬅️ ⬅️</span>
-              <span class="text-magenta-400">REAR Pointer (Newest Entry) 👉</span>
-            </div>
-
-            <!-- Conveyor Belt Graphic Bar -->
-            <div id="conveyor-track" class="conveyor-belt h-20 rounded-2xl border border-slate-700/80 shadow-inner flex items-center px-4 space-x-4 overflow-x-auto custom-scrollbar">
-              <div id="l1-package-container" class="flex items-center space-x-4 w-full justify-start min-h-[64px]">
-                <!-- Package Elements Dynamic Insertion -->
-              </div>
-            </div>
-          </div>
-
-          <!-- RIGHT: Factory Ingestion Chute -->
-          <div class="relative z-10 flex flex-col items-center">
-            <div class="w-28 h-28 bg-slate-900 border-2 border-cyan-500/60 rounded-xl flex flex-col items-center justify-center p-3 shadow-lg shadow-cyan-500/10 text-center">
-              <div class="text-[10px] font-bold text-cyan-400 uppercase tracking-wider">ENTRY CHUTE</div>
-              <svg class="w-10 h-10 text-cyan-400 my-1 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+              <svg id="sound-icon-off" class="w-4 h-4 hidden text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" clip-rule="evenodd"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"></path>
               </svg>
-              <span class="text-[10px] text-slate-400 font-mono">NEW ITEMS</span>
-            </div>
-            <div class="mt-2 text-xs font-bold text-cyan-400 flex items-center space-x-1">
-              <span>ENQUEUE ➡️</span>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- Level 1 Action Controls Footer -->
-        <div class="mt-4 pt-4 border-t border-slate-900 flex flex-wrap items-center justify-between gap-4">
-          <div class="flex items-center space-x-3">
-            <button onclick="shipFrontPackage()" class="px-5 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-slate-950 font-extrabold text-sm shadow-lg shadow-cyan-500/20 active:scale-95 transition flex items-center space-x-2">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-              <span>Ship Front Package (Dequeue)</span>
             </button>
-            
-            <button onclick="addFactoryPackage()" class="px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 hover:border-slate-500 text-slate-200 font-semibold text-sm transition flex items-center space-x-2">
-              <span>➕ Add Item to Rear</span>
+
+            <!-- Concept Guide Modal Button -->
+            <button type="button" onclick="openConceptModal()" class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-700 flex items-center space-x-1.5 transition">
+              <i data-lucide="book-open" class="w-4 h-4 text-slate-600"></i>
+              <span>Guide</span>
             </button>
-          </div>
 
-          <div class="text-xs text-slate-400 font-mono">
-            <span>Tip: Try clicking packages directly to test FIFO compliance!</span>
-          </div>
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ========================================== -->
-    <!-- LEVEL 2: THEME PARK CASHIER                -->
-    <!-- ========================================== -->
-    <section id="level-2" class="space-y-6 hidden">
-      
-      <!-- Level Banner -->
-      <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 backdrop-blur shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <div class="flex items-center space-x-3 mb-1">
-            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-magenta-500/20 text-magenta-400 border border-magenta-500/40">LEVEL 2</span>
-            <h2 class="text-xl font-bold text-white">Theme Park Cashier (Operations & State)</h2>
-            <button onclick="openConceptModal(2)" class="px-2.5 py-1 rounded-lg bg-magenta-500/10 border border-magenta-500/30 text-magenta-300 hover:bg-magenta-500/20 text-xs font-bold transition flex items-center space-x-1">
-              <span>💡 Explain Concept</span>
+            <!-- Cheatsheet Drawer Button -->
+            <button type="button" onclick="toggleCheatsheet()" class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-700 flex items-center space-x-1.5 transition">
+              <i data-lucide="file-text" class="w-4 h-4 text-slate-600"></i>
+              <span>Cheatsheet</span>
             </button>
-          </div>
-          <p class="text-sm text-slate-300">
-            Manage visitors waiting in line at the amusement park ticket booth. Max Capacity: <strong class="text-magenta-400">5 visitors</strong>. Master <code class="text-cyan-400 font-mono">Enqueue()</code>, <code class="text-cyan-400 font-mono">Dequeue()</code>, and <code class="text-cyan-400 font-mono">Peek()</code> while watching for Overflow and Underflow errors!
-          </p>
-        </div>
 
-        <div class="flex items-center bg-slate-950 px-4 py-2.5 rounded-xl border border-slate-800 space-x-3">
-          <span class="text-xs font-semibold text-slate-400">Visitors Served:</span>
-          <span id="l2-progress-text" class="text-lg font-mono font-bold text-magenta-400">0 / 5</span>
-        </div>
-      </div>
-
-      <!-- Live Status Indicators Grid -->
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-4 flex flex-col justify-between shadow-lg">
-          <span class="text-xs font-medium text-slate-400">Max Capacity</span>
-          <div class="text-2xl font-extrabold font-mono text-cyan-400 mt-1">5</div>
-          <span class="text-[10px] text-slate-500 mt-1">Fixed Queue Array Boundary</span>
-        </div>
-
-        <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-4 flex flex-col justify-between shadow-lg">
-          <span class="text-xs font-medium text-slate-400">Current Size</span>
-          <div id="l2-status-size" class="text-2xl font-extrabold font-mono text-emerald-400 mt-1">0 / 5</div>
-          <span class="text-[10px] text-slate-500 mt-1">Active Visitors in Line</span>
-        </div>
-
-        <div id="card-is-empty" class="bg-slate-900/90 border border-slate-800 rounded-xl p-4 flex flex-col justify-between shadow-lg transition-all">
-          <span class="text-xs font-medium text-slate-400">isEmpty State</span>
-          <div class="mt-1 flex items-center justify-between">
-            <span id="l2-status-empty" class="px-3 py-1 rounded-full text-xs font-mono font-bold bg-rose-500/20 text-rose-400 border border-rose-500/50">TRUE</span>
-          </div>
-          <span class="text-[10px] text-slate-500 mt-1">size === 0</span>
-        </div>
-
-        <div id="card-is-full" class="bg-slate-900/90 border border-slate-800 rounded-xl p-4 flex flex-col justify-between shadow-lg transition-all">
-          <span class="text-xs font-medium text-slate-400">isFull State</span>
-          <div class="mt-1 flex items-center justify-between">
-            <span id="l2-status-full" class="px-3 py-1 rounded-full text-xs font-mono font-bold bg-slate-800 text-slate-400">FALSE</span>
-          </div>
-          <span class="text-[10px] text-slate-500 mt-1">size === 5</span>
-        </div>
-      </div>
-
-      <!-- Main Visual Queue & Ticket Booth Container -->
-      <div class="bg-slate-950 border border-slate-800 rounded-2xl p-6 shadow-2xl relative">
-        
-        <!-- Queue Display Area -->
-        <div class="flex flex-col md:flex-row items-center justify-between gap-6 py-6 border-b border-slate-900">
-          
-          <!-- Ticket Booth (FRONT side) - Clickable to Dequeue -->
-          <div onclick="l2Dequeue()" title="Click Cashier Booth to Serve / Dequeue FRONT Visitor" class="w-full md:w-48 h-36 bg-slate-900 border-2 border-magenta-500 rounded-2xl flex flex-col items-center justify-center p-3 text-center shadow-lg shadow-magenta-500/20 relative cursor-pointer group hover:scale-105 hover:border-cyan-400 transition-all">
-            <div class="absolute -top-3 bg-magenta-500 text-slate-950 text-[10px] font-extrabold px-3 py-0.5 rounded-full uppercase tracking-wider shadow">
-              TICKET CASHIER
-            </div>
-            <div class="text-3xl my-1 group-hover:scale-125 transition-transform">🎟️</div>
-            <span class="text-xs font-bold text-magenta-300 group-hover:text-cyan-300">Front Cashier Booth</span>
-            <span id="l2-serving-badge" class="text-[10px] text-emerald-400 font-mono mt-1 font-bold animate-pulse">👉 CLICK TO SERVE (DEQUEUE)</span>
-          </div>
-
-          <!-- Queue Slot Container (5 Fixed Capacity Slots) -->
-          <div class="flex-1 w-full">
-            <div class="flex items-center justify-between text-xs font-mono mb-2 text-slate-400">
-              <span class="text-cyan-400">⬅️ FRONT Pointer (Index 0 - Click to Dequeue)</span>
-              <span>QUEUE MEMORY SLOTS (Max: 5)</span>
-              <span class="text-magenta-400">REAR Pointer ➡️</span>
-            </div>
-
-            <!-- Slots Grid -->
-            <div id="l2-queue-slots" class="grid grid-cols-5 gap-3 p-4 bg-slate-900/60 rounded-2xl border border-slate-800">
-              <!-- 5 Slots rendered by JS -->
-            </div>
-          </div>
-
-        </div>
-
-        <!-- Interactive Control Panel & Terminal Grid -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-6">
-          
-          <!-- Control Buttons Panel (5 cols) -->
-          <div class="lg:col-span-5 space-y-4">
-            <h3 class="text-sm font-bold text-slate-200 uppercase tracking-wider flex items-center space-x-2">
-              <span>🎮 Queue Control Panel</span>
-            </h3>
-
-            <div class="space-y-3">
-              <!-- Enqueue Button -->
-              <div class="flex items-center space-x-2">
-                <input id="visitor-name-input" type="text" placeholder="Visitor Name (e.g. Maya)" class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-cyan-500 font-sans">
-                <button onclick="l2Enqueue()" class="px-4 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-sm shadow-lg shadow-cyan-500/20 active:scale-95 transition flex items-center space-x-1.5 whitespace-nowrap">
-                  <span>➕ Enqueue()</span>
-                </button>
-              </div>
-
-              <!-- Dequeue & Peek & Batch Dequeue Buttons -->
-              <div class="grid grid-cols-3 gap-2">
-                <button onclick="l2Dequeue()" class="px-3 py-2.5 rounded-xl bg-magenta-500 hover:bg-magenta-400 text-slate-950 font-bold text-xs shadow-lg shadow-magenta-500/20 active:scale-95 transition flex items-center justify-center space-x-1">
-                  <span>🎟️ Dequeue()</span>
-                </button>
-
-                <button onclick="l2Peek()" class="px-3 py-2.5 rounded-xl bg-slate-900 border border-slate-700 hover:border-cyan-400 text-cyan-400 font-bold text-xs active:scale-95 transition flex items-center justify-center space-x-1">
-                  <span>🔍 Peek()</span>
-                </button>
-
-                <button onclick="l2BatchDequeue()" title="Serve all visitors in queue sequentially" class="px-3 py-2.5 rounded-xl bg-slate-900 border border-slate-700 hover:border-emerald-400 text-emerald-400 font-bold text-xs active:scale-95 transition flex items-center justify-center space-x-1">
-                  <span>⚡ Batch All</span>
-                </button>
-              </div>
-            </div>
-
-            <!-- Hint Box -->
-            <div class="p-3 bg-slate-900/40 rounded-xl border border-slate-800 text-xs text-slate-400 space-y-1">
-              <p><strong class="text-cyan-400">Enqueue():</strong> Adds visitor at REAR. Fails if size = 5 (Overflow).</p>
-              <p><strong class="text-magenta-400">Dequeue():</strong> Serves visitor at FRONT. Fails if size = 0 (Underflow).</p>
-              <p><strong class="text-amber-400">Peek():</strong> Inspects FRONT visitor without removing them ($O(1)$ time complexity).</p>
-            </div>
-          </div>
-
-          <!-- Interactive Terminal Log (7 cols) -->
-          <div class="lg:col-span-7 flex flex-col bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
-            <div class="bg-slate-950 px-4 py-2.5 border-b border-slate-800 flex items-center justify-between">
-              <div class="flex items-center space-x-2">
-                <span class="w-3 h-3 rounded-full bg-rose-500"></span>
-                <span class="w-3 h-3 rounded-full bg-amber-500"></span>
-                <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
-                <span class="text-xs font-mono font-bold text-slate-400 ml-2">Console Execution Log</span>
-              </div>
-              <button onclick="clearTerminalLog()" class="text-[11px] font-mono text-slate-400 hover:text-slate-200">Clear</button>
-            </div>
-            
-            <div id="terminal-log-body" class="p-4 font-mono text-xs space-y-2 h-48 overflow-y-auto custom-scrollbar bg-slate-950/90 text-slate-300">
-              <div class="text-slate-500">// Queue Master Console initialized. Ready for operations...</div>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ========================================== -->
-    <!-- LEVEL 3: TRAFFIC CONTROL (QUEUE VARIANTS)  -->
-    <!-- ========================================== -->
-    <section id="level-3" class="space-y-6 hidden">
-      
-      <!-- Level Banner -->
-      <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 backdrop-blur shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <div class="flex items-center space-x-3 mb-1">
-            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/40">LEVEL 3</span>
-            <h2 class="text-xl font-bold text-white">Traffic Control (Queue Variants)</h2>
-            <button onclick="openConceptModal(3)" class="px-2.5 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 hover:bg-emerald-500/20 text-xs font-bold transition flex items-center space-x-1">
-              <span>💡 Explain Concept</span>
+            <!-- Reset Level Button -->
+            <button type="button" onclick="resetCurrentLevel()" class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-rose-50 hover:text-rose-600 text-xs font-bold text-slate-700 flex items-center space-x-1.5 transition">
+              <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+              <span>Reset</span>
             </button>
+
           </div>
-          <p class="text-sm text-slate-300">
-            Explore advanced Queue implementations: <strong>Standard FIFO</strong>, <strong>Circular Queue</strong> (modulo wrap-around), and <strong>Priority Queue</strong> (emergency overriding).
-          </p>
-        </div>
-
-        <!-- Sub-Variant Switcher Buttons -->
-        <div class="flex items-center bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs font-semibold">
-          <button id="tab-variant-std" onclick="switchVariant('std')" class="px-3 py-2 rounded-lg bg-emerald-500 text-slate-950 font-bold">Standard</button>
-          <button id="tab-variant-circ" onclick="switchVariant('circ')" class="px-3 py-2 rounded-lg text-slate-400 hover:text-white">Circular</button>
-          <button id="tab-variant-prio" onclick="switchVariant('prio')" class="px-3 py-2 rounded-lg text-slate-400 hover:text-white">Priority</button>
-        </div>
-      </div>
+        </header>
 
 
-      <!-- VARIANT 1: STANDARD QUEUE -->
-      <div id="variant-std" class="bg-slate-950 border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-6">
-        <div class="flex justify-between items-center border-b border-slate-900 pb-3">
-          <h3 class="text-base font-bold text-emerald-400">1. Standard Linear Traffic Queue</h3>
-          <span class="text-xs text-slate-400 font-mono">Simple FIFO Line</span>
-        </div>
 
-        <div id="l3-std-container" class="min-h-[140px] bg-slate-900/60 rounded-2xl border border-slate-800 p-4 flex items-center space-x-4 overflow-x-auto custom-scrollbar">
-          <!-- Standard Queue Items -->
-        </div>
+        <!-- ========================================== -->
+        <!-- QUEUE DASHBOARD STAT CARDS GRID            -->
+        <!-- ========================================== -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
 
-        <div class="flex items-center space-x-3 pt-2">
-          <button onclick="l3StdEnqueue()" class="px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm transition">➕ Enqueue Vehicle</button>
-          <button onclick="l3StdDequeue()" class="px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 hover:border-emerald-400 text-emerald-400 font-bold text-sm transition">🚦 Dequeue (Pass Light)</button>
-        </div>
-      </div>
-
-
-      <!-- VARIANT 2: CIRCULAR QUEUE -->
-      <div id="variant-circ" class="bg-slate-950 border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-6 hidden">
-        <div class="flex flex-col sm:flex-row justify-between sm:items-center border-b border-slate-900 pb-3 gap-2">
-          <div>
-            <h3 class="text-base font-bold text-cyan-400">2. Circular Queue (Modulo Pointer Wrap)</h3>
-            <p class="text-xs text-slate-400">Reuses freed front memory space when <code class="text-cyan-400">rear = (rear + 1) % N</code></p>
-          </div>
-          <div class="flex items-center space-x-3 font-mono text-xs bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800">
-            <span>Front: <strong id="circ-front-idx" class="text-cyan-400">0</strong></span>
-            <span>| Rear: <strong id="circ-rear-idx" class="text-magenta-400">0</strong></span>
-            <span>| Size: <strong id="circ-size-count" class="text-emerald-400">0 / 6</strong></span>
-          </div>
-        </div>
-
-        <!-- Ring Visualizer & Telemetry Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-          
-          <!-- Circular Ring Visual (7 cols) -->
-          <div class="md:col-span-7 flex justify-center py-4">
-            <div class="ring-container flex items-center justify-center">
-              
-              <!-- Center Formula Display -->
-              <div class="w-32 h-32 rounded-full bg-slate-900 border-2 border-cyan-500/40 flex flex-col items-center justify-center text-center p-2 shadow-xl z-10">
-                <span class="text-[10px] text-slate-400 uppercase font-mono">Formula</span>
-                <span class="text-xs font-bold font-mono text-cyan-400 mt-1">(rear + 1) % 6</span>
-                <span class="text-[10px] text-slate-500 mt-1">Ring Capacity: 6</span>
-              </div>
-
-              <!-- 6 Slots around ring rendered via JavaScript -->
-              <div id="circular-ring-slots"></div>
-
-            </div>
-          </div>
-
-          <!-- Controls & Explanatory Box (5 cols) -->
-          <div class="md:col-span-5 space-y-4">
-            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-3">
-              <h4 class="text-xs font-bold text-slate-200 uppercase tracking-wider">Ring Controls</h4>
-              <div class="grid grid-cols-2 gap-3">
-                <button onclick="l3CircEnqueue()" class="px-4 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs shadow-md transition">
-                  ➕ Enqueue Vehicle
-                </button>
-                <button onclick="l3CircDequeue()" class="px-4 py-3 rounded-xl bg-magenta-500 hover:bg-magenta-400 text-slate-950 font-bold text-xs shadow-md transition">
-                  🚗 Dequeue Vehicle
-                </button>
-              </div>
-              <button onclick="resetCircQueue()" class="w-full py-2 rounded-lg bg-slate-950 border border-slate-800 text-slate-400 hover:text-white text-xs">
-                Reset Circular Ring
-              </button>
-            </div>
-
-            <div class="p-4 bg-slate-900/50 rounded-xl border border-slate-800 text-xs text-slate-300 space-y-2">
-              <span class="font-bold text-cyan-400 flex items-center space-x-1">
-                <span>💡 Why Circular Queue?</span>
+          <!-- Queue Stat Card 1: Active Progress & Capacity -->
+          <div class="bg-white rounded-3xl p-5 shadow-sm border border-slate-200/80 flex flex-col justify-between">
+            <div class="flex items-center justify-between text-xs font-bold text-slate-700">
+              <span class="flex items-center space-x-1.5">
+                <i data-lucide="layers" class="w-4 h-4 text-emerald-500"></i>
+                <span>Queue Capacity &amp; Progress</span>
               </span>
-              <p>
-                In a standard array queue, dequeuing leaves empty wasted slots at the front. A <strong>Circular Queue</strong> connects the last element back to the first using modulo arithmetic:
-              </p>
-              <p class="font-mono text-[11px] text-emerald-400 bg-slate-950 p-2 rounded border border-slate-800">
-                rear = (rear + 1) % Capacity;
-              </p>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-[#c8f53e] text-slate-950">ACTIVE</span>
+            </div>
+
+            <div class="my-3 flex items-baseline space-x-2">
+              <span id="l1-progress-text" class="text-4xl font-extrabold text-slate-900 tracking-tight">0 / 5</span>
+              <span class="text-xs text-slate-500 font-bold">Items Processed</span>
+            </div>
+
+            <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+              <span>Goal Target: <strong class="text-slate-900 font-bold">5 Items</strong></span>
+              <span class="text-emerald-600 font-bold">Level 1 Active</span>
+            </div>
+          </div>
+
+          <!-- Queue Stat Card 2: Algorithm Efficiency & Time Complexity -->
+          <div class="bg-white rounded-3xl p-5 shadow-sm border border-slate-200/80 flex flex-col justify-between">
+            <div class="flex items-center justify-between text-xs font-bold text-slate-700">
+              <span class="flex items-center space-x-1.5">
+                <i data-lucide="clock" class="w-4 h-4 text-sky-500"></i>
+                <span>Operation Complexity</span>
+              </span>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-sky-100 text-sky-700 border border-sky-200">OPTIMAL</span>
+            </div>
+
+            <div class="my-3 flex items-baseline space-x-2">
+              <span class="text-4xl font-extrabold text-slate-900 tracking-tight font-mono">O(1)</span>
+              <span class="text-xs text-slate-500 font-bold">Constant Time</span>
+            </div>
+
+            <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+              <span>Enqueue &amp; Dequeue Speed</span>
+              <span class="font-bold text-sky-700">O(1) Access</span>
+            </div>
+          </div>
+
+          <!-- Queue Stat Card 3: Data Structure Ordering Rule -->
+          <div class="bg-white rounded-3xl p-5 shadow-sm border border-slate-200/80 flex flex-col justify-between">
+            <div class="flex items-center justify-between text-xs font-bold text-slate-700">
+              <span class="flex items-center space-x-1.5">
+                <i data-lucide="arrow-right-left" class="w-4 h-4 text-purple-500"></i>
+                <span>Queue Ordering Protocol</span>
+              </span>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-purple-100 text-purple-700 border border-purple-200">STRICT</span>
+            </div>
+
+            <div class="my-3 flex items-baseline space-x-2">
+              <span class="text-3xl font-extrabold text-slate-900 tracking-tight font-mono">FIFO</span>
+              <span class="text-xs text-slate-500 font-bold">First In, First Out</span>
+            </div>
+
+            <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+              <span>Insertion: <strong class="text-rose-600 font-bold">REAR</strong></span>
+              <span>Removal: <strong class="text-emerald-600 font-bold">FRONT</strong></span>
             </div>
           </div>
 
         </div>
-      </div>
 
 
-      <!-- VARIANT 3: PRIORITY QUEUE -->
-      <div id="variant-prio" class="bg-slate-950 border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-6 hidden">
-        <div class="flex justify-between items-center border-b border-slate-900 pb-3">
-          <div>
-            <h3 class="text-base font-bold text-rose-400">3. Priority Queue (Emergency Override)</h3>
-            <p class="text-xs text-slate-400">Elements jump ahead according to Priority Level (High ➔ Medium ➔ Low)</p>
-          </div>
-          <span class="text-xs font-mono text-rose-400 font-bold">Highest Priority Dequeues First</span>
-        </div>
+        <!-- ========================================== -->
+        <!-- MAIN VISUAL STAGE & DARK LOG PANEL SECTION -->
+        <!-- ========================================== -->
 
-        <!-- Priority Insertion Control Toolbar -->
-        <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl flex flex-wrap items-center justify-between gap-4">
-          <div class="flex items-center space-x-3">
-            <span class="text-xs font-bold text-slate-300">Select Vehicle Type:</span>
-            
-            <button id="prio-select-high" onclick="selectPrioType('high')" class="px-3 py-2 rounded-lg bg-rose-500/20 text-rose-400 border border-rose-500/60 font-bold text-xs flex items-center space-x-1">
-              <span>🚨 High (Ambulance - P1)</span>
-            </button>
+        <!-- LEVEL 1: FIFO FACTORY -->
+        <section id="level-1" class="space-y-6">
 
-            <button id="prio-select-med" onclick="selectPrioType('med')" class="px-3 py-2 rounded-lg bg-slate-800 text-slate-400 border border-slate-700 font-bold text-xs flex items-center space-x-1">
-              <span>🚌 Medium (Bus - P2)</span>
-            </button>
+          <!-- Factory Stage Canvas (Full 12 Columns Width) -->
+          <div class="w-full bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 flex flex-col justify-between min-h-[380px]">
 
-            <button id="prio-select-low" onclick="selectPrioType('low')" class="px-3 py-2 rounded-lg bg-slate-800 text-slate-400 border border-slate-700 font-bold text-xs flex items-center space-x-1">
-              <span>🚗 Low (Car - P3)</span>
-            </button>
-          </div>
-
-          <div class="flex items-center space-x-3">
-            <button onclick="l3PrioEnqueue()" class="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs transition">
-              ➕ Enqueue Priority
-            </button>
-            <button onclick="l3PrioDequeue()" class="px-4 py-2 rounded-xl bg-rose-500 hover:bg-rose-400 text-slate-950 font-bold text-xs transition">
-              🚨 Dequeue FRONT
-            </button>
-          </div>
-        </div>
-
-        <!-- Priority Queue Layout Container -->
-        <div class="min-h-[160px] bg-slate-900/60 rounded-2xl border border-slate-800 p-4 relative">
-          <div class="flex items-center justify-between text-xs font-mono mb-3 text-slate-400">
-            <span class="text-rose-400">⬅️ FRONT (Highest Priority served first)</span>
-            <span class="text-cyan-400">REAR (Lowest Priority) ➡️</span>
-          </div>
-
-          <div id="l3-prio-container" class="flex items-center space-x-4 overflow-x-auto custom-scrollbar py-2">
-            <!-- Priority Queue items rendered by JS -->
-          </div>
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ========================================== -->
-    <!-- LEVEL 4: TRAIN DEQUE (DOUBLE-ENDED QUEUE)  -->
-    <!-- ========================================== -->
-    <section id="level-4" class="space-y-6 hidden">
-      
-      <!-- Level Banner -->
-      <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 backdrop-blur shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <div class="flex items-center space-x-3 mb-1">
-            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-purple-500/20 text-purple-400 border border-purple-500/40">LEVEL 4</span>
-            <h2 class="text-xl font-bold text-white">Train Switching Yard (Double-Ended Queue / Deque)</h2>
-            <button onclick="openConceptModal(4)" class="px-2.5 py-1 rounded-lg bg-purple-500/10 border border-purple-500/30 text-purple-300 hover:bg-purple-500/20 text-xs font-bold transition flex items-center space-x-1">
-              <span>💡 Explain Concept</span>
-            </button>
-          </div>
-          <p class="text-sm text-slate-300">
-            A <strong>Deque (Double-Ended Queue)</strong> allows insertion and deletion from <strong class="text-cyan-400">BOTH ends</strong>! Control train carriages using <code class="text-cyan-400 font-mono">addFirst()</code>, <code class="text-cyan-400 font-mono">addLast()</code>, <code class="text-magenta-400 font-mono">removeFirst()</code>, and <code class="text-magenta-400 font-mono">removeLast()</code>.
-          </p>
-        </div>
-
-        <div class="flex items-center bg-slate-950 px-4 py-2.5 rounded-xl border border-slate-800 space-x-3">
-          <span class="text-xs font-semibold text-slate-400">Carriage Ops:</span>
-          <span id="l4-progress-text" class="text-lg font-mono font-bold text-purple-400">0 / 5</span>
-        </div>
-      </div>
-
-      <!-- Live Telemetry Status Grid -->
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-4 flex flex-col justify-between shadow-lg">
-          <span class="text-xs font-medium text-slate-400">Max Capacity</span>
-          <div class="text-2xl font-extrabold font-mono text-cyan-400 mt-1">6</div>
-          <span class="text-[10px] text-slate-500 mt-1">Track Slot Boundary</span>
-        </div>
-
-        <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-4 flex flex-col justify-between shadow-lg">
-          <span class="text-xs font-medium text-slate-400">Current Size</span>
-          <div id="l4-status-size" class="text-2xl font-extrabold font-mono text-emerald-400 mt-1">0 / 6</div>
-          <span class="text-[10px] text-slate-500 mt-1">Active Carriages</span>
-        </div>
-
-        <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-4 flex flex-col justify-between shadow-lg">
-          <span class="text-xs font-medium text-slate-400">Front Carriage</span>
-          <div id="l4-status-front" class="text-sm font-extrabold font-mono text-cyan-300 truncate mt-1">none</div>
-          <span class="text-[10px] text-slate-500 mt-1">Left Gate Pointer</span>
-        </div>
-
-        <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-4 flex flex-col justify-between shadow-lg">
-          <span class="text-xs font-medium text-slate-400">Rear Carriage</span>
-          <div id="l4-status-rear" class="text-sm font-extrabold font-mono text-magenta-300 truncate mt-1">none</div>
-          <span class="text-[10px] text-slate-500 mt-1">Right Gate Pointer</span>
-        </div>
-      </div>
-
-      <!-- Railway Track Simulation Area -->
-      <div class="bg-slate-950 border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-6">
-        
-        <div class="flex items-center justify-between text-xs font-mono text-slate-400 border-b border-slate-900 pb-3">
-          <span class="text-cyan-400">👈 FRONT Gate (addFirst / removeFirst)</span>
-          <span>RAILWAY TRACK CONTAINER (Max Capacity: 6)</span>
-          <span class="text-magenta-400">REAR Gate (addLast / removeLast) 👉</span>
-        </div>
-
-        <!-- Animated Track Display Container -->
-        <div class="relative bg-slate-900/80 rounded-2xl border-2 border-slate-800 p-6 min-h-[170px] flex items-center justify-between overflow-x-auto custom-scrollbar">
-          
-          <!-- Left Entry Gate (FRONT) -->
-          <div onclick="l4RemoveFirst()" title="Click Left Gate to removeFirst()" class="flex-shrink-0 flex flex-col items-center justify-center border-2 border-cyan-500/60 bg-cyan-950/40 p-3 rounded-xl cursor-pointer hover:border-cyan-400 transition group">
-            <span class="text-xs font-bold text-cyan-400 font-mono">FRONT GATE</span>
-            <span class="text-2xl my-1 group-hover:scale-110 transition-transform">🚪</span>
-            <span class="text-[9px] font-mono text-cyan-300 font-bold">CLICK TO REMOVE</span>
-          </div>
-
-          <!-- Train Track Carriages Stage -->
-          <div id="l4-track-container" class="flex-1 flex items-center justify-center space-x-3 mx-4 min-h-[100px]">
-            <!-- Train Carriages rendered dynamically by JavaScript -->
-          </div>
-
-          <!-- Right Entry Gate (REAR) -->
-          <div onclick="l4RemoveLast()" title="Click Right Gate to removeLast()" class="flex-shrink-0 flex flex-col items-center justify-center border-2 border-magenta-500/60 bg-magenta-950/40 p-3 rounded-xl cursor-pointer hover:border-magenta-400 transition group">
-            <span class="text-xs font-bold text-magenta-400 font-mono">REAR GATE</span>
-            <span class="text-2xl my-1 group-hover:scale-110 transition-transform">🚪</span>
-            <span class="text-[9px] font-mono text-magenta-300 font-bold">CLICK TO REMOVE</span>
-          </div>
-
-        </div>
-
-        <!-- Interactive Control Panel & Deque Console Grid -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 pt-2">
-          
-          <!-- Controls Column (5 cols) -->
-          <div class="lg:col-span-5 space-y-4">
-            <h3 class="text-sm font-bold text-slate-200 uppercase tracking-wider flex items-center space-x-2">
-              <span>🎮 Deque Control Panel</span>
-            </h3>
-
-            <!-- Front Operations -->
-            <div class="bg-slate-900 border border-slate-800 p-3.5 rounded-xl space-y-2">
-              <span class="text-xs font-bold text-cyan-400 uppercase font-mono block">Front (Left) Operations</span>
-              <div class="grid grid-cols-3 gap-2">
-                <button onclick="l4AddFirst()" class="px-2.5 py-2 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs shadow transition active:scale-95 whitespace-nowrap">
-                  ➕ addFirst()
-                </button>
-                <button onclick="l4RemoveFirst()" class="px-2.5 py-2 rounded-lg bg-slate-950 border border-cyan-500/50 hover:bg-rose-500/20 text-rose-400 font-bold text-xs transition active:scale-95 whitespace-nowrap">
-                  ❌ removeFirst()
-                </button>
-                <button onclick="l4PeekFirst()" class="px-2.5 py-2 rounded-lg bg-slate-950 border border-slate-800 hover:border-cyan-400 text-cyan-300 font-bold text-xs transition active:scale-95 whitespace-nowrap">
-                  🔍 peekFirst()
-                </button>
-              </div>
-            </div>
-
-            <!-- Rear Operations -->
-            <div class="bg-slate-900 border border-slate-800 p-3.5 rounded-xl space-y-2">
-              <span class="text-xs font-bold text-magenta-400 uppercase font-mono block">Rear (Right) Operations</span>
-              <div class="grid grid-cols-3 gap-2">
-                <button onclick="l4AddLast()" class="px-2.5 py-2 rounded-lg bg-magenta-500 hover:bg-magenta-400 text-slate-950 font-bold text-xs shadow transition active:scale-95 whitespace-nowrap">
-                  ➕ addLast()
-                </button>
-                <button onclick="l4RemoveLast()" class="px-2.5 py-2 rounded-lg bg-slate-950 border border-magenta-500/50 hover:bg-rose-500/20 text-rose-400 font-bold text-xs transition active:scale-95 whitespace-nowrap">
-                  ❌ removeLast()
-                </button>
-                <button onclick="l4PeekLast()" class="px-2.5 py-2 rounded-lg bg-slate-950 border border-slate-800 hover:border-magenta-400 text-magenta-300 font-bold text-xs transition active:scale-95 whitespace-nowrap">
-                  🔍 peekLast()
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Deque Console Terminal (7 cols) -->
-          <div class="lg:col-span-7 flex flex-col bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
-            <div class="bg-slate-950 px-4 py-2.5 border-b border-slate-800 flex items-center justify-between">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
               <div class="flex items-center space-x-2">
-                <span class="w-3 h-3 rounded-full bg-purple-500"></span>
-                <span class="w-3 h-3 rounded-full bg-cyan-500"></span>
-                <span class="w-3 h-3 rounded-full bg-magenta-500"></span>
-                <span class="text-xs font-mono font-bold text-slate-400 ml-2">Deque Terminal Execution Log</span>
+                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-slate-900 text-[#c8f53e]">STAGE 1</span>
+                <h3 class="font-extrabold text-slate-900 text-lg">🏭 FIFO Factory Conveyor</h3>
               </div>
-              <button onclick="clearL4TerminalLog()" class="text-[11px] font-mono text-slate-400 hover:text-slate-200">Clear</button>
+              <span class="text-xs font-mono font-bold text-emerald-600">Rule: First-In, First-Out</span>
             </div>
-            
-            <div id="l4-terminal-log" class="p-4 font-mono text-xs space-y-2 h-44 overflow-y-auto custom-scrollbar bg-slate-950/90 text-slate-300">
-              <div class="text-slate-500">// Deque Track Terminal initialized. Operations ready...</div>
+
+            <!-- Conveyor Layout -->
+            <div class="relative flex items-center justify-between my-auto py-8">
+              <!-- Delivery Truck (Exit Bay) -->
+              <div class="relative z-10 flex flex-col items-center">
+                <div class="w-32 h-28 bg-rose-50 border-2 border-rose-300 rounded-2xl flex flex-col items-center justify-center p-3 shadow-sm text-center">
+                  <span class="text-4xl my-1">🚚</span>
+                  <span class="text-[10px] text-rose-800 font-extrabold uppercase">EXIT BAY (DEQUEUE)</span>
+                </div>
+              </div>
+
+              <!-- Conveyor Track -->
+              <div class="flex-1 mx-6 relative">
+                <div id="conveyor-track" class="conveyor-belt h-24 rounded-2xl border-2 border-slate-300 shadow-inner flex items-center px-4 space-x-4 overflow-x-auto custom-scrollbar">
+                  <div id="l1-package-container" class="flex items-center space-x-4 w-full justify-start min-h-[64px]">
+                    <!-- Package elements inserted dynamically -->
+                  </div>
+                </div>
+              </div>
+
+              <!-- Ingestion Chute -->
+              <div class="relative z-10 flex flex-col items-center">
+                <div class="w-28 h-28 bg-sky-50 border-2 border-sky-300 rounded-2xl flex flex-col items-center justify-center p-3 shadow-sm text-center">
+                  <span class="text-4xl my-1 animate-bounce">📦</span>
+                  <span class="text-[10px] text-sky-800 font-extrabold uppercase">ENTRY CHUTE (ENQUEUE)</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Action Controls -->
+            <div class="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
+              <div class="flex items-center space-x-3">
+                <button type="button" onclick="shipFrontPackage()" class="btn-flux-lime px-6 py-3 rounded-xl text-xs flex items-center space-x-2">
+                  <i data-lucide="package-check" class="w-4 h-4"></i>
+                  <span>Ship Front Package (Dequeue)</span>
+                </button>
+                <button type="button" onclick="addFactoryPackage()" class="btn-flux-light px-5 py-3 rounded-xl text-xs flex items-center space-x-1.5">
+                  <i data-lucide="plus-circle" class="w-4 h-4 text-sky-600"></i>
+                  <span>Add Item to Rear</span>
+                </button>
+              </div>
+              <span class="text-xs text-slate-400 font-medium">Tip: Click packages directly to ship them!</span>
             </div>
           </div>
 
-        </div>
+          <!-- Hidden element to maintain required DOM ID terminal-log-body -->
+          <div id="terminal-log-body" class="hidden"></div>
+        </section>
 
-        <!-- In-Level Deque Concept Explanation Card -->
-        <div class="bg-slate-900/60 rounded-xl border border-slate-800 p-4 space-y-3">
-          <div class="flex items-center justify-between">
-            <h4 class="text-xs font-bold text-purple-400 uppercase tracking-wider flex items-center space-x-2">
-              <span>💡 Double-Ended Queue (Deque) Concept Breakdown</span>
-            </h4>
-            <button onclick="openConceptModal(4)" class="text-[11px] font-bold text-cyan-400 hover:underline">
-              Full Guide & Code Snippets ➔
-            </button>
+
+
+
+        <!-- LEVEL 2: THEME PARK CASHIER -->
+        <section id="level-2" class="space-y-6 hidden">
+
+          <!-- Meter Cards Grid -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-sm">
+              <span class="text-xs text-slate-500 font-bold block">Max Capacity</span>
+              <div class="text-2xl font-black text-slate-900 font-mono mt-1">5</div>
+            </div>
+            <div class="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-sm">
+              <span class="text-xs text-slate-500 font-bold block">Current Size</span>
+              <div id="l2-status-size" class="text-2xl font-black text-slate-900 font-mono mt-1">0 / 5</div>
+            </div>
+            <div id="card-is-empty" class="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-sm">
+              <span class="text-xs text-slate-500 font-bold block">isEmpty State</span>
+              <div id="l2-status-empty" class="text-xs font-mono font-bold text-rose-600 mt-2">TRUE</div>
+            </div>
+            <div id="card-is-full" class="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-sm">
+              <span class="text-xs text-slate-500 font-bold block">isFull State</span>
+              <div id="l2-status-full" class="text-xs font-mono font-bold text-slate-400 mt-2">FALSE</div>
+            </div>
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs text-slate-300">
-            <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 space-y-1">
-              <span class="font-bold text-cyan-400">1. Both-End Operations</span>
-              <p class="text-[11px] text-slate-400">Unlike standard FIFO queues, Deques allow inserting (<code class="text-cyan-300 font-mono">addFirst/addLast</code>) and deleting (<code class="text-magenta-300 font-mono">removeFirst/removeLast</code>) from BOTH ends in <strong>O(1) time</strong>.</p>
+          <!-- Main Interactive Theme Park Container -->
+          <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 space-y-6">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6 py-2 border-b border-slate-100">
+
+              <!-- Ticket Booth -->
+              <div onclick="l2Dequeue()" class="w-full md:w-48 h-36 bg-slate-900 text-white rounded-2xl p-4 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-slate-800 transition group shadow-md">
+                <span class="text-3xl my-1 group-hover:scale-110 transition-transform">🎟️</span>
+                <span class="text-xs font-bold text-white">Cashier Booth</span>
+                <span id="l2-serving-badge" class="text-[9px] text-[#c8f53e] font-mono mt-1">👉 CLICK TO SERVE</span>
+              </div>
+
+              <!-- Slots Grid -->
+              <div class="flex-1 w-full">
+                <div class="text-xs font-bold text-slate-500 mb-2 flex justify-between">
+                  <span>QUEUE SLOTS (Max 5)</span>
+                  <span id="l2-progress-text" class="text-slate-900 font-mono">0 / 5 Served</span>
+                </div>
+                <div id="l2-queue-slots" class="grid grid-cols-5 gap-3 p-4 bg-slate-100 rounded-2xl border border-slate-200">
+                  <!-- Slots inserted dynamically -->
+                </div>
+              </div>
             </div>
 
-            <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-1">
-              <span class="font-bold text-magenta-400">2. Queue + Stack Hybrid</span>
-              <p class="text-[11px] text-slate-400">A Deque can function as a <strong>FIFO Queue</strong> (insert Rear, remove Front) or a <strong>LIFO Stack</strong> (insert Front, remove Front) depending on which methods you invoke!</p>
+            <!-- Action Controls -->
+            <div class="flex flex-wrap items-center justify-between gap-4">
+              <div class="flex items-center space-x-2">
+                <input id="visitor-name-input" type="text" placeholder="Visitor Name" class="bg-slate-100 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-900 focus:outline-none focus:border-slate-400 font-medium">
+                <button type="button" onclick="l2Enqueue()" class="btn-flux-lime px-4 py-2 rounded-xl text-xs">➕ Enqueue()</button>
+                <button type="button" onclick="l2Dequeue()" class="btn-flux-dark px-4 py-2 rounded-xl text-xs">🎟️ Dequeue()</button>
+                <button type="button" onclick="l2Peek()" class="btn-flux-light px-4 py-2 rounded-xl text-xs">🔍 Peek()</button>
+                <button type="button" onclick="l2BatchDequeue()" class="btn-flux-light px-4 py-2 rounded-xl text-xs">⚡ Batch All</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- LEVEL 3: TRAFFIC CONTROL -->
+        <section id="level-3" class="space-y-6 hidden">
+          <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 space-y-6">
+
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+              <h3 class="font-extrabold text-slate-900 text-lg">🚦 Queue Implementation Variants</h3>
+
+              <div class="flex items-center space-x-1 bg-slate-100 p-1 rounded-xl text-xs font-bold">
+                <button type="button" id="tab-variant-std" onclick="switchVariant('std')" class="px-3 py-1.5 rounded-lg bg-slate-900 text-white">Standard</button>
+                <button type="button" id="tab-variant-circ" onclick="switchVariant('circ')" class="px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900">Circular</button>
+                <button type="button" id="tab-variant-prio" onclick="switchVariant('prio')" class="px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900">Priority</button>
+              </div>
             </div>
 
-            <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-1">
-              <span class="font-bold text-amber-400">3. Real-World Power</span>
-              <p class="text-[11px] text-slate-400">Used for <strong>Undo/Redo</strong> buffers in code editors, browser history, and <strong>Sliding Window Maximum</strong> algorithms in algorithmic interviews.</p>
+            <!-- Standard Variant -->
+            <div id="variant-std" class="space-y-4">
+              <div id="l3-std-container" class="min-h-[120px] bg-slate-100 rounded-2xl p-4 flex items-center space-x-3 overflow-x-auto custom-scrollbar"></div>
+              <div class="flex items-center space-x-2">
+                <button type="button" onclick="l3StdEnqueue()" class="btn-flux-lime px-4 py-2 rounded-xl text-xs">➕ Enqueue Vehicle</button>
+                <button type="button" onclick="l3StdDequeue()" class="btn-flux-dark px-4 py-2 rounded-xl text-xs">🚦 Dequeue (Pass)</button>
+              </div>
+            </div>
+
+            <!-- Circular Variant -->
+            <div id="variant-circ" class="space-y-4 hidden">
+              <div class="flex justify-between text-xs font-mono font-bold bg-slate-100 p-3 rounded-xl">
+                <span>Front: <strong id="circ-front-idx" class="text-sky-600">0</strong></span>
+                <span>Rear: <strong id="circ-rear-idx" class="text-rose-600">0</strong></span>
+                <span>Size: <strong id="circ-size-count" class="text-emerald-600">0 / 6</strong></span>
+              </div>
+              <div class="flex justify-center py-4">
+                <div class="ring-container">
+                  <div class="w-32 h-32 rounded-full bg-slate-900 text-white flex flex-col items-center justify-center text-center p-2 shadow-md z-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                    <span class="text-[9px] text-zinc-400 font-mono">Modulo Ring</span>
+                    <span class="text-xs font-bold text-[#c8f53e] mt-1">(rear + 1) % 6</span>
+                  </div>
+                  <div id="circular-ring-slots"></div>
+                </div>
+              </div>
+              <div class="flex items-center space-x-2 justify-center">
+                <button type="button" onclick="l3CircEnqueue()" class="btn-flux-lime px-4 py-2 rounded-xl text-xs">➕ Enqueue</button>
+                <button type="button" onclick="l3CircDequeue()" class="btn-flux-dark px-4 py-2 rounded-xl text-xs">🚗 Dequeue</button>
+                <button type="button" onclick="resetCircQueue()" class="btn-flux-light px-4 py-2 rounded-xl text-xs">Reset Ring</button>
+              </div>
+            </div>
+
+            <!-- Priority Variant -->
+            <div id="variant-prio" class="space-y-4 hidden">
+              <div class="flex items-center space-x-2 bg-slate-100 p-3 rounded-xl text-xs">
+                <button type="button" id="prio-select-high" onclick="selectPrioType('high')" class="px-3 py-1.5 rounded-lg bg-rose-500 text-white font-bold">High (Ambulance P1)</button>
+                <button type="button" id="prio-select-med" onclick="selectPrioType('med')" class="px-3 py-1.5 rounded-lg btn-flux-light">Med (Bus P2)</button>
+                <button type="button" id="prio-select-low" onclick="selectPrioType('low')" class="px-3 py-1.5 rounded-lg btn-flux-light">Low (Car P3)</button>
+              </div>
+              <div id="l3-prio-container" class="min-h-[140px] bg-slate-100 rounded-2xl p-4 flex items-center space-x-3 overflow-x-auto custom-scrollbar"></div>
+              <div class="flex items-center space-x-2">
+                <button type="button" onclick="l3PrioEnqueue()" class="btn-flux-lime px-4 py-2 rounded-xl text-xs">➕ Enqueue Priority</button>
+                <button type="button" onclick="l3PrioDequeue()" class="btn-flux-dark px-4 py-2 rounded-xl text-xs">🚨 Dequeue FRONT</button>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+
+        <!-- LEVEL 4: TRAIN DEQUE -->
+        <section id="level-4" class="space-y-6 hidden">
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-sm">
+              <span class="text-xs text-slate-500 font-bold block">Capacity</span>
+              <div class="text-2xl font-black text-slate-900 font-mono mt-1">6</div>
+            </div>
+            <div class="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-sm">
+              <span class="text-xs text-slate-500 font-bold block">Active Size</span>
+              <div id="l4-status-size" class="text-2xl font-black text-slate-900 font-mono mt-1">0 / 6</div>
+            </div>
+            <div class="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-sm">
+              <span class="text-xs text-slate-500 font-bold block">Front Carriage</span>
+              <div id="l4-status-front" class="text-xs font-mono font-bold text-sky-600 mt-2 truncate">none</div>
+            </div>
+            <div class="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-sm">
+              <span class="text-xs text-slate-500 font-bold block">Rear Carriage</span>
+              <div id="l4-status-rear" class="text-xs font-mono font-bold text-rose-600 mt-2 truncate">none</div>
             </div>
           </div>
-        </div>
 
-      </div>
+          <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 space-y-6">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+              <h3 class="font-extrabold text-slate-900 text-lg">🚂 Train Deque Switching Yard</h3>
+              <span id="l4-progress-text" class="text-xs font-mono font-bold text-purple-600">0 / 5</span>
+            </div>
 
-    </section>
+            <!-- Track Visualizer -->
+            <div id="l4-track-container" class="min-h-[140px] bg-slate-100 rounded-2xl p-4 flex items-center justify-center space-x-3 overflow-x-auto custom-scrollbar"></div>
 
+            <!-- Deque Dual Control Panels -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-2">
+                <span class="text-xs font-bold text-sky-600 uppercase font-mono block">Front Gate (Left)</span>
+                <div class="flex space-x-2">
+                  <button type="button" onclick="l4AddFirst()" class="btn-flux-lime px-3 py-2 rounded-xl text-xs">➕ addFirst()</button>
+                  <button type="button" onclick="l4RemoveFirst()" class="btn-flux-dark px-3 py-2 rounded-xl text-xs">❌ removeFirst()</button>
+                  <button type="button" onclick="l4PeekFirst()" class="btn-flux-light px-3 py-2 rounded-xl text-xs">🔍 peekFirst()</button>
+                </div>
+              </div>
 
-    <!-- ========================================== -->
-    <!-- LEVEL 5: MINI GAME QUEUE TRIVIA ARCADE     -->
-    <!-- ========================================== -->
-    <section id="level-5" class="space-y-6 hidden">
-      
-      <!-- Mini Game Banner -->
-      <div class="bg-slate-900/80 border border-amber-500/40 rounded-2xl p-5 backdrop-blur shadow-2xl flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <div class="flex items-center space-x-3 mb-1">
-            <span class="px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-amber-500/20 text-amber-400 border border-amber-500/40">FINAL BOSS MINI GAME</span>
-            <h2 class="text-xl font-bold text-white">Queue Master Trivia Arcade</h2>
+              <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-2">
+                <span class="text-xs font-bold text-rose-600 uppercase font-mono block">Rear Gate (Right)</span>
+                <div class="flex space-x-2">
+                  <button type="button" onclick="l4AddLast()" class="btn-flux-lime px-3 py-2 rounded-xl text-xs">➕ addLast()</button>
+                  <button type="button" onclick="l4RemoveLast()" class="btn-flux-dark px-3 py-2 rounded-xl text-xs">❌ removeLast()</button>
+                  <button type="button" onclick="l4PeekLast()" class="btn-flux-light px-3 py-2 rounded-xl text-xs">🔍 peekLast()</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Deque Terminal Log -->
+            <div class="bg-[#18181b] text-white rounded-2xl p-4 border border-zinc-800">
+              <div class="flex justify-between text-xs border-b border-zinc-800 pb-2">
+                <span class="font-bold text-zinc-300">Deque Log</span>
+                <button type="button" onclick="clearL4TerminalLog()" class="text-[10px] text-zinc-500">Clear</button>
+              </div>
+              <div id="l4-terminal-log" class="font-mono text-xs p-2 h-28 overflow-y-auto custom-scrollbar text-[#c8f53e] mt-2"></div>
+            </div>
           </div>
-          <p class="text-sm text-slate-300">
-            Put your queue knowledge to the test! Answer 5 questions correctly to earn your <strong class="text-amber-400">Certified Queue Master Badge</strong>!
-          </p>
-        </div>
+        </section>
 
-        <!-- Arcade Telemetry Dashboard -->
-        <div class="flex items-center space-x-4 bg-slate-950 px-4 py-2.5 rounded-xl border border-slate-800 font-mono text-xs">
-          <div>Lives: <span id="quiz-lives" class="text-rose-400 font-bold">❤️❤️❤️</span></div>
-          <div>Score: <span id="quiz-score" class="text-emerald-400 font-bold">0 PTS</span></div>
-          <div>Streak: <span id="quiz-streak" class="text-amber-400 font-bold">🔥 x0</span></div>
-        </div>
-      </div>
 
-      <!-- Main Arcade Question Card Container -->
-      <div id="quiz-card-container" class="bg-slate-950 border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-6 max-w-3xl mx-auto relative overflow-hidden">
-        
-        <!-- Progress Bar Header -->
-        <div class="flex justify-between items-center text-xs font-mono text-slate-400 border-b border-slate-900 pb-3">
-          <span id="quiz-progress-text" class="text-amber-400 font-bold">QUESTION 1 / 5</span>
-          <span class="text-slate-500">Topic: Data Structure Mastery</span>
-        </div>
+        <!-- LEVEL 5: MINI GAME QUIZ TRIVIA ARCADE -->
+        <section id="level-5" class="space-y-6 hidden">
+          <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 space-y-6 max-w-3xl mx-auto">
 
-        <!-- Question Prompt Text -->
-        <div class="bg-slate-900 p-5 rounded-2xl border border-slate-800 space-y-2">
-          <h3 id="quiz-question-title" class="text-base font-bold text-white leading-snug">
-            Question loading...
-          </h3>
-        </div>
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+              <h3 class="font-extrabold text-slate-900 text-lg">🎮 Queue Trivia Arcade</h3>
+              <div class="flex space-x-3 text-xs font-mono font-bold">
+                <div>Lives: <span id="quiz-lives" class="text-rose-600">❤️❤️❤️</span></div>
+                <div>Score: <span id="quiz-score" class="text-emerald-600">0 PTS</span></div>
+                <div>Streak: <span id="quiz-streak" class="text-amber-500">🔥 x0</span></div>
+              </div>
+            </div>
 
-        <!-- Multiple Choice Options -->
-        <div id="quiz-options-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <!-- 4 Choice Buttons rendered by JS -->
-        </div>
+            <div id="quiz-card-container" class="space-y-6">
+              <div class="text-xs font-bold text-slate-400" id="quiz-progress-text">QUESTION 1 / 5</div>
+              <div id="quiz-question-title" class="text-lg font-bold text-slate-900 leading-relaxed">Loading...</div>
+              <div id="quiz-options-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
 
-        <!-- Explanation Card (Appears after answering) -->
-        <div id="quiz-explanation-box" class="bg-slate-900/90 border border-slate-800 p-4 rounded-xl text-xs space-y-2 hidden">
-          <div class="font-bold text-cyan-400 flex items-center space-x-1">
-            <span>💡 Explanation:</span>
+              <div id="quiz-explanation-box" class="bg-slate-100 p-4 rounded-2xl text-xs text-slate-700 hidden">
+                <span class="font-bold block text-slate-900 mb-1">Explanation:</span>
+                <p id="quiz-explanation-text"></p>
+              </div>
+
+              <button type="button" id="quiz-next-btn" onclick="nextQuizQuestion()" class="w-full py-3 btn-flux-lime rounded-2xl text-xs font-bold hidden">Next Question ➔</button>
+            </div>
+
+            <div id="quiz-results-container" class="text-center space-y-6 hidden bg-gradient-to-b from-white to-slate-50 p-8 rounded-3xl border-2 border-[#c8f53e] shadow-2xl relative overflow-hidden">
+
+              <!-- Glowing Celebration Badge -->
+              <div class="relative inline-block my-2">
+                <div class="w-24 h-24 rounded-full bg-[#c8f53e] text-slate-950 flex items-center justify-center text-5xl mx-auto shadow-xl bounce-pulse border-4 border-slate-900">
+                  🏆
+                </div>
+                <span class="absolute -bottom-2 left-1/2 -translate-x-1/2 px-3 py-1 bg-slate-900 text-[#c8f53e] text-[10px] font-black uppercase tracking-wider rounded-full shadow-md">VICTORY</span>
+              </div>
+
+              <div>
+                <h3 class="text-3xl font-black text-slate-900 tracking-tight">CERTIFIED QUEUE MASTER!</h3>
+                <p class="text-xs text-slate-600 font-medium mt-1">Outstanding job! You completed all 5 levels of the Queue Academy!</p>
+              </div>
+
+              <!-- Total Score Highlight Banner -->
+              <div class="bg-slate-900 text-white rounded-2xl p-5 shadow-lg border border-slate-800 max-w-md mx-auto space-y-2">
+                <span class="text-xs font-bold text-zinc-400 uppercase tracking-wider block">Total Points Scored</span>
+                <div class="flex items-baseline justify-center space-x-2">
+                  <span id="final-score-text" class="text-5xl font-extrabold text-[#c8f53e] tracking-tight font-mono">500 PTS</span>
+                </div>
+                <div class="pt-2 border-t border-zinc-800 flex items-center justify-between text-xs text-zinc-400">
+                  <span>Accuracy: <strong id="final-acc-text" class="text-white font-bold">100%</strong></span>
+                  <span>Rank: <strong id="final-rank-title" class="text-[#c8f53e] font-bold">Grandmaster 🏆</strong></span>
+                </div>
+              </div>
+
+              <!-- Detailed Points Breakdown Grid -->
+              <div class="grid grid-cols-3 gap-3 max-w-md mx-auto text-xs">
+                <div class="bg-slate-100 p-3 rounded-2xl border border-slate-200">
+                  <span class="text-slate-500 font-bold block text-[10px]">Base Score</span>
+                  <span id="final-base-pts" class="font-extrabold text-slate-900 text-sm font-mono mt-1 block">500 PTS</span>
+                </div>
+                <div class="bg-slate-100 p-3 rounded-2xl border border-slate-200">
+                  <span class="text-slate-500 font-bold block text-[10px]">Streak Bonus</span>
+                  <span id="final-bonus-pts" class="font-extrabold text-amber-600 text-sm font-mono mt-1 block">+0 PTS</span>
+                </div>
+                <div class="bg-slate-100 p-3 rounded-2xl border border-slate-200">
+                  <span class="text-slate-500 font-bold block text-[10px]">Lives Saved</span>
+                  <span id="final-lives-left" class="font-extrabold text-rose-600 text-sm font-mono mt-1 block">❤️ x3</span>
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="flex justify-center space-x-3 pt-2">
+                <button type="button" onclick="restartQuiz()" class="btn-flux-light px-5 py-2.5 rounded-xl text-xs font-bold shadow-sm">
+                  🔄 Replay Arcade Quiz
+                </button>
+                <button type="button" onclick="switchLevel(1)" class="btn-flux-lime px-6 py-2.5 rounded-xl text-xs font-bold shadow-md">
+                  🏭 Return to Level 1
+                </button>
+              </div>
+
+            </div>
           </div>
-          <p id="quiz-explanation-text" class="text-slate-300 leading-relaxed"></p>
-        </div>
-
-        <!-- Next / Action Button -->
-        <button id="quiz-next-btn" onclick="nextQuizQuestion()" class="w-full py-3.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-sm shadow-lg shadow-amber-500/20 transition hidden">
-          Next Question ➔
-        </button>
+        </section>
 
       </div>
 
-      <!-- Final Victory Certificate Overlay (Hidden initially) -->
-      <div id="quiz-results-container" class="bg-slate-950 border-2 border-amber-500/80 rounded-2xl p-8 shadow-2xl max-w-2xl mx-auto text-center space-y-6 hidden">
-        <div class="w-20 h-20 bg-amber-500/20 border-2 border-amber-500 rounded-3xl flex items-center justify-center mx-auto text-4xl shadow-xl">
-          🏅
-        </div>
+      <!-- FOOTER -->
+      <footer class="mt-8 pt-4 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-2">
+        <p>&copy; 2026 Flux Queue Master Academy &bull; Nixtio Health Dashboard Redesign</p>
+        <p class="font-mono text-[10px]">Built with HTML5, Tailwind CSS, Web Audio API &amp; Vanilla JS</p>
+      </footer>
 
-        <div>
-          <h3 class="text-3xl font-extrabold text-white bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 bg-clip-text text-transparent">
-            CERTIFIED QUEUE MASTER!
-          </h3>
-          <p class="text-sm text-slate-300 mt-2">
-            Congratulations! You completed all 4 levels and conquered the Queue Trivia Arcade!
-          </p>
-        </div>
+    </main>
 
-        <!-- Final Report Score Box -->
-        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 max-w-sm mx-auto font-mono text-xs space-y-2">
-          <div class="flex justify-between"><span>Final Score:</span> <strong id="final-score-text" class="text-emerald-400">500 PTS</strong></div>
-          <div class="flex justify-between"><span>Accuracy:</span> <strong id="final-acc-text" class="text-cyan-400">100%</strong></div>
-          <div class="flex justify-between"><span>Rank Badge:</span> <strong class="text-amber-400">Queue Grandmaster 🏆</strong></div>
-        </div>
-
-        <div class="flex space-x-3 justify-center">
-          <button onclick="restartQuiz()" class="px-6 py-3 rounded-xl bg-slate-900 border border-slate-700 hover:border-amber-400 text-amber-400 font-bold text-xs transition">
-            🔄 Replay Arcade Quiz
-          </button>
-          <button onclick="switchLevel(1)" class="px-6 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition">
-            🏭 Return to Level 1
-          </button>
-        </div>
-      </div>
-
-    </section>
-
-  </main>
-
-
-  <!-- MODAL: FIFO VIOLATION ERROR MODAL -->
-  <div id="fifo-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-slate-900 border-2 border-rose-500/80 rounded-2xl max-w-md w-full p-6 shadow-2xl shadow-rose-500/20 shake-error space-y-4">
-      <div class="flex items-center space-x-3 text-rose-400">
-        <div class="p-2 bg-rose-500/20 rounded-xl border border-rose-500/40">
-          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-        </div>
-        <div>
-          <h3 class="text-lg font-bold text-white">FIFO VIOLATION DETECTED!</h3>
-          <span class="text-xs font-mono text-rose-400 font-bold">Queue Rule Violation</span>
-        </div>
-      </div>
-
-      <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-sm text-slate-300 space-y-2">
-        <p id="fifo-modal-message">
-          In a Queue, the <strong class="text-cyan-400">First</strong> element to enter must be the <strong class="text-cyan-400">First</strong> to leave.
-        </p>
-        <p class="text-xs text-slate-400 border-t border-slate-900 pt-2">
-          You clicked a package in the middle or back of the line. You can only dequeue the element at the <strong>FRONT</strong> pointer!
-        </p>
-      </div>
-
-      <button onclick="closeFifoModal()" class="w-full py-3 rounded-xl bg-rose-500 hover:bg-rose-400 text-slate-950 font-extrabold text-sm transition">
-        I Understand - Try Again
-      </button>
-    </div>
   </div>
 
 
-  <!-- MODAL: LEVEL COMPLETE VICTORY MODAL -->
-  <div id="victory-modal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-slate-900 border-2 border-emerald-500/80 rounded-2xl max-w-md w-full p-6 shadow-2xl shadow-emerald-500/20 text-center space-y-5">
-      <div class="w-16 h-16 bg-emerald-500/20 border border-emerald-500/50 rounded-2xl flex items-center justify-center mx-auto text-3xl">
-        🎉
-      </div>
-      <div>
-        <h3 id="victory-title" class="text-2xl font-extrabold text-white">LEVEL COMPLETE!</h3>
-        <p id="victory-subtitle" class="text-sm text-slate-300 mt-1">You mastered the FIFO Queue principle!</p>
-      </div>
+  <!-- MODALS SECTION -->
 
-      <button id="victory-action-btn" onclick="closeVictoryModal()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-400 to-teal-500 hover:from-emerald-300 hover:to-teal-400 text-slate-950 font-extrabold text-sm shadow-lg shadow-emerald-500/20 transition">
-        Proceed to Next Level ➔
-      </button>
+  <!-- FIFO MODAL -->
+  <div id="fifo-modal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white max-w-md w-full p-6 rounded-3xl border-2 border-rose-400 shake-error space-y-4 shadow-2xl">
+      <div class="flex items-center space-x-3 text-rose-600">
+        <span class="text-3xl">⚠️</span>
+        <h3 class="text-lg font-black text-slate-900">FIFO VIOLATION DETECTED!</h3>
+      </div>
+      <p id="fifo-modal-message" class="text-xs text-slate-700 leading-relaxed"></p>
+      <button type="button" onclick="closeFifoModal()" class="w-full py-3 rounded-2xl btn-flux-dark text-xs">I Understand - Try Again</button>
     </div>
   </div>
 
+  <!-- VICTORY MODAL -->
+  <div id="victory-modal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white max-w-md w-full p-6 rounded-3xl border-2 border-[#c8f53e] text-center space-y-4 shadow-2xl">
+      <div class="text-4xl">🎉</div>
+      <h3 id="victory-title" class="text-2xl font-black text-slate-900">LEVEL COMPLETE!</h3>
+      <p id="victory-subtitle" class="text-xs text-slate-600 font-medium"></p>
+      <button type="button" id="victory-action-btn" onclick="closeVictoryModal()" class="w-full py-3 rounded-2xl btn-flux-lime text-xs">Proceed to Next Level ➔</button>
+    </div>
+  </div>
 
-  <!-- MODAL: QUEUE CHEATSHEET DRAWER -->
-  <div id="cheatsheet-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-2xl w-full p-6 shadow-2xl space-y-5 max-h-[85vh] overflow-y-auto custom-scrollbar">
-      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+  <!-- CHEATSHEET MODAL -->
+  <div id="cheatsheet-modal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white max-w-2xl w-full p-6 rounded-3xl space-y-5 max-h-[85vh] overflow-y-auto custom-scrollbar">
+      <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+        <h3 class="text-lg font-bold text-slate-900">📖 Queue Data Structure Cheatsheet</h3>
+        <button type="button" onclick="toggleCheatsheet()" class="text-slate-400 hover:text-slate-900 text-xs">✕ Close</button>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+        <div class="bg-slate-100 p-3 rounded-2xl">
+          <span class="font-bold text-sky-600">Enqueue(x)</span>
+          <p class="text-slate-600 mt-1">Adds item x to REAR pointer.</p>
+          <span class="font-mono text-emerald-600 font-bold block mt-2">Time: O(1)</span>
+        </div>
+        <div class="bg-slate-100 p-3 rounded-2xl">
+          <span class="font-bold text-rose-600">Dequeue()</span>
+          <p class="text-slate-600 mt-1">Removes item from FRONT pointer.</p>
+          <span class="font-mono text-emerald-600 font-bold block mt-2">Time: O(1)</span>
+        </div>
+        <div class="bg-slate-100 p-3 rounded-2xl">
+          <span class="font-bold text-amber-600">Peek()</span>
+          <p class="text-slate-600 mt-1">Inspects front item without removing.</p>
+          <span class="font-mono text-emerald-600 font-bold block mt-2">Time: O(1)</span>
+        </div>
+      </div>
+      <button type="button" onclick="toggleCheatsheet()" class="w-full py-2.5 btn-flux-light rounded-2xl text-xs">Back to Dashboard</button>
+    </div>
+  </div>
+
+  <!-- CONCEPT EXPLAINER MODAL -->
+  <div id="concept-modal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white max-w-3xl w-full p-6 rounded-3xl space-y-5 max-h-[88vh] overflow-y-auto custom-scrollbar shadow-2xl">
+
+      <!-- Header -->
+      <div class="flex justify-between items-center border-b border-slate-100 pb-3">
         <div class="flex items-center space-x-2">
-          <span class="text-xl">📖</span>
-          <h3 class="text-lg font-bold text-white">Queue Data Structure Cheatsheet</h3>
-        </div>
-        <button onclick="toggleCheatsheet()" class="text-slate-400 hover:text-white text-sm font-bold">✕ Close</button>
-      </div>
-
-      <!-- Core Concepts Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
-          <span class="text-xs font-bold text-cyan-400">Enqueue(x)</span>
-          <p class="text-[11px] text-slate-400 mt-1">Adds item x to the <strong>REAR</strong> pointer.</p>
-          <span class="text-[10px] font-mono text-emerald-400 mt-2 block">Time: O(1)</span>
-        </div>
-
-        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
-          <span class="text-xs font-bold text-magenta-400">Dequeue()</span>
-          <p class="text-[11px] text-slate-400 mt-1">Removes item from the <strong>FRONT</strong> pointer.</p>
-          <span class="text-[10px] font-mono text-emerald-400 mt-2 block">Time: O(1)</span>
-        </div>
-
-        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
-          <span class="text-xs font-bold text-amber-400">Peek() / Front()</span>
-          <p class="text-[11px] text-slate-400 mt-1">Returns front item without removing it.</p>
-          <span class="text-[10px] font-mono text-emerald-400 mt-2 block">Time: O(1)</span>
-        </div>
-      </div>
-
-      <!-- Real World Applications -->
-      <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
-        <h4 class="text-xs font-bold text-slate-200 uppercase tracking-wider">Real-World Queue Applications</h4>
-        <ul class="text-xs text-slate-300 space-y-1.5 list-disc list-inside">
-          <li><strong>Printer Spooling:</strong> Documents print in exact order submitted.</li>
-          <li><strong>CPU Task Scheduling:</strong> Process requests managed in FIFO queues.</li>
-          <li><strong>Breadth-First Search (BFS):</strong> Graph traversal algorithm relying on queues.</li>
-          <li><strong>Web Server Requests:</strong> Incoming HTTP traffic handled sequentially.</li>
-        </ul>
-      </div>
-
-      <button onclick="toggleCheatsheet()" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs">
-        Back to Game
-      </button>
-    </div>
-  </div>
-
-
-  <!-- MODAL: INTERACTIVE CONCEPT EXPLANATION GUIDE -->
-  <div id="concept-modal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-3xl w-full p-6 shadow-2xl space-y-5 max-h-[85vh] overflow-y-auto custom-scrollbar">
-      
-      <!-- Modal Header -->
-      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
-        <div class="flex items-center space-x-3">
-          <div class="p-2 bg-emerald-500/20 rounded-xl border border-emerald-500/40 text-emerald-400 text-xl">
-            🎓
-          </div>
+          <div class="w-8 h-8 rounded-xl bg-[#c8f53e] text-slate-950 flex items-center justify-center font-bold text-base">🎓</div>
           <div>
-            <h3 class="text-lg font-bold text-white">Interactive Queue Concept Explainer</h3>
-            <p class="text-xs text-slate-400">Master the theory, algorithms, and real-world implementations</p>
+            <h3 class="text-lg font-bold text-slate-900">Interactive Queue Concept Guide</h3>
+            <p class="text-xs text-slate-500 font-medium">Master concepts across all 5 levels in the Queue Academy</p>
           </div>
         </div>
-        <button onclick="closeConceptModal()" class="text-slate-400 hover:text-white text-sm font-bold p-1">✕ Close</button>
+        <button type="button" onclick="closeConceptModal()" class="text-slate-400 hover:text-slate-900 text-xs font-bold p-1">✕ Close</button>
       </div>
 
-      <!-- Concept Tabs -->
-      <div class="flex items-center bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs font-semibold overflow-x-auto custom-scrollbar">
-        <button id="concept-tab-1" onclick="switchConceptTab(1)" class="flex-1 py-2 rounded-lg bg-cyan-500 text-slate-950 font-bold whitespace-nowrap">🏭 L1: FIFO</button>
-        <button id="concept-tab-2" onclick="switchConceptTab(2)" class="flex-1 py-2 rounded-lg text-slate-400 hover:text-white whitespace-nowrap">🎟️ L2: Operations</button>
-        <button id="concept-tab-3" onclick="switchConceptTab(3)" class="flex-1 py-2 rounded-lg text-slate-400 hover:text-white whitespace-nowrap">🚦 L3: Variants</button>
-        <button id="concept-tab-4" onclick="switchConceptTab(4)" class="flex-1 py-2 rounded-lg text-slate-400 hover:text-white whitespace-nowrap">🚂 L4: Deque</button>
+      <!-- 5 Level Tabs Selector -->
+      <div class="flex items-center space-x-1 bg-slate-100 p-1.5 rounded-2xl text-xs font-bold overflow-x-auto custom-scrollbar">
+        <button type="button" id="concept-tab-1" onclick="switchConceptTab(1)" class="flex-1 py-2 px-3 rounded-xl bg-slate-900 text-white font-bold whitespace-nowrap shadow-sm">L1: FIFO Factory</button>
+        <button type="button" id="concept-tab-2" onclick="switchConceptTab(2)" class="flex-1 py-2 px-3 rounded-xl text-slate-600 hover:text-slate-900 whitespace-nowrap">L2: Operations</button>
+        <button type="button" id="concept-tab-3" onclick="switchConceptTab(3)" class="flex-1 py-2 px-3 rounded-xl text-slate-600 hover:text-slate-900 whitespace-nowrap">L3: Queue Variants</button>
+        <button type="button" id="concept-tab-4" onclick="switchConceptTab(4)" class="flex-1 py-2 px-3 rounded-xl text-slate-600 hover:text-slate-900 whitespace-nowrap">L4: Train Deque</button>
+        <button type="button" id="concept-tab-5" onclick="switchConceptTab(5)" class="flex-1 py-2 px-3 rounded-xl text-slate-600 hover:text-slate-900 whitespace-nowrap">L5: Arcade Quiz</button>
       </div>
 
-      <!-- TAB 1 CONTENT: FIFO FACTORY -->
-      <div id="concept-content-1" class="space-y-4">
-        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
-          <h4 class="text-sm font-bold text-cyan-400 flex items-center space-x-2">
-            <span>📦 What is the First-In, First-Out (FIFO) Rule?</span>
+      <!-- TAB 1 CONTENT: L1 FIFO FACTORY -->
+      <div id="concept-content-1" class="space-y-4 text-xs">
+        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-2">
+          <h4 class="font-bold text-slate-900 text-sm flex items-center space-x-2">
+            <span>📦 Level 1: What is the First-In, First-Out (FIFO) Rule?</span>
           </h4>
-          <p class="text-xs text-slate-300 leading-relaxed">
-            A <strong>Queue</strong> is a linear data structure operating under the <strong>FIFO (First-In, First-Out)</strong> principle. The first item inserted into the queue is guaranteed to be the first item removed. Think of a physical line of people waiting for a bus—the person who arrived first gets on the bus first!
-          </p>
-        </div>
-
-        <!-- Visual Flow Diagram -->
-        <div class="bg-slate-950/80 p-4 rounded-xl border border-slate-800 font-mono text-xs space-y-2 text-center">
-          <span class="text-[10px] text-slate-500 uppercase tracking-wider block font-bold">Queue Flow Diagram</span>
-          <div class="flex items-center justify-center space-x-2 text-slate-200 py-2">
-            <span class="text-cyan-400 font-bold">REAR (Enqueue ➡️)</span>
-            <span class="px-2 py-1 bg-slate-900 border border-slate-700 rounded">[Pkg #3]</span>
-            <span class="px-2 py-1 bg-slate-900 border border-slate-700 rounded">[Pkg #2]</span>
-            <span class="px-2 py-1 bg-cyan-500/20 border border-cyan-500 text-cyan-300 rounded font-bold glow-cyan">[Pkg #1]</span>
-            <span class="text-magenta-400 font-bold">➡️ FRONT (Dequeue)</span>
-          </div>
-          <span class="text-[11px] text-slate-400 block">Package #1 arrived first, so Package #1 MUST be shipped first!</span>
-        </div>
-
-        <!-- Code Snippet -->
-        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
-          <div class="flex justify-between items-center text-xs font-mono text-slate-400 border-b border-slate-900 pb-1">
-            <span class="text-emerald-400 font-bold">JavaScript Implementation</span>
-            <span>Standard Queue</span>
-          </div>
-          <pre class="font-mono text-[11px] text-cyan-300 overflow-x-auto p-2 bg-slate-900/90 rounded border border-slate-800">
-class FifoQueue {
-  constructor() {
-    this.elements = [];
-  }
-  // Enqueue: Add to back (O(1))
-  enqueue(item) {
-    this.elements.push(item);
-  }
-  // Dequeue: Remove from front (O(1) amortized or O(N) naive)
-  dequeue() {
-    return this.elements.shift();
-  }
-}</pre>
-        </div>
-      </div>
-
-      <!-- TAB 2 CONTENT: THEME PARK CASHIER -->
-      <div id="concept-content-2" class="space-y-4 hidden">
-        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
-          <h4 class="text-sm font-bold text-magenta-400 flex items-center space-x-2">
-            <span>🎟️ Queue Operations & Boundary Safety</span>
-          </h4>
-          <p class="text-xs text-slate-300 leading-relaxed">
-            In fixed-capacity queues (like arrays with limited memory), operations must handle boundary conditions to prevent crashes and memory corruption:
+          <p class="text-slate-600 leading-relaxed">
+            A <strong>Queue</strong> is a linear data structure that restricts data access according to the <strong>First-In, First-Out (FIFO)</strong> principle.
+            The element that enters the queue first is guaranteed to be the element removed first. Think of a conveyor belt at a shipping factory or a line of people buying movie tickets—the first package placed on the belt reaches the shipping truck first!
           </p>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div class="bg-slate-950 p-3 rounded-xl border border-rose-500/30">
-            <span class="text-xs font-bold text-rose-400 flex items-center space-x-1">
-              <span>⚠️ Overflow Exception</span>
-            </span>
-            <p class="text-[11px] text-slate-400 mt-1">
-              Occurs when calling <code class="text-cyan-400 font-mono">Enqueue()</code> on a queue that has reached maximum capacity (<code class="text-magenta-400 font-mono">size === capacity</code>).
-            </p>
+          <div class="bg-emerald-50 p-3 rounded-2xl border border-emerald-200 space-y-1">
+            <span class="font-bold text-emerald-900">REAR (Ingestion / Enqueue)</span>
+            <p class="text-slate-600 text-[11px]">New items are added to the back of the queue (REAR pointer). It takes <strong>O(1) constant time</strong>.</p>
           </div>
-
-          <div class="bg-slate-950 p-3 rounded-xl border border-amber-500/30">
-            <span class="text-xs font-bold text-amber-400 flex items-center space-x-1">
-              <span>⚠️ Underflow Exception</span>
-            </span>
-            <p class="text-[11px] text-slate-400 mt-1">
-              Occurs when calling <code class="text-magenta-400 font-mono">Dequeue()</code> on an empty queue (<code class="text-emerald-400 font-mono">size === 0</code>).
-            </p>
+          <div class="bg-rose-50 p-3 rounded-2xl border border-rose-200 space-y-1">
+            <span class="font-bold text-rose-900">FRONT (Exit Bay / Dequeue)</span>
+            <p class="text-slate-600 text-[11px]">Items are removed strictly from the front (FRONT pointer). Trying to remove items from the middle violates FIFO!</p>
           </div>
         </div>
 
-        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
-          <h4 class="text-xs font-bold text-amber-400">🔍 Peek() / Front() Operation</h4>
-          <p class="text-xs text-slate-300">
-            <code class="text-amber-400 font-mono">Peek()</code> returns the element at the <strong>FRONT</strong> pointer without removing it. It runs in <strong>O(1) constant time</strong> because no elements are shifted.
-          </p>
+        <div class="bg-slate-900 text-white p-4 rounded-2xl font-mono text-[11px] space-y-2">
+          <div class="text-[#c8f53e] font-bold">// JavaScript FIFO Implementation</div>
+          <pre class="text-zinc-300 overflow-x-auto">class Queue {
+  constructor() { this.items = []; }
+  enqueue(item) { this.items.push(item); } // Add at Rear
+  dequeue()      { return this.items.shift(); } // Remove at Front
+  peek()         { return this.items[0]; } // Inspect Front
+}</pre>
         </div>
       </div>
 
-      <!-- TAB 3 CONTENT: QUEUE VARIANTS -->
-      <div id="concept-content-3" class="space-y-4 hidden">
-        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
-          <h4 class="text-sm font-bold text-emerald-400">🚦 Common Queue Variants</h4>
-          <p class="text-xs text-slate-300">
-            Standard queues can be modified to optimize memory usage or handle priority scheduling:
+      <!-- TAB 2 CONTENT: L2 OPERATIONS & BOUNDARY CONDITIONS -->
+      <div id="concept-content-2" class="space-y-4 text-xs hidden">
+        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-2">
+          <h4 class="font-bold text-slate-900 text-sm">🎟️ Level 2: Queue Operations &amp; Boundary Safety</h4>
+          <p class="text-slate-600 leading-relaxed">
+            In fixed-capacity queues (like arrays with fixed memory limits), operations must check boundary states to prevent crashes, buffer overflows, and memory leak vulnerabilities.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div class="bg-slate-100 p-3 rounded-2xl border border-slate-200">
+            <span class="font-bold text-sky-700 block">➕ Enqueue(item)</span>
+            <p class="text-slate-600 mt-1">Inserts a new element at the REAR pointer. Fails if the queue is full.</p>
+            <span class="text-[10px] font-mono font-bold text-emerald-600 block mt-2">Complexity: O(1)</span>
+          </div>
+
+          <div class="bg-slate-100 p-3 rounded-2xl border border-slate-200">
+            <span class="font-bold text-rose-600 block">🎟️ Dequeue()</span>
+            <p class="text-slate-600 mt-1">Removes and returns the element at the FRONT pointer. Fails if empty.</p>
+            <span class="text-[10px] font-mono font-bold text-emerald-600 block mt-2">Complexity: O(1)</span>
+          </div>
+
+          <div class="bg-slate-100 p-3 rounded-2xl border border-slate-200">
+            <span class="font-bold text-amber-600 block">🔍 Peek()</span>
+            <p class="text-slate-600 mt-1">Inspects the FRONT element without mutating or removing it.</p>
+            <span class="text-[10px] font-mono font-bold text-emerald-600 block mt-2">Complexity: O(1)</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="bg-rose-50 p-3 rounded-2xl border border-rose-200">
+            <span class="font-bold text-rose-900 block mb-1">⚠️ Overflow Exception</span>
+            <p class="text-slate-600 text-[11px]">Occurs when calling <code class="font-mono font-bold text-slate-900">Enqueue()</code> on a queue that has reached max capacity (<code class="font-mono text-rose-700">size === capacity</code>).</p>
+          </div>
+          <div class="bg-amber-50 p-3 rounded-2xl border border-amber-200">
+            <span class="font-bold text-amber-900 block mb-1">⚠️ Underflow Exception</span>
+            <p class="text-slate-600 text-[11px]">Occurs when calling <code class="font-mono font-bold text-slate-900">Dequeue()</code> on an empty queue (<code class="font-mono text-amber-700">size === 0</code>).</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3 CONTENT: L3 QUEUE VARIANTS -->
+      <div id="concept-content-3" class="space-y-4 text-xs hidden">
+        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-2">
+          <h4 class="font-bold text-slate-900 text-sm">🚦 Level 3: Queue Implementation Variants</h4>
+          <p class="text-slate-600 leading-relaxed">
+            Standard queues can be adapted to overcome array memory fragmentation or handle urgent priority scheduling.
           </p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          
-          <!-- Circular Queue Explanation -->
-          <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
-            <h5 class="text-xs font-bold text-cyan-400">🔄 1. Circular Queue (Ring Buffer)</h5>
-            <p class="text-[11px] text-slate-300">
-              Solves the problem of wasted front slots after dequeuing. Uses <strong>modulo arithmetic</strong> to wrap rear back to index 0:
+          <!-- Circular Queue -->
+          <div class="bg-slate-100 p-4 rounded-2xl border border-slate-200 space-y-2">
+            <h5 class="font-bold text-sky-700">🔄 1. Circular Queue (Ring Buffer)</h5>
+            <p class="text-slate-600 text-[11px]">
+              In linear array queues, dequeuing leaves wasted empty slots at the front. A Circular Queue connects the last memory slot back to the first using modulo wrap-around arithmetic:
             </p>
-            <div class="p-2 bg-slate-900 rounded font-mono text-[11px] text-cyan-300 border border-slate-800">
+            <div class="bg-slate-900 text-[#c8f53e] font-mono text-[11px] p-2 rounded-xl">
               rear = (rear + 1) % Capacity;
             </div>
 
-            <!-- Modulo Interactive Demo -->
-            <div class="pt-2 border-t border-slate-900 space-y-2">
-              <span class="text-[10px] font-bold text-slate-400 uppercase font-mono">Interactive Modulo Calculator</span>
+            <!-- Modulo Calculator Demo -->
+            <div class="pt-2 border-t border-slate-200 space-y-1">
+              <span class="text-[10px] font-bold text-slate-500 uppercase">Interactive Modulo Calculator:</span>
               <div class="flex items-center space-x-2">
-                <input id="mod-rear-val" type="number" value="5" min="0" max="20" class="w-16 bg-slate-900 border border-slate-700 rounded px-2 py-1 text-xs font-mono text-cyan-300">
-                <span class="text-xs font-mono text-slate-400">+ 1) % 6 =</span>
-                <span id="mod-result" class="text-xs font-bold font-mono text-emerald-400 bg-slate-900 px-2 py-1 rounded border border-slate-800">0</span>
-                <button onclick="calcModuloDemo()" class="px-2.5 py-1 bg-cyan-500 text-slate-950 font-bold text-[10px] rounded hover:bg-cyan-400">Calc</button>
+                <input id="mod-rear-val" type="number" value="5" min="0" max="20" class="w-14 bg-white border border-slate-300 rounded px-2 py-1 text-xs font-mono font-bold">
+                <span class="font-mono text-slate-600">+ 1) % 6 =</span>
+                <span id="mod-result" class="font-bold font-mono text-emerald-700 bg-white px-2.5 py-1 rounded border border-slate-300">0</span>
+                <button type="button" onclick="calcModuloDemo()" class="btn-flux-lime px-2.5 py-1 rounded text-[10px]">Calc</button>
               </div>
             </div>
           </div>
 
-          <!-- Priority Queue Explanation -->
-          <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
-            <h5 class="text-xs font-bold text-rose-400">🚨 2. Priority Queue</h5>
-            <p class="text-[11px] text-slate-300">
-              Each element has a <strong>priority level</strong>. High-priority items jump ahead of lower-priority items, overriding standard arrival order.
+          <!-- Priority Queue -->
+          <div class="bg-slate-100 p-4 rounded-2xl border border-slate-200 space-y-2">
+            <h5 class="font-bold text-rose-600">🚨 2. Priority Queue</h5>
+            <p class="text-slate-600 text-[11px]">
+              Elements carry a <strong>priority level</strong>. High-priority items (e.g. Ambulances or OS interrupts) jump ahead of lower-priority items, overriding standard FIFO arrival order!
             </p>
-            <ul class="text-[11px] text-slate-400 space-y-1 list-disc list-inside">
-              <li><strong>Hospital Triage:</strong> ER ambulances served first.</li>
-              <li><strong>OS Process Scheduling:</strong> Interrupts take precedence.</li>
-              <li><strong>Data Structure:</strong> Implemented via Binary Heaps ($O(\log N)$).</li>
+            <ul class="text-slate-600 text-[11px] space-y-1 list-disc list-inside">
+              <li>Hospital ER Triage (Ambulances served before routine checkups)</li>
+              <li>CPU Task Interrupt Handling</li>
+              <li>Dijkstra's Shortest Path Algorithm (using Min-Heap)</li>
             </ul>
           </div>
-
-        </div>
-      <!-- TAB 4 CONTENT: DEQUE -->
-      <div id="concept-content-4" class="space-y-4 hidden">
-        <div class="bg-slate-950 p-4 rounded-xl border border-purple-500/30 space-y-2">
-          <h4 class="text-sm font-bold text-purple-400 flex items-center space-x-2">
-            <span>🚂 What is a Double-Ended Queue (Deque)?</span>
-          </h4>
-          <p class="text-xs text-slate-300 leading-relaxed">
-            A <strong>Deque</strong> (pronounced <em>"deck"</em>) is a generalized linear data structure that supports inserting and removing elements from <strong>BOTH</strong> the <strong>FRONT</strong> and <strong>REAR</strong> pointers in <strong>O(1) constant time</strong>.
-          </p>
-        </div>
-
-        <!-- Deque Flow Diagram -->
-        <div class="bg-slate-950/80 p-4 rounded-xl border border-slate-800 font-mono text-xs space-y-2 text-center">
-          <span class="text-[10px] text-slate-500 uppercase tracking-wider block font-bold">Double-Ended Flow Diagram</span>
-          <div class="flex items-center justify-center space-x-2 text-slate-200 py-2">
-            <span class="text-cyan-400 font-bold">⬅️ FRONT (addFirst / removeFirst) ➡️</span>
-            <span class="px-2.5 py-1 bg-slate-900 border border-cyan-500/50 rounded text-cyan-300 font-bold">[Train #1]</span>
-            <span class="px-2.5 py-1 bg-slate-900 border border-slate-700 rounded">[Train #2]</span>
-            <span class="px-2.5 py-1 bg-slate-900 border border-magenta-500/50 rounded text-magenta-300 font-bold">[Train #3]</span>
-            <span class="text-magenta-400 font-bold">⬅️ REAR (addLast / removeLast) ➡️</span>
-          </div>
-          <span class="text-[11px] text-slate-400 block">Carriages can enter or exit from the LEFT (FRONT) or RIGHT (REAR) gates!</span>
-        </div>
-
-        <!-- Four Core Deque Operations Grid -->
-        <div class="grid grid-cols-2 gap-3 font-mono text-xs">
-          <div class="bg-slate-950 p-3 rounded-xl border border-cyan-500/40">
-            <span class="text-cyan-400 font-bold">1. addFirst(item)</span>
-            <p class="text-[10px] text-slate-400 font-sans mt-1">Inserts element at the FRONT (Left) of the Deque. <strong class="text-emerald-400">Time: O(1)</strong></p>
-          </div>
-          <div class="bg-slate-950 p-3 rounded-xl border border-magenta-500/40">
-            <span class="text-magenta-400 font-bold">2. addLast(item)</span>
-            <p class="text-[10px] text-slate-400 font-sans mt-1">Inserts element at the REAR (Right) of the Deque. <strong class="text-emerald-400">Time: O(1)</strong></p>
-          </div>
-          <div class="bg-slate-950 p-3 rounded-xl border border-rose-500/40">
-            <span class="text-rose-400 font-bold">3. removeFirst()</span>
-            <p class="text-[10px] text-slate-400 font-sans mt-1">Removes and returns element from FRONT. <strong class="text-emerald-400">Time: O(1)</strong></p>
-          </div>
-          <div class="bg-slate-950 p-3 rounded-xl border border-amber-500/40">
-            <span class="text-amber-400 font-bold">4. removeLast()</span>
-            <p class="text-[10px] text-slate-400 font-sans mt-1">Removes and returns element from REAR. <strong class="text-emerald-400">Time: O(1)</strong></p>
-          </div>
-        </div>
-
-        <!-- Comparison Table: Queue vs Stack vs Deque -->
-        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
-          <h5 class="text-xs font-bold text-slate-200 uppercase tracking-wider">Comparison Matrix</h5>
-          <div class="overflow-x-auto">
-            <table class="w-full text-left font-mono text-[11px]">
-              <thead class="bg-slate-900 text-slate-400 border-b border-slate-800">
-                <tr>
-                  <th class="p-2">Data Structure</th>
-                  <th class="p-2">Insertion Point</th>
-                  <th class="p-2">Removal Point</th>
-                  <th class="p-2">Access Rule</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-slate-900 text-slate-300">
-                <tr>
-                  <td class="p-2 font-bold text-cyan-400">Standard Queue</td>
-                  <td class="p-2">REAR only</td>
-                  <td class="p-2">FRONT only</td>
-                  <td class="p-2 text-emerald-400 font-bold">FIFO (First In, First Out)</td>
-                </tr>
-                <tr>
-                  <td class="p-2 font-bold text-rose-400">Stack</td>
-                  <td class="p-2">TOP only</td>
-                  <td class="p-2">TOP only</td>
-                  <td class="p-2 text-amber-400 font-bold">LIFO (Last In, First Out)</td>
-                </tr>
-                <tr>
-                  <td class="p-2 font-bold text-purple-400">Deque</td>
-                  <td class="p-2 text-cyan-300">FRONT or REAR</td>
-                  <td class="p-2 text-magenta-300">FRONT or REAR</td>
-                  <td class="p-2 text-purple-300 font-bold">Flexible (Both FIFO & LIFO)</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- Code Snippet -->
-        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
-          <div class="flex justify-between items-center text-xs font-mono text-slate-400 border-b border-slate-900 pb-1">
-            <span class="text-purple-400 font-bold">JavaScript & Python Implementations</span>
-            <span>Constant Time O(1) Both Ends</span>
-          </div>
-          <pre class="font-mono text-[11px] text-purple-300 overflow-x-auto p-2 bg-slate-900/90 rounded border border-slate-800">
-// JavaScript (Doubly-Linked List or Array)
-class Deque {
-  constructor() { this.items = []; }
-  addFirst(x) { this.items.unshift(x); }
-  addLast(x)  { this.items.push(x); }
-  removeFirst() { return this.items.shift(); }
-  removeLast()  { return this.items.pop(); }
-}
-
-# Python (collections.deque - Doubly Linked List)
-from collections import deque
-d = deque()
-d.appendleft("Carriage #1") # addFirst
-d.append("Carriage #2")     # addLast
-d.popleft()                 # removeFirst
-d.pop()                     # removeLast</pre>
         </div>
       </div>
 
-      <button onclick="closeConceptModal()" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs">
-        Return to Game
-      </button>
+      <!-- TAB 4 CONTENT: L4 TRAIN DEQUE -->
+      <div id="concept-content-4" class="space-y-4 text-xs hidden">
+        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-2">
+          <h4 class="font-bold text-slate-900 text-sm">🚂 Level 4: Double-Ended Queue (Deque)</h4>
+          <p class="text-slate-600 leading-relaxed">
+            A <strong>Deque</strong> (pronounced <em>"deck"</em>) is a generalized linear data structure allowing element insertion and removal from <strong>BOTH the FRONT and REAR pointers</strong> in <strong>O(1) constant time</strong>.
+          </p>
+        </div>
 
+        <div class="grid grid-cols-2 gap-3 font-mono text-[11px]">
+          <div class="bg-sky-50 p-3 rounded-2xl border border-sky-200">
+            <span class="font-bold text-sky-700">1. addFirst(item)</span>
+            <p class="text-slate-600 font-sans text-[10px] mt-1">Inserts element at FRONT (Left gate).</p>
+          </div>
+          <div class="bg-rose-50 p-3 rounded-2xl border border-rose-200">
+            <span class="font-bold text-rose-700">2. addLast(item)</span>
+            <p class="text-slate-600 font-sans text-[10px] mt-1">Inserts element at REAR (Right gate).</p>
+          </div>
+          <div class="bg-rose-50 p-3 rounded-2xl border border-rose-200">
+            <span class="font-bold text-rose-700">3. removeFirst()</span>
+            <p class="text-slate-600 font-sans text-[10px] mt-1">Unlinks element from FRONT pointer.</p>
+          </div>
+          <div class="bg-amber-50 p-3 rounded-2xl border border-amber-200">
+            <span class="font-bold text-amber-700">4. removeLast()</span>
+            <p class="text-slate-600 font-sans text-[10px] mt-1">Unlinks element from REAR pointer.</p>
+          </div>
+        </div>
+
+        <div class="bg-slate-100 p-4 rounded-2xl border border-slate-200 space-y-2">
+          <h5 class="font-bold text-slate-900">Versatility: Queue + Stack Hybrid</h5>
+          <p class="text-slate-600 text-[11px]">
+            Because Deques allow operation at both ends, they can function as a <strong>FIFO Queue</strong> (insert Rear, remove Front) or a <strong>LIFO Stack</strong> (insert Front, remove Front). Common in text editor Undo/Redo buffers and Sliding Window Maximum algorithms.
+          </p>
+        </div>
+      </div>
+
+      <!-- TAB 5 CONTENT: L5 ARCADE QUIZ -->
+      <div id="concept-content-5" class="space-y-4 text-xs hidden">
+        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-2">
+          <h4 class="font-bold text-slate-900 text-sm">🎮 Level 5: Queue Trivia Arcade Assessment</h4>
+          <p class="text-slate-600 leading-relaxed">
+            The final boss module tests your practical mastery of all data structure concepts covered across Levels 1 through 4.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div class="bg-amber-50 p-3 rounded-2xl border border-amber-200 space-y-1">
+            <span class="font-bold text-amber-900">❤️ 3 Heart Lives</span>
+            <p class="text-slate-600 text-[11px]">Answering incorrectly deducts 1 life heart. Maintain high accuracy to pass!</p>
+          </div>
+          <div class="bg-emerald-50 p-3 rounded-2xl border border-emerald-200 space-y-1">
+            <span class="font-bold text-emerald-900">🔥 Streak Bonus</span>
+            <p class="text-slate-600 text-[11px]">Consecutive correct answers increase your score multiplier (+25 bonus PTS per streak!).</p>
+          </div>
+          <div class="bg-purple-50 p-3 rounded-2xl border border-purple-200 space-y-1">
+            <span class="font-bold text-purple-900">🏅 Master Badge</span>
+            <p class="text-slate-600 text-[11px]">Scoring 500 PTS unlocks your official Certified Queue Master Badge!</p>
+          </div>
+        </div>
+      </div>
+
+      <button type="button" onclick="closeConceptModal()" class="w-full py-2.5 btn-flux-light rounded-2xl text-xs font-bold">Return to Dashboard</button>
     </div>
   </div>
 
 
-  <!-- TOAST NOTIFICATION CONTAINER -->
+  <!-- TOAST CONTAINER -->
   <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col space-y-2 pointer-events-none"></div>
 
+<script>
+    // Helper function to re-initialize Lucide Icons after DOM updates
+    function refreshIcons() {
+      if (window.lucide && typeof window.lucide.createIcons === 'function') {
+        window.lucide.createIcons();
+      }
+    }
 
-  <!-- FOOTER -->
-  <footer class="border-t border-slate-900 bg-slate-950 py-4 text-center text-xs text-slate-400">
-    <p>Queue Master Educational Game &bull; Built with HTML5, Tailwind CSS, & Vanilla JS</p>
-  </footer>
-
-
-  <!-- JAVASCRIPT LOGIC ENGINE -->
-  <script>
     // ==========================================
     // AUDIO SYNTHESIZER (WEB AUDIO API)
     // ==========================================
@@ -1399,27 +1077,165 @@ d.pop()                     # removeLast</pre>
 
     function switchLevel(lvl) {
       currentLevel = lvl;
-      
+
       // Update nav styling
       [1, 2, 3, 4, 5].forEach(i => {
         const btn = document.getElementById(`nav-lvl${i}`);
         const sec = document.getElementById(`level-${i}`);
         if (btn && sec) {
           if (i === lvl) {
-            btn.className = 'px-3.5 py-2 rounded-lg transition-all flex items-center space-x-2 bg-cyan-500 text-slate-950 font-bold shadow-md whitespace-nowrap';
+            btn.className = 'w-full px-4 py-3 rounded-2xl transition-all flex items-center justify-between bg-[#27272a] text-white font-bold border border-[#3f3f46] shadow-sm';
             sec.classList.remove('hidden');
           } else {
-            btn.className = 'px-3.5 py-2 rounded-lg transition-all flex items-center space-x-2 text-slate-400 hover:text-white hover:bg-slate-800 whitespace-nowrap';
+            btn.className = 'w-full px-4 py-3 rounded-2xl transition-all flex items-center justify-between text-zinc-400 hover:text-white hover:bg-[#27272a]/50 font-medium';
             sec.classList.add('hidden');
           }
         }
       });
+
+      // Update Top Stat Cards dynamically per level
+      updateTopStatCards(lvl);
 
       if (lvl === 4) renderL4UI();
       if (lvl === 5) loadQuizQuestion();
 
       showToast(`Switched to ${lvl === 5 ? 'Mini Game Quiz' : 'Level ' + lvl}`, 'info');
       getAudioContext();
+      refreshIcons();
+    }
+
+    function updateTopStatCards(lvl) {
+      const title1 = document.getElementById('top-card1-title');
+      const badge1 = document.getElementById('top-card1-badge');
+      const val1   = document.getElementById('l1-progress-text');
+      const sub1   = document.getElementById('top-card1-sub');
+      const footL1 = document.getElementById('top-card1-foot-left');
+      const footR1 = document.getElementById('top-card1-foot-right');
+
+      const title2 = document.getElementById('top-card2-title');
+      const badge2 = document.getElementById('top-card2-badge');
+      const val2   = document.getElementById('top-card2-val');
+      const sub2   = document.getElementById('top-card2-sub');
+      const footL2 = document.getElementById('top-card2-foot-left');
+      const footR2 = document.getElementById('top-card2-foot-right');
+
+      const title3 = document.getElementById('top-card3-title');
+      const badge3 = document.getElementById('top-card3-badge');
+      const val3   = document.getElementById('top-card3-val');
+      const sub3   = document.getElementById('top-card3-sub');
+      const footL3 = document.getElementById('top-card3-foot-left');
+      const footR3 = document.getElementById('top-card3-foot-right');
+
+      if (lvl === 1) {
+        if (title1) title1.innerText = 'L1 Progress';
+        if (badge1) badge1.innerText = 'L1 ACTIVE';
+        if (val1)   val1.innerText   = `${l1ShippedCount} / 5`;
+        if (sub1)   sub1.innerText   = 'Packages Shipped';
+        if (footL1) footL1.innerHTML = 'Goal Target: <strong class="text-slate-900 font-bold">5 Packages</strong>';
+        if (footR1) footR1.innerHTML = '<span class="text-emerald-600 font-bold">FIFO Factory</span>';
+
+        if (title2) title2.innerText = 'Operation Complexity';
+        if (badge2) badge2.innerText = 'OPTIMAL';
+        if (val2)   val2.innerText   = 'O(1)';
+        if (sub2)   sub2.innerText   = 'Constant Time';
+        if (footL2) footL2.innerText = 'Enqueue & Dequeue Speed';
+        if (footR2) footR2.innerText = 'O(1) Access';
+
+        if (title3) title3.innerText = 'Ordering Protocol';
+        if (badge3) badge3.innerText = 'STRICT';
+        if (val3)   val3.innerText   = 'FIFO';
+        if (sub3)   sub3.innerText   = 'First In, First Out';
+        if (footL3) footL3.innerHTML = 'Insertion: <strong class="text-rose-600 font-bold">REAR</strong>';
+        if (footR3) footR3.innerHTML = 'Removal: <strong class="text-emerald-600 font-bold">FRONT</strong>';
+      }
+      else if (lvl === 2) {
+        if (title1) title1.innerText = 'L2 Visitors Served';
+        if (badge1) badge1.innerText = 'L2 ACTIVE';
+        if (val1)   val1.innerText   = `${l2ServedCount} / 5`;
+        if (sub1)   sub1.innerText   = 'Visitors Served';
+        if (footL1) footL1.innerHTML = 'Capacity: <strong class="text-slate-900 font-bold">5 Visitors</strong>';
+        if (footR1) footR1.innerHTML = '<span class="text-rose-600 font-bold">Theme Park Cashier</span>';
+
+        if (title2) title2.innerText = 'Current Queue Size';
+        if (badge2) badge2.innerText = 'MEMORY STATE';
+        if (val2)   val2.innerText   = `${l2Queue.length} / 5`;
+        if (sub2)   sub2.innerText   = 'In Line';
+        if (footL2) footL2.innerText = 'Max Capacity Limit';
+        if (footR2) footR2.innerText = '5 Slots';
+
+        if (title3) title3.innerText = 'Boundary Flags';
+        if (badge3) badge3.innerText = 'SAFETY';
+        if (val3)   val3.innerText   = l2Queue.length === 0 ? 'EMPTY' : (l2Queue.length === 5 ? 'FULL' : 'READY');
+        if (sub3)   sub3.innerText   = `isEmpty: ${l2Queue.length === 0} | isFull: ${l2Queue.length === 5}`;
+        if (footL3) footL3.innerHTML = 'Overflow Check: <strong class="text-rose-600 font-bold">size === 5</strong>';
+        if (footR3) footR3.innerHTML = 'Underflow Check: <strong class="text-emerald-600 font-bold">size === 0</strong>';
+      }
+      else if (lvl === 3) {
+        if (title1) title1.innerText = 'Active Variant';
+        if (badge1) badge1.innerText = 'L3 VARIANTS';
+        if (val1)   val1.innerText   = activeVariant.toUpperCase();
+        if (sub1)   sub1.innerText   = activeVariant === 'std' ? 'Standard Linear' : (activeVariant === 'circ' ? 'Circular Modulo' : 'Priority Queue');
+        if (footL1) footL1.innerHTML = 'Selected: <strong class="text-slate-900 font-bold">' + activeVariant + '</strong>';
+        if (footR1) footR1.innerHTML = '<span class="text-sky-600 font-bold">Traffic Control</span>';
+
+        if (title2) title2.innerText = 'Circular Ring Modulo';
+        if (badge2) badge2.innerText = 'POINTER WRAP';
+        if (val2)   val2.innerText   = '(rear+1)%6';
+        if (sub2)   sub2.innerText   = 'Ring Capacity: 6';
+        if (footL2) footL2.innerText = 'Modulo Wrap Calculation';
+        if (footR2) footR2.innerText = '(rear + 1) % N';
+
+        if (title3) title3.innerText = 'Priority Hierarchy';
+        if (badge3) badge3.innerText = 'TRIAGE';
+        if (val3)   val3.innerText   = 'P1 > P2 > P3';
+        if (sub3)   sub3.innerText   = 'Ambulance > Bus > Car';
+        if (footL3) footL3.innerHTML = 'High Priority: <strong class="text-rose-600 font-bold">P1 (Ambulance)</strong>';
+        if (footR3) footR3.innerHTML = 'Low Priority: <strong class="text-sky-600 font-bold">P3 (Car)</strong>';
+      }
+      else if (lvl === 4) {
+        if (title1) title1.innerText = 'L4 Carriage Ops';
+        if (badge1) badge1.innerText = 'L4 ACTIVE';
+        if (val1)   val1.innerText   = `${l4OpsCount} / 5`;
+        if (sub1)   sub1.innerText   = 'Carriages Unlinked';
+        if (footL1) footL1.innerHTML = 'Track Target: <strong class="text-slate-900 font-bold">5 Ops</strong>';
+        if (footR1) footR1.innerHTML = '<span class="text-purple-600 font-bold">Train Switching Yard</span>';
+
+        if (title2) title2.innerText = 'Active Track Size';
+        if (badge2) badge2.innerText = 'DEQUE CAPACITY';
+        if (val2)   val2.innerText   = `${l4Deque.length} / 6`;
+        if (sub2)   sub2.innerText   = 'Active Carriages';
+        if (footL2) footL2.innerText = 'Track Limit';
+        if (footR2) footR2.innerText = '6 Carriages';
+
+        if (title3) title3.innerText = 'Deque Gates';
+        if (badge3) badge3.innerText = 'BOTH ENDS';
+        if (val3)   val3.innerText   = '2-WAY';
+        if (sub3)   sub3.innerText   = 'addFirst & addLast';
+        if (footL3) footL3.innerHTML = 'Front Gate: <strong class="text-sky-600 font-bold">addFirst()</strong>';
+        if (footR3) footR3.innerHTML = 'Rear Gate: <strong class="text-rose-600 font-bold">addLast()</strong>';
+      }
+      else if (lvl === 5) {
+        if (title1) title1.innerText = 'Quiz Lives';
+        if (badge1) badge1.innerText = 'ARCADE';
+        if (val1)   val1.innerText   = '❤️'.repeat(quizLives) || '💀';
+        if (sub1)   sub1.innerText   = `${quizLives} Lives Remaining`;
+        if (footL1) footL1.innerHTML = 'Question: <strong class="text-slate-900 font-bold">' + (currentQuizIdx + 1) + ' / 5</strong>';
+        if (footR1) footR1.innerHTML = '<span class="text-amber-500 font-bold">Trivia Boss</span>';
+
+        if (title2) title2.innerText = 'Total Score';
+        if (badge2) badge2.innerText = 'POINTS';
+        if (val2)   val2.innerText   = `${quizScore}`;
+        if (sub2)   sub2.innerText   = 'PTS Earned';
+        if (footL2) footL2.innerText = 'Target Score';
+        if (footR2) footR2.innerText = '500 PTS';
+
+        if (title3) title3.innerText = 'Streak Multiplier';
+        if (badge3) badge3.innerText = 'BONUS';
+        if (val3)   val3.innerText   = `🔥 x${quizStreak}`;
+        if (sub3)   sub3.innerText   = 'Streak Active';
+        if (footL3) footL3.innerHTML = 'Bonus: <strong class="text-amber-600 font-bold">+' + (quizStreak * 25) + ' PTS</strong>';
+        if (footR3) footR3.innerHTML = 'Master Badge: <strong class="text-emerald-600 font-bold">Grandmaster</strong>';
+      }
     }
 
     function resetCurrentLevel() {
@@ -1429,30 +1245,31 @@ d.pop()                     # removeLast</pre>
       else if (currentLevel === 4) resetL4();
       else if (currentLevel === 5) restartQuiz();
       showToast(`Level ${currentLevel} Reset`, 'info');
+      refreshIcons();
     }
 
     // Toast Notifications System
     function showToast(msg, type = 'info') {
       const container = document.getElementById('toast-container');
       const toast = document.createElement('div');
-      
-      let borderClr = 'border-cyan-500/50 text-cyan-300';
+
+      let borderClr = 'border-2 border-[#d4a373] text-[#43281c] bg-[#fffdf8]';
       let icon = 'ℹ️';
       if (type === 'error') {
-        borderClr = 'border-rose-500/80 text-rose-300 bg-rose-950/90';
+        borderClr = 'border-2 border-rose-400 text-rose-900 bg-rose-100';
         icon = '⚠️';
       } else if (type === 'success') {
-        borderClr = 'border-emerald-500/80 text-emerald-300 bg-emerald-950/90';
-        icon = '✅';
+        borderClr = 'border-2 border-emerald-400 text-emerald-950 bg-emerald-100';
+        icon = '🎉';
       } else {
-        borderClr = 'border-cyan-500/80 text-cyan-300 bg-slate-900/90';
+        borderClr = 'border-2 border-sky-300 text-sky-950 bg-sky-100';
       }
 
-      toast.className = `pointer-events-auto flex items-center space-x-2 px-4 py-3 rounded-xl border ${borderClr} backdrop-blur shadow-2xl text-xs font-medium transition-all duration-300 transform translate-y-2 opacity-0`;
+      toast.className = `pointer-events-auto flex items-center space-x-2 px-4 py-3 rounded-2xl ${borderClr} shadow-xl text-xs font-bold transition-all duration-300 transform translate-y-2 opacity-0`;
       toast.innerHTML = `<span>${icon}</span> <span>${msg}</span>`;
 
       container.appendChild(toast);
-      
+
       // Animate in
       requestAnimationFrame(() => {
         toast.classList.remove('translate-y-2', 'opacity-0');
@@ -1467,11 +1284,13 @@ d.pop()                     # removeLast</pre>
     function toggleCheatsheet() {
       const modal = document.getElementById('cheatsheet-modal');
       modal.classList.toggle('hidden');
+      refreshIcons();
     }
 
     function openConceptModal(tab = 1) {
       document.getElementById('concept-modal').classList.remove('hidden');
       switchConceptTab(tab);
+      refreshIcons();
     }
 
     function closeConceptModal() {
@@ -1479,19 +1298,20 @@ d.pop()                     # removeLast</pre>
     }
 
     function switchConceptTab(tab) {
-      [1, 2, 3, 4].forEach(t => {
+      [1, 2, 3, 4, 5].forEach(t => {
         const btn = document.getElementById(`concept-tab-${t}`);
         const content = document.getElementById(`concept-content-${t}`);
         if (btn && content) {
           if (t === tab) {
-            btn.className = 'flex-1 py-2 rounded-lg bg-cyan-500 text-slate-950 font-bold shadow-md whitespace-nowrap';
+            btn.className = 'flex-1 py-2 px-3 rounded-xl bg-slate-900 text-white font-bold whitespace-nowrap shadow-sm';
             content.classList.remove('hidden');
           } else {
-            btn.className = 'flex-1 py-2 rounded-lg text-slate-400 hover:text-white whitespace-nowrap';
+            btn.className = 'flex-1 py-2 px-3 rounded-xl text-slate-600 hover:text-slate-900 whitespace-nowrap';
             content.classList.add('hidden');
           }
         }
       });
+      refreshIcons();
     }
 
     function calcModuloDemo() {
@@ -1519,10 +1339,10 @@ d.pop()                     # removeLast</pre>
 
     function resetL1() {
       l1Packages = [
-        { id: 1, label: 'PKG #1', color: 'from-cyan-500 to-blue-600' },
-        { id: 2, label: 'PKG #2', color: 'from-magenta-500 to-purple-600' },
-        { id: 3, label: 'PKG #3', color: 'from-emerald-500 to-teal-600' },
-        { id: 4, label: 'PKG #4', color: 'from-amber-500 to-orange-600' }
+        { id: 1, label: 'PKG #1', color: 'from-amber-400 to-orange-500 border-amber-600' },
+        { id: 2, label: 'PKG #2', color: 'from-rose-400 to-pink-500 border-rose-600' },
+        { id: 3, label: 'PKG #3', color: 'from-emerald-400 to-teal-500 border-emerald-600' },
+        { id: 4, label: 'PKG #4', color: 'from-sky-400 to-blue-500 border-sky-600' }
       ];
       l1PackageCounter = 5;
       l1ShippedCount = 0;
@@ -1530,12 +1350,13 @@ d.pop()                     # removeLast</pre>
     }
 
     function updateL1UI() {
+      if (currentLevel === 1) updateTopStatCards(1);
       document.getElementById('l1-progress-text').innerText = `${l1ShippedCount} / 5`;
       const container = document.getElementById('l1-package-container');
       container.innerHTML = '';
 
       if (l1Packages.length === 0) {
-        container.innerHTML = `<span class="text-xs font-mono text-slate-500 italic py-2">Conveyor belt empty. Click "Add Item to Rear" to enqueue more packages!</span>`;
+        container.innerHTML = `<span class="text-xs font-bold text-[#8d6e5a] italic py-2">Conveyor belt empty! Click "Add Item to Rear" to enqueue packages!</span>`;
         return;
       }
 
@@ -1546,24 +1367,25 @@ d.pop()                     # removeLast</pre>
 
         let badge = '';
         if (isFront) {
-          badge = `<span class="absolute -top-3 left-1/2 -translate-x-1/2 px-2 py-0.5 bg-cyan-400 text-slate-950 text-[9px] font-extrabold rounded-full whitespace-nowrap shadow glow-cyan">FRONT</span>`;
+          badge = `<span class="absolute -top-3 left-1/2 -translate-x-1/2 px-2 py-0.5 bg-sky-400 text-white text-[9px] font-black rounded-full whitespace-nowrap shadow border border-sky-600">FRONT</span>`;
         } else if (isRear && l1Packages.length > 1) {
-          badge = `<span class="absolute -top-3 left-1/2 -translate-x-1/2 px-2 py-0.5 bg-magenta-400 text-slate-950 text-[9px] font-extrabold rounded-full whitespace-nowrap shadow">REAR</span>`;
+          badge = `<span class="absolute -top-3 left-1/2 -translate-x-1/2 px-2 py-0.5 bg-rose-400 text-white text-[9px] font-black rounded-full whitespace-nowrap shadow border border-rose-600">REAR</span>`;
         }
 
-        pkgEl.className = `relative cursor-pointer group flex-shrink-0 w-24 h-16 bg-gradient-to-br ${pkg.color} rounded-xl p-2 flex flex-col justify-center items-center shadow-lg border border-white/20 transition-all transform hover:scale-105 queue-item-enter`;
+        pkgEl.className = `relative cursor-pointer group flex-shrink-0 w-24 h-16 bg-gradient-to-br ${pkg.color} rounded-2xl p-2 flex flex-col justify-center items-center shadow-md border-2 transition-all transform hover:scale-105 queue-item-enter`;
         pkgEl.onclick = () => onPackageClick(index);
 
         pkgEl.innerHTML = `
           ${badge}
-          <div class="text-xs font-mono font-extrabold text-white tracking-wider flex items-center space-x-1">
+          <div class="text-xs font-mono font-black text-white tracking-wider flex items-center space-x-1">
             <span>📦</span> <span>${pkg.label}</span>
           </div>
-          <span class="text-[9px] text-white/80 font-mono mt-0.5">Pos: [${index}]</span>
+          <span class="text-[9px] text-white/90 font-mono mt-0.5 font-bold">Pos: [${index}]</span>
         `;
 
         container.appendChild(pkgEl);
       });
+      refreshIcons();
     }
 
     function onPackageClick(index) {
@@ -1574,13 +1396,14 @@ d.pop()                     # removeLast</pre>
         playErrorSound();
         const clickedPkg = l1Packages[index];
         const frontPkg = l1Packages[0];
-        
+
         document.getElementById('fifo-modal-message').innerHTML = `
-          You clicked <strong class="text-rose-400">${clickedPkg.label}</strong> (Position [${index}]), but <strong class="text-cyan-400">${frontPkg.label}</strong> is at the <strong>FRONT</strong> (Position [0])!
+          You clicked <strong class="text-rose-600">${clickedPkg.label}</strong> (Position [${index}]), but <strong class="text-sky-700">${frontPkg.label}</strong> is at the <strong>FRONT</strong> (Position [0])!
           <br><br>
-          <span class="text-xs text-amber-300 font-mono">Rule: First-In, First-Out (FIFO) strictly dictates that elements MUST leave in the exact order they entered.</span>
+          <span class="text-xs text-amber-800 font-mono font-bold">Rule: First-In, First-Out (FIFO) strictly dictates that elements MUST leave in the exact order they entered.</span>
         `;
         document.getElementById('fifo-modal').classList.remove('hidden');
+        refreshIcons();
       }
     }
 
@@ -1595,7 +1418,7 @@ d.pop()                     # removeLast</pre>
       const shipped = l1Packages.shift();
       l1ShippedCount++;
       showToast(`Shipped ${shipped.label} from FRONT`, 'success');
-      
+
       updateL1UI();
 
       // Check win condition
@@ -1608,19 +1431,20 @@ d.pop()                     # removeLast</pre>
           switchLevel(2);
         };
         document.getElementById('victory-modal').classList.remove('hidden');
+        refreshIcons();
       }
     }
 
     function addFactoryPackage() {
       const colors = [
-        'from-cyan-500 to-blue-600',
-        'from-magenta-500 to-purple-600',
-        'from-emerald-500 to-teal-600',
-        'from-amber-500 to-orange-600',
-        'from-rose-500 to-pink-600'
+        'from-amber-400 to-orange-500 border-amber-600',
+        'from-rose-400 to-pink-500 border-rose-600',
+        'from-emerald-400 to-teal-500 border-emerald-600',
+        'from-sky-400 to-blue-500 border-sky-600',
+        'from-purple-400 to-indigo-500 border-purple-600'
       ];
       const randColor = colors[Math.floor(Math.random() * colors.length)];
-      
+
       l1Packages.push({
         id: l1PackageCounter,
         label: `PKG #${l1PackageCounter}`,
@@ -1651,6 +1475,7 @@ d.pop()                     # removeLast</pre>
     }
 
     function updateL2UI() {
+      if (currentLevel === 2) updateTopStatCards(2);
       const size = l2Queue.length;
       const isEmpty = size === 0;
       const isFull = size === L2_CAPACITY;
@@ -1662,15 +1487,15 @@ d.pop()                     # removeLast</pre>
       // Update State Pills
       const emptyEl = document.getElementById('l2-status-empty');
       emptyEl.innerText = isEmpty ? 'TRUE' : 'FALSE';
-      emptyEl.className = isEmpty 
-        ? 'px-3 py-1 rounded-full text-xs font-mono font-bold bg-rose-500/20 text-rose-400 border border-rose-500/50 animate-pulse'
-        : 'px-3 py-1 rounded-full text-xs font-mono font-bold bg-slate-800 text-slate-400';
+      emptyEl.className = isEmpty
+        ? 'px-3 py-1 rounded-full text-xs font-mono font-black bg-rose-100 text-rose-700 border border-rose-300'
+        : 'px-3 py-1 rounded-full text-xs font-mono font-black bg-slate-200 text-slate-600';
 
       const fullEl = document.getElementById('l2-status-full');
       fullEl.innerText = isFull ? 'TRUE' : 'FALSE';
-      fullEl.className = isFull 
-        ? 'px-3 py-1 rounded-full text-xs font-mono font-bold bg-rose-500/20 text-rose-400 border border-rose-500/50 animate-pulse'
-        : 'px-3 py-1 rounded-full text-xs font-mono font-bold bg-slate-800 text-slate-400';
+      fullEl.className = isFull
+        ? 'px-3 py-1 rounded-full text-xs font-mono font-black bg-rose-100 text-rose-700 border border-rose-300'
+        : 'px-3 py-1 rounded-full text-xs font-mono font-black bg-slate-200 text-slate-600';
 
       // Highlight status cards on error state
       document.getElementById('card-is-empty').style.borderColor = isEmpty ? '#f43f5e' : '';
@@ -1690,35 +1515,36 @@ d.pop()                     # removeLast</pre>
 
           let badge = '';
           if (isFront) {
-            badge = `<span id="l2-front-badge" class="px-2 py-0.5 bg-cyan-400 text-slate-950 text-[9px] font-extrabold rounded-full shadow glow-cyan">FRONT</span>`;
+            badge = `<span id="l2-front-badge" class="px-2 py-0.5 bg-sky-400 text-white text-[9px] font-black rounded-full shadow border border-sky-600">FRONT</span>`;
           } else if (isRear) {
-            badge = `<span class="px-2 py-0.5 bg-magenta-400 text-slate-950 text-[9px] font-extrabold rounded-full shadow">REAR</span>`;
+            badge = `<span class="px-2 py-0.5 bg-rose-400 text-white text-[9px] font-black rounded-full shadow border border-rose-600">REAR</span>`;
           } else {
-            badge = `<span class="text-[10px] text-slate-500 font-mono">Slot [${i}]</span>`;
+            badge = `<span class="text-[10px] text-[#8d6e5a] font-bold">Slot [${i}]</span>`;
           }
 
-          slotEl.className = `relative bg-slate-900 border-2 ${isFront ? 'border-cyan-400 hover:border-emerald-400 cursor-pointer' : 'border-slate-700 hover:border-rose-400 cursor-pointer'} rounded-xl p-3 flex flex-col items-center justify-between min-h-[120px] shadow-lg queue-item-enter transition-transform hover:scale-105`;
+          slotEl.className = `relative bg-[#fffdf8] border-3 ${isFront ? 'border-sky-500 shadow-md cursor-pointer' : 'border-[#d4a373] hover:border-rose-400 cursor-pointer'} rounded-2xl p-3 flex flex-col items-center justify-between min-h-[120px] shadow-sm queue-item-enter transition-transform hover:scale-105`;
           slotEl.id = `l2-slot-${i}`;
           slotEl.onclick = () => onL2VisitorClick(i);
           slotEl.title = isFront ? 'Click FRONT visitor to Dequeue / Serve!' : `Slot [${i}] - Cannot Dequeue non-front visitor!`;
           slotEl.innerHTML = `
             <div class="h-5 flex items-center">${badge}</div>
-            <div class="text-2xl my-1">${visitor.avatar}</div>
-            <div class="text-xs font-bold text-white truncate max-w-full">${visitor.name}</div>
-            <div class="text-[9px] text-slate-400 font-mono">ID: #${visitor.id}</div>
+            <div class="text-3xl my-1">${visitor.avatar}</div>
+            <div class="text-xs font-extrabold text-[#43281c] truncate max-w-full">${visitor.name}</div>
+            <div class="text-[9px] text-[#8d6e5a] font-mono font-bold">ID: #${visitor.id}</div>
           `;
         } else {
           // Empty slot placeholder
-          slotEl.className = 'border-2 border-dashed border-slate-800 rounded-xl p-3 flex flex-col items-center justify-between min-h-[120px] bg-slate-950/40 text-slate-600';
+          slotEl.className = 'border-2 border-dashed border-[#d4a373] rounded-2xl p-3 flex flex-col items-center justify-between min-h-[120px] bg-[#fff8ee] text-[#8d6e5a]';
           slotEl.innerHTML = `
-            <span class="text-[10px] font-mono text-slate-600">Empty</span>
-            <div class="text-xl opacity-20">👤</div>
+            <span class="text-[10px] font-bold text-[#8d6e5a]">Empty</span>
+            <div class="text-2xl opacity-40">👤</div>
             <span class="text-[10px] font-mono">Slot [${i}]</span>
           `;
         }
 
         slotsContainer.appendChild(slotEl);
       }
+      refreshIcons();
     }
 
     function onL2VisitorClick(index) {
@@ -1730,7 +1556,7 @@ d.pop()                     # removeLast</pre>
         const front = l2Queue[0];
         showToast(`⚠️ FIFO Violation: Clicked "${clicked.name}" at Slot [${index}], but "${front.name}" is at FRONT! Only FRONT can be dequeued.`, 'error');
         logTerminal(`> ERROR: FIFO Violation! Attempted to dequeue Slot [${index}] instead of FRONT.`, 'error');
-        
+
         // Shake clicked slot
         const slotEl = document.getElementById(`l2-slot-${index}`);
         if (slotEl) {
@@ -1745,7 +1571,7 @@ d.pop()                     # removeLast</pre>
         playErrorSound();
         showToast('⚠️ OVERFLOW ERROR: Queue is FULL (Capacity = 5)! Cannot Enqueue.', 'error');
         logTerminal('> ERROR: Overflow Exception! Queue is at max capacity (5).', 'error');
-        
+
         // Flash full card
         const card = document.getElementById('card-is-full');
         card.classList.add('shake-error');
@@ -1770,7 +1596,7 @@ d.pop()                     # removeLast</pre>
       playEnqueueSound();
       showToast(`Enqueued "${visitor.name}" at REAR`, 'info');
       logTerminal(`> Enqueue("${visitor.name}") ➔ Inserted at REAR index [${l2Queue.length - 1}]`, 'success');
-      
+
       updateL2UI();
     }
 
@@ -1779,7 +1605,7 @@ d.pop()                     # removeLast</pre>
         playErrorSound();
         showToast('⚠️ UNDERFLOW ERROR: Queue is EMPTY! Cannot Dequeue.', 'error');
         logTerminal('> ERROR: Underflow Exception! Cannot Dequeue from empty queue.', 'error');
-        
+
         // Flash empty card
         const card = document.getElementById('card-is-empty');
         card.classList.add('shake-error');
@@ -1814,6 +1640,7 @@ d.pop()                     # removeLast</pre>
           switchLevel(3);
         };
         document.getElementById('victory-modal').classList.remove('hidden');
+        refreshIcons();
       }
     }
 
@@ -1853,8 +1680,8 @@ d.pop()                     # removeLast</pre>
       // Highlight slot 0 visually
       const slot0 = document.getElementById('l2-slot-0');
       if (slot0) {
-        slot0.classList.add('glow-cyan', 'scale-105');
-        setTimeout(() => slot0.classList.remove('glow-cyan', 'scale-105'), 1200);
+        slot0.classList.add('scale-105', 'border-sky-500');
+        setTimeout(() => slot0.classList.remove('scale-105', 'border-sky-500'), 1200);
       }
     }
 
@@ -1863,20 +1690,20 @@ d.pop()                     # removeLast</pre>
       const line = document.createElement('div');
       const time = new Date().toLocaleTimeString().split(' ')[0];
 
-      let color = 'text-slate-300';
-      if (type === 'error') color = 'text-rose-400 font-bold';
-      else if (type === 'success') color = 'text-emerald-400 font-bold';
-      else if (type === 'warn') color = 'text-amber-300';
+      let color = 'text-[#2c1e13]';
+      if (type === 'error') color = 'text-rose-600 font-bold';
+      else if (type === 'success') color = 'text-emerald-700 font-bold';
+      else if (type === 'warn') color = 'text-amber-800 font-bold';
 
       line.className = `${color} flex items-center space-x-2`;
-      line.innerHTML = `<span class="text-slate-600 text-[10px]">[${time}]</span> <span>${msg}</span>`;
+      line.innerHTML = `<span class="text-[#8d6e5a] text-[10px]">[${time}]</span> <span>${msg}</span>`;
 
       container.appendChild(line);
       container.scrollTop = container.scrollHeight;
     }
 
     function clearTerminalLog() {
-      document.getElementById('terminal-log-body').innerHTML = `<div class="text-slate-500">// Console cleared.</div>`;
+      document.getElementById('terminal-log-body').innerHTML = `<div class="text-[#8d6e5a]">// Console cleared.</div>`;
     }
 
 
@@ -1893,10 +1720,10 @@ d.pop()                     # removeLast</pre>
         const view = document.getElementById(`variant-${v}`);
 
         if (v === variant) {
-          tabBtn.className = 'px-3 py-2 rounded-lg bg-emerald-500 text-slate-950 font-bold';
+          tabBtn.className = 'px-3.5 py-2 rounded-xl bg-emerald-500 text-white font-bold shadow-md transition';
           view.classList.remove('hidden');
         } else {
-          tabBtn.className = 'px-3 py-2 rounded-lg text-slate-400 hover:text-white';
+          tabBtn.className = 'px-3.5 py-2 rounded-xl text-[#6b4c38] hover:bg-[#e7d7c1] transition';
           view.classList.add('hidden');
         }
       });
@@ -1904,6 +1731,8 @@ d.pop()                     # removeLast</pre>
       if (variant === 'circ') renderCircUI();
       else if (variant === 'prio') renderPrioUI();
       else if (variant === 'std') renderStdUI();
+
+      refreshIcons();
     }
 
     function resetL3() {
@@ -1931,20 +1760,21 @@ d.pop()                     # removeLast</pre>
       container.innerHTML = '';
 
       if (l3StdQueue.length === 0) {
-        container.innerHTML = `<span class="text-xs font-mono text-slate-500 italic">No vehicles in line at traffic light.</span>`;
+        container.innerHTML = `<span class="text-xs font-bold text-[#8d6e5a] italic">No vehicles in line at traffic light.</span>`;
         return;
       }
 
       l3StdQueue.forEach((v, i) => {
         const item = document.createElement('div');
         const isFront = i === 0;
-        item.className = `flex-shrink-0 bg-slate-900 border ${isFront ? 'border-emerald-400 shadow-emerald-500/20' : 'border-slate-700'} rounded-xl p-3 min-w-[110px] text-center shadow-lg queue-item-enter`;
+        item.className = `flex-shrink-0 bg-[#fffdf8] border-2 ${isFront ? 'border-emerald-500 shadow-md' : 'border-[#d4a373]'} rounded-2xl p-3 min-w-[110px] text-center queue-item-enter`;
         item.innerHTML = `
-          <div class="text-[9px] font-bold font-mono ${isFront ? 'text-emerald-400' : 'text-slate-500'} mb-1">${isFront ? 'FRONT' : `[Pos ${i}]`}</div>
-          <div class="text-sm font-bold text-white">${v.name}</div>
+          <div class="text-[9px] font-black font-mono ${isFront ? 'text-emerald-700' : 'text-[#8d6e5a]'} mb-1">${isFront ? 'FRONT' : `[Pos ${i}]`}</div>
+          <div class="text-sm font-extrabold text-[#43281c]">${v.name}</div>
         `;
         container.appendChild(item);
       });
+      refreshIcons();
     }
 
     function l3StdEnqueue() {
@@ -2005,31 +1835,32 @@ d.pop()                     # removeLast</pre>
         const isFrontSlot = i === circFront && circSize > 0;
         const isRearSlot = i === circRear && circSize > 0;
 
-        let borderColor = 'border-slate-800 bg-slate-900/80';
-        if (val) borderColor = 'border-cyan-500/80 bg-slate-900 shadow-cyan-500/20';
-        if (isFrontSlot) borderColor = 'border-cyan-400 bg-slate-900 ring-2 ring-cyan-400';
-        if (isRearSlot) borderColor = 'border-magenta-400 bg-slate-900 ring-2 ring-magenta-400';
+        let borderColor = 'border-[#d4a373] bg-[#fff8ee]';
+        if (val) borderColor = 'border-sky-400 bg-[#fffdf8] shadow-md';
+        if (isFrontSlot) borderColor = 'border-sky-500 bg-[#fffdf8] ring-2 ring-sky-500';
+        if (isRearSlot) borderColor = 'border-rose-400 bg-[#fffdf8] ring-2 ring-rose-400';
 
         const node = document.createElement('div');
         node.style.position = 'absolute';
         node.style.left = `${x}px`;
         node.style.top = `${y}px`;
-        node.className = `w-14 h-14 rounded-2xl border-2 ${borderColor} flex flex-col items-center justify-center text-center shadow-lg transition-all transform hover:scale-110`;
-        
-        let label = val ? val.name : `<span class="text-slate-600 text-[10px]">Slot ${i}</span>`;
+        node.className = `w-14 h-14 rounded-2xl border-2 ${borderColor} flex flex-col items-center justify-center text-center shadow-sm transition-all transform hover:scale-110`;
+
+        let label = val ? val.name : `<span class="text-[#8d6e5a] text-[10px]">Slot ${i}</span>`;
         let pointerTag = '';
-        if (isFrontSlot && isRearSlot) pointerTag = '<span class="text-[8px] bg-amber-400 text-black font-extrabold px-1 rounded">F & R</span>';
-        else if (isFrontSlot) pointerTag = '<span class="text-[8px] bg-cyan-400 text-black font-extrabold px-1 rounded">FRONT</span>';
-        else if (isRearSlot) pointerTag = '<span class="text-[8px] bg-magenta-400 text-black font-extrabold px-1 rounded">REAR</span>';
+        if (isFrontSlot && isRearSlot) pointerTag = '<span class="text-[8px] bg-amber-400 text-black font-black px-1 rounded">F & R</span>';
+        else if (isFrontSlot) pointerTag = '<span class="text-[8px] bg-sky-400 text-white font-black px-1 rounded">FRONT</span>';
+        else if (isRearSlot) pointerTag = '<span class="text-[8px] bg-rose-400 text-white font-black px-1 rounded">REAR</span>';
 
         node.innerHTML = `
-          <span class="text-[9px] font-mono font-bold text-slate-400">#${i}</span>
-          <div class="text-[11px] font-bold text-white truncate max-w-full">${label}</div>
+          <span class="text-[9px] font-mono font-bold text-[#8d6e5a]">#${i}</span>
+          <div class="text-[11px] font-black text-[#43281c] truncate max-w-full">${label}</div>
           ${pointerTag}
         `;
 
         container.appendChild(node);
       }
+      refreshIcons();
     }
 
     function l3CircEnqueue() {
@@ -2041,7 +1872,7 @@ d.pop()                     # removeLast</pre>
 
       const vehicle = { name: `V#${circVehicleNum++}` };
       circArray[circRear] = vehicle;
-      
+
       // Modulo wrap arithmetic
       const oldRear = circRear;
       circRear = (circRear + 1) % CIRC_CAPACITY;
@@ -2061,7 +1892,7 @@ d.pop()                     # removeLast</pre>
 
       const freed = circArray[circFront];
       circArray[circFront] = null;
-      
+
       const oldFront = circFront;
       circFront = (circFront + 1) % CIRC_CAPACITY;
       circSize--;
@@ -2079,9 +1910,9 @@ d.pop()                     # removeLast</pre>
 
     function resetPrioQueue() {
       l3PrioQueue = [
-        { id: 1, name: 'Ambulance 🚨', priority: 1, pLabel: 'High', color: 'border-rose-500 text-rose-400' },
-        { id: 2, name: 'City Bus 🚌', priority: 2, pLabel: 'Med', color: 'border-amber-500 text-amber-400' },
-        { id: 3, name: 'Standard Car 🚗', priority: 3, pLabel: 'Low', color: 'border-cyan-500 text-cyan-400' }
+        { id: 1, name: 'Ambulance 🚨', priority: 1, pLabel: 'High', color: 'border-rose-400 text-rose-700 bg-rose-50' },
+        { id: 2, name: 'City Bus 🚌', priority: 2, pLabel: 'Med', color: 'border-amber-400 text-amber-800 bg-amber-50' },
+        { id: 3, name: 'Standard Car 🚗', priority: 3, pLabel: 'Low', color: 'border-sky-400 text-sky-800 bg-sky-50' }
       ];
       prioCounter = 4;
       renderPrioUI();
@@ -2092,11 +1923,12 @@ d.pop()                     # removeLast</pre>
       ['high', 'med', 'low'].forEach(t => {
         const btn = document.getElementById(`prio-select-${t}`);
         if (t === type) {
-          btn.className = 'px-3 py-2 rounded-lg bg-rose-500 text-slate-950 font-bold text-xs flex items-center space-x-1 shadow-md';
+          btn.className = 'px-3 py-2 rounded-xl bg-rose-500 text-white font-bold text-xs flex items-center space-x-1 shadow-md';
         } else {
-          btn.className = 'px-3 py-2 rounded-lg bg-slate-800 text-slate-400 border border-slate-700 font-bold text-xs flex items-center space-x-1';
+          btn.className = 'px-3 py-2 rounded-xl btn-game-neutral text-xs flex items-center space-x-1';
         }
       });
+      refreshIcons();
     }
 
     function renderPrioUI() {
@@ -2104,7 +1936,7 @@ d.pop()                     # removeLast</pre>
       container.innerHTML = '';
 
       if (l3PrioQueue.length === 0) {
-        container.innerHTML = `<span class="text-xs font-mono text-slate-500 italic">Priority Queue is empty.</span>`;
+        container.innerHTML = `<span class="text-xs font-bold text-[#8d6e5a] italic">Priority Queue is empty.</span>`;
         return;
       }
 
@@ -2112,32 +1944,33 @@ d.pop()                     # removeLast</pre>
         const item = document.createElement('div');
         const isFront = i === 0;
 
-        let badgeClr = 'bg-cyan-500/20 text-cyan-400 border-cyan-500/40';
-        if (v.priority === 1) badgeClr = 'bg-rose-500/20 text-rose-400 border-rose-500/40 animate-pulse';
-        else if (v.priority === 2) badgeClr = 'bg-amber-500/20 text-amber-400 border-amber-500/40';
+        let badgeClr = 'bg-sky-100 text-sky-800 border-sky-300';
+        if (v.priority === 1) badgeClr = 'bg-rose-100 text-rose-800 border-rose-300';
+        else if (v.priority === 2) badgeClr = 'bg-amber-100 text-amber-800 border-amber-300';
 
-        item.className = `flex-shrink-0 bg-slate-900 border-2 ${v.color} rounded-2xl p-3.5 min-w-[140px] shadow-xl relative queue-item-enter`;
+        item.className = `flex-shrink-0 border-2 ${v.color} rounded-2xl p-3.5 min-w-[140px] shadow-md relative queue-item-enter`;
         item.innerHTML = `
-          ${isFront ? '<span class="absolute -top-3 left-3 px-2 py-0.5 bg-rose-500 text-slate-950 text-[9px] font-extrabold rounded-full">SERVED NEXT</span>' : ''}
+          ${isFront ? '<span class="absolute -top-3 left-3 px-2 py-0.5 bg-rose-500 text-white text-[9px] font-black rounded-full shadow">SERVED NEXT</span>' : ''}
           <div class="flex items-center justify-between mb-1.5">
-            <span class="text-[10px] font-mono text-slate-400">Pos [${i}]</span>
-            <span class="px-2 py-0.5 rounded-full text-[9px] font-bold border ${badgeClr}">P${v.priority}: ${v.pLabel}</span>
+            <span class="text-[10px] font-mono text-[#8d6e5a] font-bold">Pos [${i}]</span>
+            <span class="px-2 py-0.5 rounded-full text-[9px] font-black border ${badgeClr}">P${v.priority}: ${v.pLabel}</span>
           </div>
-          <div class="text-sm font-bold text-white mt-1">${v.name}</div>
+          <div class="text-sm font-extrabold text-[#43281c] mt-1">${v.name}</div>
         `;
 
         container.appendChild(item);
       });
+      refreshIcons();
     }
 
     function l3PrioEnqueue() {
       let vehicle;
       if (prioSelectedType === 'high') {
-        vehicle = { id: prioCounter++, name: `Ambulance 🚨 #${prioCounter}`, priority: 1, pLabel: 'High', color: 'border-rose-500 text-rose-400' };
+        vehicle = { id: prioCounter++, name: `Ambulance 🚨 #${prioCounter}`, priority: 1, pLabel: 'High', color: 'border-rose-400 text-rose-700 bg-rose-50' };
       } else if (prioSelectedType === 'med') {
-        vehicle = { id: prioCounter++, name: `Bus 🚌 #${prioCounter}`, priority: 2, pLabel: 'Med', color: 'border-amber-500 text-amber-400' };
+        vehicle = { id: prioCounter++, name: `Bus 🚌 #${prioCounter}`, priority: 2, pLabel: 'Med', color: 'border-amber-400 text-amber-800 bg-amber-50' };
       } else {
-        vehicle = { id: prioCounter++, name: `Car 🚗 #${prioCounter}`, priority: 3, pLabel: 'Low', color: 'border-cyan-500 text-cyan-400' };
+        vehicle = { id: prioCounter++, name: `Car 🚗 #${prioCounter}`, priority: 3, pLabel: 'Low', color: 'border-sky-400 text-sky-800 bg-sky-50' };
       }
 
       // Priority Queue Insertion Logic (Sorted by Priority ASC: 1 -> 2 -> 3)
@@ -2173,9 +2006,9 @@ d.pop()                     # removeLast</pre>
 
     function resetL4() {
       l4Deque = [
-        { id: 1, name: 'Engine 🚂', color: 'from-cyan-500 to-blue-600 border-cyan-400' },
-        { id: 2, name: 'Coach 🚃', color: 'from-purple-500 to-indigo-600 border-purple-400' },
-        { id: 3, name: 'Caboose 🚃', color: 'from-magenta-500 to-pink-600 border-magenta-400' }
+        { id: 1, name: 'Engine 🚂', color: 'from-sky-400 to-blue-500 border-sky-600' },
+        { id: 2, name: 'Coach 🚃', color: 'from-purple-400 to-indigo-500 border-purple-600' },
+        { id: 3, name: 'Caboose 🚃', color: 'from-rose-400 to-pink-500 border-rose-600' }
       ];
       l4CarriageId = 4;
       l4OpsCount = 0;
@@ -2184,6 +2017,7 @@ d.pop()                     # removeLast</pre>
     }
 
     function renderL4UI() {
+      if (currentLevel === 4) updateTopStatCards(4);
       const size = l4Deque.length;
       const frontName = size > 0 ? l4Deque[0].name : 'none';
       const rearName = size > 0 ? l4Deque[size - 1].name : 'none';
@@ -2197,7 +2031,7 @@ d.pop()                     # removeLast</pre>
       container.innerHTML = '';
 
       if (size === 0) {
-        container.innerHTML = `<span class="text-xs font-mono text-slate-500 italic py-4">Railway track empty. Click addFirst() or addLast() to load train carriages!</span>`;
+        container.innerHTML = `<span class="text-xs font-bold text-[#8d6e5a] italic py-4">Railway track empty. Click addFirst() or addLast() to load train carriages!</span>`;
         return;
       }
 
@@ -2208,7 +2042,7 @@ d.pop()                     # removeLast</pre>
         // Coupling link between carriages
         if (index > 0) {
           const coupler = document.createElement('div');
-          coupler.className = 'text-slate-600 font-bold text-xs select-none px-1 animate-pulse';
+          coupler.className = 'text-[#8d6e5a] font-bold text-xs select-none px-1';
           coupler.innerText = '🔗';
           container.appendChild(coupler);
         }
@@ -2217,25 +2051,26 @@ d.pop()                     # removeLast</pre>
         el.id = `l4-carriage-${index}`;
         el.onclick = () => onL4CarriageClick(index);
         el.title = isFront ? 'FRONT Carriage - Click to removeFirst()' : (isRear ? 'REAR Carriage - Click to removeLast()' : `Carriage Pos [${index}]`);
-        el.className = `flex-shrink-0 bg-gradient-to-br ${item.color} border-2 rounded-2xl p-3 min-w-[120px] text-center shadow-xl relative cursor-pointer queue-item-enter transition-all duration-300 transform hover:scale-105`;
-        
+        el.className = `flex-shrink-0 bg-gradient-to-br ${item.color} border-2 rounded-2xl p-3 min-w-[120px] text-center shadow-md relative cursor-pointer queue-item-enter transition-all duration-300 transform hover:scale-105`;
+
         let pointerBadge = '';
         if (isFront && isRear) {
-          pointerBadge = `<span class="absolute -top-3 left-1/2 -translate-x-1/2 px-2 py-0.5 bg-amber-400 text-black text-[9px] font-extrabold rounded-full whitespace-nowrap shadow">FRONT & REAR</span>`;
+          pointerBadge = `<span class="absolute -top-3 left-1/2 -translate-x-1/2 px-2 py-0.5 bg-amber-400 text-black text-[9px] font-black rounded-full whitespace-nowrap shadow">FRONT & REAR</span>`;
         } else if (isFront) {
-          pointerBadge = `<span class="absolute -top-3 left-1/2 -translate-x-1/2 px-2 py-0.5 bg-cyan-400 text-black text-[9px] font-extrabold rounded-full glow-cyan whitespace-nowrap">FRONT</span>`;
+          pointerBadge = `<span class="absolute -top-3 left-1/2 -translate-x-1/2 px-2 py-0.5 bg-sky-400 text-white text-[9px] font-black rounded-full whitespace-nowrap shadow">FRONT</span>`;
         } else if (isRear) {
-          pointerBadge = `<span class="absolute -top-3 left-1/2 -translate-x-1/2 px-2 py-0.5 bg-magenta-400 text-black text-[9px] font-extrabold rounded-full whitespace-nowrap">REAR</span>`;
+          pointerBadge = `<span class="absolute -top-3 left-1/2 -translate-x-1/2 px-2 py-0.5 bg-rose-400 text-white text-[9px] font-black rounded-full whitespace-nowrap shadow">REAR</span>`;
         }
 
         el.innerHTML = `
           ${pointerBadge}
-          <div class="text-[9px] font-mono text-white/80 mt-1">Pos [${index}]</div>
-          <div class="text-sm font-bold text-white tracking-wide mt-0.5">${item.name}</div>
+          <div class="text-[9px] font-mono text-white/90 font-bold mt-1">Pos [${index}]</div>
+          <div class="text-sm font-extrabold text-white tracking-wide mt-0.5">${item.name}</div>
         `;
 
         container.appendChild(el);
       });
+      refreshIcons();
     }
 
     function onL4CarriageClick(index) {
@@ -2264,10 +2099,10 @@ d.pop()                     # removeLast</pre>
         logL4Terminal('> ERROR: Deque Overflow! Track is full.', 'error');
         return;
       }
-      
+
       const carriageNames = ['Engine 🚂', 'Express 🚃', 'Tanker 🚃', 'Cargo 🚃'];
       const randName = carriageNames[Math.floor(Math.random() * carriageNames.length)];
-      const colors = ['from-cyan-500 to-blue-600 border-cyan-400', 'from-emerald-500 to-teal-600 border-emerald-400'];
+      const colors = ['from-sky-400 to-blue-500 border-sky-600', 'from-emerald-400 to-teal-500 border-emerald-600'];
       const randColor = colors[Math.floor(Math.random() * colors.length)];
 
       const item = { id: l4CarriageId++, name: `${randName} #${l4CarriageId}`, color: randColor };
@@ -2276,7 +2111,7 @@ d.pop()                     # removeLast</pre>
       playEnqueueSound();
       showToast(`addFirst(): Inserted "${item.name}" at FRONT`, 'info');
       logL4Terminal(`> addFirst("${item.name}") ➔ Pushed to FRONT index [0]`, 'success');
-      
+
       checkL4Win();
       renderL4UI();
     }
@@ -2291,7 +2126,7 @@ d.pop()                     # removeLast</pre>
 
       const carriageNames = ['Caboose 🚃', 'Freight 🚃', 'Coach 🚃', 'Flatcar 🚃'];
       const randName = carriageNames[Math.floor(Math.random() * carriageNames.length)];
-      const colors = ['from-magenta-500 to-pink-600 border-magenta-400', 'from-purple-500 to-indigo-600 border-purple-400'];
+      const colors = ['from-rose-400 to-pink-500 border-rose-600', 'from-purple-400 to-indigo-500 border-purple-600'];
       const randColor = colors[Math.floor(Math.random() * colors.length)];
 
       const item = { id: l4CarriageId++, name: `${randName} #${l4CarriageId}`, color: randColor };
@@ -2357,8 +2192,8 @@ d.pop()                     # removeLast</pre>
       // Highlight FRONT carriage visually
       const el = document.getElementById('l4-carriage-0');
       if (el) {
-        el.classList.add('glow-cyan', 'scale-110', 'z-20');
-        setTimeout(() => el.classList.remove('glow-cyan', 'scale-110', 'z-20'), 1500);
+        el.classList.add('scale-110');
+        setTimeout(() => el.classList.remove('scale-110'), 1500);
       }
     }
 
@@ -2379,8 +2214,8 @@ d.pop()                     # removeLast</pre>
       // Highlight REAR carriage visually
       const el = document.getElementById(`l4-carriage-${lastIdx}`);
       if (el) {
-        el.classList.add('glow-magenta', 'scale-110', 'z-20');
-        setTimeout(() => el.classList.remove('glow-magenta', 'scale-110', 'z-20'), 1500);
+        el.classList.add('scale-110');
+        setTimeout(() => el.classList.remove('scale-110'), 1500);
       }
     }
 
@@ -2390,13 +2225,13 @@ d.pop()                     # removeLast</pre>
       const line = document.createElement('div');
       const time = new Date().toLocaleTimeString().split(' ')[0];
 
-      let color = 'text-slate-300';
-      if (type === 'error') color = 'text-rose-400 font-bold';
-      else if (type === 'success') color = 'text-emerald-400 font-bold';
-      else if (type === 'warn') color = 'text-amber-300';
+      let color = 'text-[#2c1e13]';
+      if (type === 'error') color = 'text-rose-600 font-bold';
+      else if (type === 'success') color = 'text-emerald-700 font-bold';
+      else if (type === 'warn') color = 'text-amber-800 font-bold';
 
       line.className = `${color} flex items-center space-x-2`;
-      line.innerHTML = `<span class="text-slate-600 text-[10px]">[${time}]</span> <span>${msg}</span>`;
+      line.innerHTML = `<span class="text-[#8d6e5a] text-[10px]">[${time}]</span> <span>${msg}</span>`;
 
       container.appendChild(line);
       container.scrollTop = container.scrollHeight;
@@ -2404,7 +2239,7 @@ d.pop()                     # removeLast</pre>
 
     function clearL4TerminalLog() {
       const container = document.getElementById('l4-terminal-log');
-      if (container) container.innerHTML = `<div class="text-slate-500">// Deque console cleared.</div>`;
+      if (container) container.innerHTML = `<div class="text-[#8d6e5a]">// Deque console cleared.</div>`;
     }
 
     function checkL4Win() {
@@ -2417,6 +2252,7 @@ d.pop()                     # removeLast</pre>
           switchLevel(5);
         };
         document.getElementById('victory-modal').classList.remove('hidden');
+        refreshIcons();
       }
     }
 
@@ -2518,14 +2354,15 @@ d.pop()                     # removeLast</pre>
 
       q.options.forEach((optText, idx) => {
         const btn = document.createElement('button');
-        btn.className = `p-4 rounded-xl bg-slate-900 border border-slate-800 hover:border-amber-400 text-left text-xs font-semibold text-slate-200 transition flex items-center justify-between group active:scale-95`;
+        btn.className = `p-4 rounded-2xl btn-game-neutral text-left text-xs font-bold text-[#43281c] transition flex items-center justify-between group active:scale-95 shadow-sm`;
         btn.onclick = () => submitQuizAnswer(idx);
         btn.innerHTML = `
           <span>${optText}</span>
-          <span class="w-6 h-6 rounded-full bg-slate-950 border border-slate-800 flex items-center justify-center text-[10px] font-mono text-slate-400 group-hover:border-amber-400 group-hover:text-amber-400">${String.fromCharCode(65 + idx)}</span>
+          <span class="w-6 h-6 rounded-full bg-[#f5edd9] border border-[#d4a373] flex items-center justify-center text-[10px] font-mono font-bold text-[#6b4c38]">${String.fromCharCode(65 + idx)}</span>
         `;
         optionsContainer.appendChild(btn);
       });
+      refreshIcons();
     }
 
     function submitQuizAnswer(selectedIdx) {
@@ -2535,19 +2372,18 @@ d.pop()                     # removeLast</pre>
       // Disable all buttons after answering
       for (let i = 0; i < optionsBtns.length; i++) {
         optionsBtns[i].onclick = null;
-        optionsBtns[i].classList.remove('hover:border-amber-400');
       }
 
       if (selectedIdx === q.answer) {
         playVictorySound();
-        optionsBtns[selectedIdx].className = 'p-4 rounded-xl bg-emerald-500/20 border-2 border-emerald-400 text-emerald-300 font-bold text-xs flex items-center justify-between shadow-lg shadow-emerald-500/20';
+        optionsBtns[selectedIdx].className = 'p-4 rounded-2xl bg-emerald-100 border-3 border-emerald-500 text-emerald-950 font-extrabold text-xs flex items-center justify-between shadow-md';
         quizScore += 100 + (quizStreak * 25);
         quizStreak++;
         showToast('🎉 Correct Answer! +100 PTS', 'success');
       } else {
         playErrorSound();
-        optionsBtns[selectedIdx].className = 'p-4 rounded-xl bg-rose-500/20 border-2 border-rose-500 text-rose-300 font-bold text-xs flex items-center justify-between shake-error';
-        optionsBtns[q.answer].className = 'p-4 rounded-xl bg-emerald-500/20 border-2 border-emerald-400 text-emerald-300 font-bold text-xs flex items-center justify-between';
+        optionsBtns[selectedIdx].className = 'p-4 rounded-2xl bg-rose-100 border-3 border-rose-500 text-rose-950 font-extrabold text-xs flex items-center justify-between shake-error';
+        optionsBtns[q.answer].className = 'p-4 rounded-2xl bg-emerald-100 border-3 border-emerald-500 text-emerald-950 font-extrabold text-xs flex items-center justify-between';
         quizLives--;
         quizStreak = 0;
         showToast('❌ Incorrect Answer!', 'error');
@@ -2561,6 +2397,7 @@ d.pop()                     # removeLast</pre>
       document.getElementById('quiz-explanation-text').innerText = q.explanation;
       document.getElementById('quiz-explanation-box').classList.remove('hidden');
       document.getElementById('quiz-next-btn').classList.remove('hidden');
+      refreshIcons();
     }
 
     function nextQuizQuestion() {
@@ -2570,13 +2407,67 @@ d.pop()                     # removeLast</pre>
 
     function showQuizResults() {
       playVictorySound();
+      triggerConfetti();
       document.getElementById('quiz-card-container').classList.add('hidden');
       document.getElementById('quiz-results-container').classList.remove('hidden');
 
       const accuracy = Math.round((quizScore / (quizQuestions.length * 100)) * 100);
       document.getElementById('final-score-text').innerText = `${quizScore} PTS`;
       document.getElementById('final-acc-text').innerText = `${accuracy}%`;
+
+      const basePoints = quizQuestions.length * 100;
+      const bonusPoints = Math.max(0, quizScore - basePoints);
+
+      const baseEl = document.getElementById('final-base-pts');
+      if (baseEl) baseEl.innerText = `${basePoints} PTS`;
+      const bonusEl = document.getElementById('final-bonus-pts');
+      if (bonusEl) bonusEl.innerText = `+${bonusPoints} PTS`;
+      const livesEl = document.getElementById('final-lives-left');
+      if (livesEl) livesEl.innerText = `❤️ x${quizLives}`;
+
+      const rankEl = document.getElementById('final-rank-title');
+      if (rankEl) {
+        if (accuracy >= 90) rankEl.innerText = 'Grandmaster 🏆';
+        else if (accuracy >= 70) rankEl.innerText = 'Master 🥇';
+        else rankEl.innerText = 'Scholar 📜';
+      }
+
+      showToast(`🏆 QUIZ COMPLETE! Total Score: ${quizScore} PTS`, 'success');
+      refreshIcons();
     }
+
+    function triggerConfetti() {
+      const confettiContainer = document.createElement('div');
+      confettiContainer.id = 'confetti-wrapper';
+      confettiContainer.className = 'fixed inset-0 pointer-events-none z-50 overflow-hidden';
+      document.body.appendChild(confettiContainer);
+
+      const colors = ['#c8f53e', '#10b981', '#3b82f6', '#f59e0b', '#ec4899', '#8b5cf6'];
+      for (let i = 0; i < 75; i++) {
+        const particle = document.createElement('div');
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        const left = Math.random() * 100;
+        const delay = Math.random() * 0.6;
+        const duration = 2 + Math.random() * 2.5;
+        const size = 6 + Math.random() * 8;
+
+        particle.className = 'absolute rounded-sm';
+        particle.style.cssText = `
+          left: ${left}%;
+          top: -20px;
+          width: ${size}px;
+          height: ${size}px;
+          background-color: ${color};
+          opacity: ${0.8 + Math.random() * 0.2};
+          transform: rotate(${Math.random() * 360}deg);
+          animation: confettiFall ${duration}s ease-in ${delay}s forwards;
+        `;
+        confettiContainer.appendChild(particle);
+      }
+
+      setTimeout(() => confettiContainer.remove(), 5000);
+    }
+
 
 
     // ==========================================
@@ -2588,6 +2479,7 @@ d.pop()                     # removeLast</pre>
       resetL3();
       resetL4();
       switchLevel(1);
+      refreshIcons();
     });
   </script>
 
