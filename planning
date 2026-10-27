@@ -1,0 +1,52 @@
+# ALGO CRAFT: Data Structure Arena
+
+## Overview
+A unified interactive learning platform for core linear data structures:
+1. **Stack Master (LIFO Realm)**: An interactive suite exploring the Last-In, First-Out principle across 7 comprehensive modules.
+2. **Queue Master (FIFO Realm)**: The classic queue simulation platform (preserved intact).
+
+## Architecture
+- **Landing Hub Screen (`#landing-hub`)**: Prominently presented at application startup with two realm cards:
+  - 🥞 **Stack Master**: LIFO Principle with 7 curriculum modules.
+  - ⚡ **Queue Master**: FIFO Principle with 5 factory modules.
+- **Top Navigation Switchers**: In-game headers feature quick toggle buttons ("🏠 Hub", "⇄ Play Queue", "⇄ Play Stack") for seamless instant transitions between games without losing state.
+- **Interactive Concept Guides**: Both games feature a dedicated "📖 Guide" modal with detailed breakdowns for each level, explaining what each level is about, the underlying algorithm, time complexities, boundary conditions, and real-world analogies.
+
+---
+
+## Stack Master Modules
+- **Level 1: The LIFO Cafeteria (Core Stack)**
+  - Single pointer `TOP` tracking.
+  - PUSH, POP, PEEK operations with spring-loaded plate dispenser.
+  - Fixed-size array mode (`MAX=6`) with Stack Overflow (`top >= N-1`) and Underflow (`top == -1`) safety checks.
+  - Dynamic stack mode toggle (Linked list / Heap).
+  - LIFO violation detection modal when attempting to click/remove non-top plates.
+  - Real-time C code tracking.
+
+- **Level 2: Polish Notation & Postfix Lab**
+  - **Postfix Expression Evaluator**: Single-pass left-to-right scan with operand stack.
+    - Examples: `"2 3 1 * + 9 -"` (Yields `-4`) and `"6 5 2 3 + 8 * + 3 + *"` (Yields `288`).
+    - Step-by-step and auto-play runners with dynamic operator cards.
+  - **Infix to Postfix Converter**: Operator stack maintaining operator precedence (`^` > `* /` > `+ -`) and associativity with parentheses handling using expression `M * J - ( N + D ) / F * W + Z`.
+
+- **Level 3: Syntax Sentinel (Balanced Parentheses & Brackets)**
+  - Validates `()`, `{}`, `[]` using LIFO bracket matching.
+  - Presets: `"({[]})"`, nested expressions, mismatched brackets, and C-code snippets.
+  - Step-by-step scanner with live execution trace table (`Stack | Expression | Action`).
+
+- **Level 4: Monotonic Peak (Next & Previous Greater Element)**
+  - Toggle between **Next Greater Element (NGE)** and **Previous Greater Element (PGE)**.
+  - Monotonic decreasing stack achieving $O(N)$ linear time complexity.
+  - Examples: `[1, 3, 2, 4]` (NGE: `[3, 4, 4, -1]`), `[6, 8, 0, 1, 3]`, `[10, 4, 2, 20, 40, 12]`, and `[10, 20, 30, 40]`.
+  - Mountain bar height radar visualizer and real-time result array.
+
+- **Level 5: Base & String Lab**
+  - **String Reversal Studio**: Push all characters onto stack, then pop in reverse.
+  - **Number Radix Converter**: Decimal to Binary, Octal, Hexadecimal via repeated division and remainder stack.
+
+- **Level 6: Dynamic Heap & Call Stack Recursion**
+  - **Linked List Stack**: Heap node structure `[info | next*]`, dynamic allocation (`malloc`), unconstrained memory growth.
+  - **Recursion Call Stack Simulator**: Visualizing `factorial(4)` activation records pushing on invocation and unwinding on base case.
+
+- **Level 7: Stack Arcade Boss Quiz & Cheatsheet**
+  - 8 curated questions testing core stack concepts with score multipliers, 3 heart lives, celebratory confetti, and cheatsheet modal.

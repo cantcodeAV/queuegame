@@ -154,7 +154,172 @@
 <body class="p-2 sm:p-4 min-h-screen flex items-center justify-center selection:bg-slate-900 selection:text-[#c8f53e]">
 
   <!-- FLUX SAAS MAIN APPLICATION WINDOW FRAME -->
-  <div class="w-full max-w-[1550px] min-h-[92vh] bg-[#18181b] rounded-[28px] overflow-hidden flex flex-col lg:flex-row shadow-2xl border border-[#27272a]">
+  
+  <!-- ========================================== -->
+  <!-- MAIN LANDING SCREEN: DATA STRUCTURE REALMS -->
+  <!-- ========================================== -->
+  <div id="landing-hub" class="w-full max-w-6xl min-h-[90vh] flex flex-col justify-between py-6 px-4 sm:px-8 text-white my-auto">
+
+    <!-- Hero Header -->
+    <div class="text-center space-y-3 pt-4">
+      <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-zinc-900 border border-zinc-700/80 shadow-md">
+        <span class="w-2.5 h-2.5 rounded-full bg-[#c8f53e] animate-pulse"></span>
+        <span class="text-xs font-mono font-bold tracking-wider text-zinc-300 uppercase">ALGO CRAFT &bull; DATA STRUCTURE ARENA v2.0</span>
+      </div>
+
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white">
+        Choose Your <span class="bg-gradient-to-r from-[#c8f53e] via-emerald-400 to-violet-400 bg-clip-text text-transparent">Data Structure</span> Realm
+      </h1>
+
+      <p class="max-w-2xl mx-auto text-sm sm:text-base text-zinc-400 font-medium">
+        Master fundamental linear data structures through tactile interactive simulations, step-by-step algorithm visualizers, and arcade quizzes.
+      </p>
+    </div>
+
+    <!-- Realm Selection Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-8 max-w-5xl mx-auto w-full">
+
+      <!-- STACK REALM CARD -->
+      <div class="group relative rounded-3xl p-7 bg-gradient-to-b from-[#1e1b4b] via-[#151329] to-[#0f172a] border-2 border-violet-500/40 hover:border-violet-400 shadow-2xl transition-all duration-300 transform hover:-translate-y-1.5 flex flex-col justify-between overflow-hidden">
+        <div class="absolute -right-10 -top-10 w-44 h-44 bg-violet-600/15 rounded-full blur-2xl group-hover:bg-violet-600/25 transition"></div>
+
+        <div class="space-y-5 relative z-10">
+          <div class="flex items-center justify-between">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-500 to-purple-700 text-white flex items-center justify-center text-3xl shadow-lg border border-violet-400/40">
+              🥞
+            </div>
+            <span class="px-3 py-1 rounded-full text-xs font-mono font-black bg-violet-500/20 text-violet-300 border border-violet-500/40 uppercase tracking-wider">
+              LIFO PRINCIPLE
+            </span>
+          </div>
+
+          <div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-white flex items-center gap-2">
+              Stack Master <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-violet-600 text-white">NEW</span>
+            </h2>
+            <p class="text-xs sm:text-sm text-zinc-400 font-medium mt-1.5 leading-relaxed">
+              <strong>Last-In, First-Out:</strong> Single-ended access restricted to the <strong class="text-violet-300">TOP pointer</strong>. Explore plate stacking, expression parsing, bracket validation, and monotonic mountain peaks.
+            </p>
+          </div>
+
+          <!-- Feature Bullets -->
+          <div class="grid grid-cols-2 gap-2 text-xs font-medium text-zinc-300 pt-2 border-t border-violet-900/40">
+            <div class="flex items-center space-x-1.5">
+              <span class="text-violet-400 font-bold">✓</span>
+              <span>L1: LIFO Cafeteria</span>
+            </div>
+            <div class="flex items-center space-x-1.5">
+              <span class="text-violet-400 font-bold">✓</span>
+              <span>L2: Polish & Postfix</span>
+            </div>
+            <div class="flex items-center space-x-1.5">
+              <span class="text-violet-400 font-bold">✓</span>
+              <span>L3: Syntax Sentinel</span>
+            </div>
+            <div class="flex items-center space-x-1.5">
+              <span class="text-violet-400 font-bold">✓</span>
+              <span>L4: Monotonic Peak</span>
+            </div>
+            <div class="flex items-center space-x-1.5">
+              <span class="text-violet-400 font-bold">✓</span>
+              <span>L5: String & Base Radix</span>
+            </div>
+            <div class="flex items-center space-x-1.5">
+              <span class="text-violet-400 font-bold">✓</span>
+              <span>L6: Dynamic Heap & CallStack</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-6 relative z-10">
+          <button type="button" onclick="launchStackGame()" class="w-full py-4 rounded-2xl bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white font-extrabold text-sm tracking-wide shadow-xl flex items-center justify-center space-x-2 transition-all transform active:scale-[0.98]">
+            <span>Enter Stack Arena (LIFO)</span>
+            <span class="text-lg">➔</span>
+          </button>
+        </div>
+      </div>
+
+
+      <!-- QUEUE REALM CARD -->
+      <div class="group relative rounded-3xl p-7 bg-gradient-to-b from-[#182613] via-[#121c0e] to-[#18181b] border-2 border-[#c8f53e]/40 hover:border-[#c8f53e] shadow-2xl transition-all duration-300 transform hover:-translate-y-1.5 flex flex-col justify-between overflow-hidden">
+        <div class="absolute -right-10 -top-10 w-44 h-44 bg-[#c8f53e]/10 rounded-full blur-2xl group-hover:bg-[#c8f53e]/20 transition"></div>
+
+        <div class="space-y-5 relative z-10">
+          <div class="flex items-center justify-between">
+            <div class="w-14 h-14 rounded-2xl bg-[#c8f53e] text-slate-950 flex items-center justify-center text-3xl shadow-lg font-black">
+              ⚡
+            </div>
+            <span class="px-3 py-1 rounded-full text-xs font-mono font-black bg-[#c8f53e]/20 text-[#c8f53e] border border-[#c8f53e]/40 uppercase tracking-wider">
+              FIFO PRINCIPLE
+            </span>
+          </div>
+
+          <div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-white flex items-center gap-2">
+              Queue Master <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-[#c8f53e] text-slate-950">CLASSIC</span>
+            </h2>
+            <p class="text-xs sm:text-sm text-zinc-400 font-medium mt-1.5 leading-relaxed">
+              <strong>First-In, First-Out:</strong> Dual-ended processing with <strong class="text-[#c8f53e]">REAR insertion</strong> and <strong class="text-[#c8f53e]">FRONT removal</strong>. Explore factory conveyor lines, circular queues, priority triage, and deques.
+            </p>
+          </div>
+
+          <!-- Feature Bullets -->
+          <div class="grid grid-cols-2 gap-2 text-xs font-medium text-zinc-300 pt-2 border-t border-emerald-950/40">
+            <div class="flex items-center space-x-1.5">
+              <span class="text-[#c8f53e] font-bold">✓</span>
+              <span>L1: FIFO Conveyor</span>
+            </div>
+            <div class="flex items-center space-x-1.5">
+              <span class="text-[#c8f53e] font-bold">✓</span>
+              <span>L2: Circular Theme Park</span>
+            </div>
+            <div class="flex items-center space-x-1.5">
+              <span class="text-[#c8f53e] font-bold">✓</span>
+              <span>L3: Traffic Priority Queue</span>
+            </div>
+            <div class="flex items-center space-x-1.5">
+              <span class="text-[#c8f53e] font-bold">✓</span>
+              <span>L4: Double-Ended Train Deque</span>
+            </div>
+            <div class="flex items-center space-x-1.5">
+              <span class="text-[#c8f53e] font-bold">✓</span>
+              <span>L5: Queue Arcade Quiz</span>
+            </div>
+            <div class="flex items-center space-x-1.5">
+              <span class="text-[#c8f53e] font-bold">✓</span>
+              <span>Formulas & Cheatsheet</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-6 relative z-10">
+          <button type="button" onclick="launchQueueGame()" class="w-full py-4 rounded-2xl bg-[#c8f53e] hover:bg-[#b0e322] text-slate-950 font-extrabold text-sm tracking-wide shadow-xl flex items-center justify-center space-x-2 transition-all transform active:scale-[0.98]">
+            <span>Enter Queue Arena (FIFO)</span>
+            <span class="text-lg">➔</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Quick Comparison Matrix Footer Banner -->
+    <div class="w-full max-w-5xl mx-auto bg-zinc-900/90 border border-zinc-800 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between text-xs text-zinc-400 gap-4">
+      <div class="flex items-center space-x-3">
+        <span class="text-xl">⚖️</span>
+        <div>
+          <h4 class="font-bold text-white text-sm">Linear Data Structures Comparison</h4>
+          <p class="text-[11px] text-zinc-400">Stack (LIFO) uses 1 pointer (TOP). Queue (FIFO) uses 2 pointers (FRONT & REAR).</p>
+        </div>
+      </div>
+      <div class="flex items-center space-x-2 font-mono text-[11px]">
+        <span class="px-2.5 py-1 rounded-lg bg-violet-950 text-violet-300 border border-violet-800">Stack: O(1) Push/Pop</span>
+        <span class="px-2.5 py-1 rounded-lg bg-emerald-950 text-emerald-300 border border-emerald-800">Queue: O(1) Enqueue/Dequeue</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="queue-app-container" class="hidden w-full max-w-[1550px] min-h-[92vh] bg-[#18181b] rounded-[28px] overflow-hidden flex flex-col lg:flex-row shadow-2xl border border-[#27272a]">
 
     <!-- ========================================== -->
     <!-- LEFT SIDEBAR NAVIGATION (FLUX DARK THEME)  -->
@@ -238,6 +403,10 @@
               <i data-lucide="file-text" class="w-3.5 h-3.5 text-[#c8f53e]"></i>
               <span>Open Cheatsheet</span>
             </button>
+            <button type="button" onclick="returnToLanding()" class="w-full py-2 bg-slate-900/90 text-white/90 hover:text-white rounded-xl text-xs font-bold hover:bg-slate-900 transition flex items-center justify-center space-x-1.5 border border-slate-700/60 mt-2">
+              <i data-lucide="home" class="w-3.5 h-3.5 text-[#c8f53e]"></i>
+              <span>Main Menu (Hub)</span>
+            </button>
           </div>
         </div>
       </div>
@@ -264,6 +433,16 @@
 
           <!-- Controls Toolbar -->
           <div class="flex items-center space-x-2">
+
+            <!-- Return to Landing / Switcher -->
+            <button type="button" onclick="returnToLanding()" title="Return to Main Hub" class="px-3 py-2 rounded-xl bg-slate-900 text-white hover:bg-slate-800 text-xs font-bold flex items-center space-x-1.5 transition shadow-sm">
+              <i data-lucide="home" class="w-3.5 h-3.5 text-[#c8f53e]"></i>
+              <span>Hub</span>
+            </button>
+            <button type="button" onclick="launchStackGame()" title="Switch to Stack Master" class="px-3 py-2 rounded-xl bg-violet-600 text-white hover:bg-violet-700 text-xs font-bold flex items-center space-x-1.5 transition shadow-sm">
+              <span>🥞</span>
+              <span>Stack Master</span>
+            </button>
 
             <!-- Sound FX Toggle -->
             <button type="button" id="sound-btn" onclick="toggleAudio()" title="Toggle Sound FX" aria-label="Toggle Sound FX" class="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition flex items-center justify-center">
@@ -722,6 +901,1183 @@
   </div>
 
 
+  <!-- ================================================================= -->
+  <!-- STACK MASTER MAIN APPLICATION CONTAINER (VIOLET / OBSIDIAN THEME) -->
+  <!-- ================================================================= -->
+  <div id="stack-app-container" class="hidden w-full max-w-[1550px] min-h-[92vh] bg-[#18181b] rounded-[28px] overflow-hidden flex flex-col lg:flex-row shadow-2xl border border-[#27272a]">
+
+    <!-- ========================================== -->
+    <!-- STACK LEFT SIDEBAR NAVIGATION              -->
+    <!-- ========================================== -->
+    <aside class="w-full lg:w-72 bg-[#18181b] text-white p-6 flex flex-col justify-between border-r border-[#27272a] flex-shrink-0">
+
+      <div class="space-y-6">
+        <!-- Logo -->
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-violet-500 to-purple-600 text-white flex items-center justify-center font-black text-xl shadow-md border border-violet-400/40">
+              🥞
+            </div>
+            <div>
+              <h1 class="text-lg font-extrabold tracking-tight text-white flex items-center gap-1.5">
+                Stack Master <span class="text-violet-400 font-bold text-xs">LIFO Lab</span>
+              </h1>
+              <p class="text-[11px] text-zinc-400 font-medium">Interactive Data Structure Arena</p>
+            </div>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-violet-500 text-white shadow">PRO</span>
+        </div>
+
+        <!-- Navigation Tabs List -->
+        <nav class="space-y-1.5 pt-2">
+          <div class="text-[10px] font-bold text-zinc-500 uppercase tracking-wider px-3 mb-2">Stack Curriculum</div>
+
+          <button type="button" id="sm-nav-lvl1" onclick="smSwitchLevel(1)" class="w-full px-4 py-3 rounded-2xl transition-all flex items-center justify-between bg-violet-600 text-white font-bold border border-violet-400 shadow-md">
+            <span class="flex items-center space-x-3">
+              <i data-lucide="layers" class="w-4 h-4 text-amber-300"></i>
+              <span class="text-sm">L1: LIFO Cafeteria</span>
+            </span>
+            <span class="w-2 h-2 rounded-full bg-amber-300"></span>
+          </button>
+
+          <button type="button" id="sm-nav-lvl2" onclick="smSwitchLevel(2)" class="w-full px-4 py-3 rounded-2xl transition-all flex items-center justify-between text-zinc-400 hover:text-white hover:bg-zinc-800/60 font-medium">
+            <span class="flex items-center space-x-3">
+              <i data-lucide="calculator" class="w-4 h-4"></i>
+              <span class="text-sm">L2: Polish & Postfix</span>
+            </span>
+          </button>
+
+          <button type="button" id="sm-nav-lvl3" onclick="smSwitchLevel(3)" class="w-full px-4 py-3 rounded-2xl transition-all flex items-center justify-between text-zinc-400 hover:text-white hover:bg-zinc-800/60 font-medium">
+            <span class="flex items-center space-x-3">
+              <i data-lucide="shield-check" class="w-4 h-4"></i>
+              <span class="text-sm">L3: Syntax Sentinel</span>
+            </span>
+          </button>
+
+          <button type="button" id="sm-nav-lvl4" onclick="smSwitchLevel(4)" class="w-full px-4 py-3 rounded-2xl transition-all flex items-center justify-between text-zinc-400 hover:text-white hover:bg-zinc-800/60 font-medium">
+            <span class="flex items-center space-x-3">
+              <i data-lucide="trending-up" class="w-4 h-4"></i>
+              <span class="text-sm">L4: Monotonic Peak</span>
+            </span>
+          </button>
+
+          <button type="button" id="sm-nav-lvl5" onclick="smSwitchLevel(5)" class="w-full px-4 py-3 rounded-2xl transition-all flex items-center justify-between text-zinc-400 hover:text-white hover:bg-zinc-800/60 font-medium">
+            <span class="flex items-center space-x-3">
+              <i data-lucide="repeat" class="w-4 h-4"></i>
+              <span class="text-sm">L5: Base & String Lab</span>
+            </span>
+          </button>
+
+          <button type="button" id="sm-nav-lvl6" onclick="smSwitchLevel(6)" class="w-full px-4 py-3 rounded-2xl transition-all flex items-center justify-between text-zinc-400 hover:text-white hover:bg-zinc-800/60 font-medium">
+            <span class="flex items-center space-x-3">
+              <i data-lucide="cpu" class="w-4 h-4"></i>
+              <span class="text-sm">L6: Dynamic & CallStack</span>
+            </span>
+          </button>
+
+          <button type="button" id="sm-nav-lvl7" onclick="smSwitchLevel(7)" class="w-full px-4 py-3 rounded-2xl transition-all flex items-center justify-between text-zinc-400 hover:text-white hover:bg-zinc-800/60 font-medium">
+            <span class="flex items-center space-x-3">
+              <i data-lucide="gamepad-2" class="w-4 h-4 text-amber-400"></i>
+              <span class="text-sm">L7: Arcade Quiz</span>
+            </span>
+            <span class="px-2 py-0.5 rounded-full text-[9px] font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30">BOSS</span>
+          </button>
+        </nav>
+      </div>
+
+      <!-- Bottom Card: Cheatsheet & Home Return -->
+      <div class="mt-6 pt-6 border-t border-[#27272a] space-y-3">
+        <div class="bg-gradient-to-tr from-violet-600 to-indigo-700 text-white p-5 rounded-2xl shadow-lg relative overflow-hidden group">
+          <div class="absolute -right-4 -bottom-4 w-20 h-20 bg-white/10 rounded-full blur-sm"></div>
+          <div class="relative z-10 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-black uppercase tracking-wider bg-black/40 text-violet-200 px-2.5 py-0.5 rounded-full">STACK GUIDE</span>
+              <span class="text-lg">📚</span>
+            </div>
+            <div>
+              <h4 class="font-black text-base leading-tight">Stack Cheatsheet</h4>
+              <p class="text-xs text-violet-200 font-medium mt-1">LIFO properties, C code, & formulas.</p>
+            </div>
+            <button type="button" onclick="smToggleCheatsheet()" class="w-full py-2.5 bg-slate-950 text-white rounded-xl text-xs font-bold hover:bg-slate-900 transition flex items-center justify-center space-x-1.5 shadow-md">
+              <i data-lucide="file-text" class="w-3.5 h-3.5 text-violet-400"></i>
+              <span>Open Stack Cheatsheet</span>
+            </button>
+          </div>
+        </div>
+
+        <button type="button" onclick="returnToLanding()" class="w-full py-2.5 bg-zinc-800 text-zinc-300 hover:text-white hover:bg-zinc-700 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-2 border border-zinc-700">
+          <i data-lucide="home" class="w-3.5 h-3.5 text-violet-400"></i>
+          <span>Return to Realm Selector</span>
+        </button>
+      </div>
+
+    </aside>
+
+
+    <!-- ========================================== -->
+    <!-- STACK RIGHT MAIN CONTENT PANEL             -->
+    <!-- ========================================== -->
+    <main class="flex-1 bg-[#f4f4f6] text-slate-900 p-6 flex flex-col justify-between overflow-y-auto custom-scrollbar">
+
+      <div class="space-y-6">
+
+        <!-- Top Header Bar -->
+        <header class="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white p-4 rounded-3xl border border-slate-200/80 shadow-sm">
+          <div>
+            <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
+              Stack Dashboard
+              <span class="text-[10px] font-mono font-bold bg-violet-600 text-white px-2 py-0.5 rounded-full">LIFO Lab</span>
+            </h2>
+            <p class="text-xs text-slate-500 font-medium">Single-Ended Linear Data Structure Learning Suite</p>
+          </div>
+
+          <!-- Controls Toolbar -->
+          <div class="flex items-center space-x-2">
+
+            <!-- Concept Guide Modal Button -->
+            <button type="button" onclick="smOpenConceptModal()" class="px-3.5 py-2 rounded-xl bg-violet-50 hover:bg-violet-100 text-xs font-bold text-violet-700 flex items-center space-x-1.5 transition border border-violet-200 shadow-sm">
+              <i data-lucide="book-open" class="w-3.5 h-3.5 text-violet-600"></i>
+              <span>Guide</span>
+            </button>
+
+            <!-- Return to Landing Hub -->
+            <button type="button" onclick="returnToLanding()" title="Return to Main Hub" class="px-3.5 py-2 rounded-xl bg-slate-900 text-white hover:bg-slate-800 text-xs font-bold flex items-center space-x-1.5 transition shadow-sm">
+              <i data-lucide="home" class="w-3.5 h-3.5 text-violet-400"></i>
+              <span>Hub</span>
+            </button>
+
+            <!-- Switch to Queue Master -->
+            <button type="button" onclick="launchQueueGame()" title="Switch to Queue Master" class="px-3.5 py-2 rounded-xl bg-[#c8f53e] text-slate-950 hover:bg-[#b0e322] text-xs font-bold flex items-center space-x-1.5 transition shadow-sm">
+              <span>⚡</span>
+              <span>Queue Master</span>
+            </button>
+
+            <!-- Cheatsheet -->
+            <button type="button" onclick="smToggleCheatsheet()" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-700 flex items-center space-x-1.5 transition">
+              <i data-lucide="file-text" class="w-3.5 h-3.5 text-slate-600"></i>
+              <span>Cheatsheet</span>
+            </button>
+
+            <!-- Reset Level -->
+            <button type="button" onclick="smResetCurrentLevel()" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-rose-50 hover:text-rose-600 text-xs font-bold text-slate-700 flex items-center space-x-1.5 transition">
+              <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+              <span>Reset</span>
+            </button>
+
+          </div>
+        </header>
+
+        <!-- TOP STAT CARDS GRID -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+
+          <!-- Card 1 -->
+          <div class="bg-white rounded-3xl p-5 shadow-sm border border-slate-200/80 flex flex-col justify-between">
+            <div class="flex items-center justify-between text-xs font-bold text-slate-700">
+              <span class="flex items-center space-x-1.5">
+                <i data-lucide="layers" class="w-4 h-4 text-violet-500"></i>
+                <span id="sm-top-card1-title">Stack Memory & Top</span>
+              </span>
+              <span id="sm-top-card1-badge" class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-violet-100 text-violet-700 border border-violet-200">ACTIVE</span>
+            </div>
+
+            <div class="my-3 flex items-baseline space-x-2">
+              <span id="sm-top-card1-val" class="text-4xl font-extrabold text-slate-900 tracking-tight font-mono">0 / 6</span>
+              <span id="sm-top-card1-sub" class="text-xs text-slate-500 font-bold">Top Pointer</span>
+            </div>
+
+            <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+              <span id="sm-top-card1-foot">Mode: <strong class="text-violet-600 font-bold">Fixed Array (Max=6)</strong></span>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="bg-white rounded-3xl p-5 shadow-sm border border-slate-200/80 flex flex-col justify-between">
+            <div class="flex items-center justify-between text-xs font-bold text-slate-700">
+              <span class="flex items-center space-x-1.5">
+                <i data-lucide="clock" class="w-4 h-4 text-sky-500"></i>
+                <span id="sm-top-card2-title">Algorithm Complexity</span>
+              </span>
+              <span id="sm-top-card2-badge" class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-sky-100 text-sky-700 border border-sky-200">OPTIMAL</span>
+            </div>
+
+            <div class="my-3 flex items-baseline space-x-2">
+              <span id="sm-top-card2-val" class="text-4xl font-extrabold text-slate-900 tracking-tight font-mono">O(1)</span>
+              <span id="sm-top-card2-sub" class="text-xs text-slate-500 font-bold">Constant Time</span>
+            </div>
+
+            <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+              <span id="sm-top-card2-foot">Push, Pop & Peek Operations</span>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="bg-white rounded-3xl p-5 shadow-sm border border-slate-200/80 flex flex-col justify-between">
+            <div class="flex items-center justify-between text-xs font-bold text-slate-700">
+              <span class="flex items-center space-x-1.5">
+                <i data-lucide="arrow-up-circle" class="w-4 h-4 text-purple-500"></i>
+                <span id="sm-top-card3-title">Ordering Protocol</span>
+              </span>
+              <span id="sm-top-card3-badge" class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-purple-100 text-purple-700 border border-purple-200">STRICT</span>
+            </div>
+
+            <div class="my-3 flex items-baseline space-x-2">
+              <span id="sm-top-card3-val" class="text-3xl font-extrabold text-slate-900 tracking-tight font-mono">LIFO</span>
+              <span id="sm-top-card3-sub" class="text-xs text-slate-500 font-bold">Last In, First Out</span>
+            </div>
+
+            <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+              <span id="sm-top-card3-foot">Pointer: <strong class="text-amber-600 font-bold">TOP only</strong></span>
+            </div>
+          </div>
+
+        </div>
+
+
+        <!-- ========================================== -->
+        <!-- LEVEL 1: LIFO CAFETERIA (CORE STACK)       -->
+        <!-- ========================================== -->
+        <section id="sm-level-1" class="space-y-6">
+
+          <div class="w-full bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 flex flex-col justify-between min-h-[500px]">
+
+            <!-- Level 1 Quick Guide Banner -->
+            <div class="bg-gradient-to-r from-violet-50 via-purple-50 to-indigo-50 border border-violet-200/80 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-sm">
+              <div class="flex items-center space-x-3">
+                <span class="text-2xl">🥞</span>
+                <div>
+                  <h4 class="font-bold text-slate-900 text-sm">Level 1 Concept: What is the LIFO Principle &amp; TOP Pointer?</h4>
+                  <p class="text-xs text-slate-600">A Stack is a linear data structure with single-ended access restricted to the <strong>TOP pointer</strong>. The last plate placed on top is the first one taken (Last-In, First-Out).</p>
+                </div>
+              </div>
+              <button type="button" onclick="smOpenConceptModal(1)" class="px-3.5 py-2 rounded-xl bg-violet-600 text-white hover:bg-violet-700 text-xs font-bold whitespace-nowrap shadow-sm flex items-center space-x-1.5 transition">
+                <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
+                <span>Level Guide</span>
+              </button>
+            </div>
+
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-slate-100 pb-3 gap-2">
+              <div class="flex items-center space-x-2">
+                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-violet-600 text-white">STAGE 1</span>
+                <h3 class="font-extrabold text-slate-900 text-lg">🥞 The LIFO Cafeteria (Plate Dispenser)</h3>
+              </div>
+              <div class="flex items-center space-x-3">
+                <button type="button" id="sm-mode-badge" onclick="smToggleL1Mode()" class="px-3 py-1 rounded-full text-xs font-mono font-bold bg-amber-100 text-amber-800 border border-amber-300 hover:bg-amber-200 transition cursor-pointer">
+                  FIXED SIZE ARRAY (MAX = 6)
+                </button>
+              </div>
+            </div>
+
+            <!-- Central Visualization Stage -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 my-6 items-center">
+
+              <!-- Left Column: C Code & Safety Checks -->
+              <div class="lg:col-span-4 bg-zinc-900 text-white rounded-2xl p-4 font-mono text-xs space-y-3 shadow-md border border-zinc-800">
+                <div class="flex items-center justify-between text-zinc-400 border-b border-zinc-800 pb-2">
+                  <span class="text-[11px] font-bold text-amber-300">// ADT Stack C Implementation</span>
+                  <span class="text-[10px] font-mono">Standard ADT</span>
+                </div>
+
+                <div class="space-y-2 text-[11px] text-zinc-300">
+                  <div class="text-violet-400 font-bold">/* PUSH Operation */</div>
+                  <div id="sm-code-push-1" class="p-1 rounded transition-colors">if (top >= n - 1) { printf("Stack Overflow"); }</div>
+                  <div id="sm-code-push-2" class="p-1 rounded transition-colors">else { top++; stack[top] = x; }</div>
+
+                  <div class="text-violet-400 font-bold pt-2 border-t border-zinc-800">/* POP Operation */</div>
+                  <div id="sm-code-pop-1" class="p-1 rounded transition-colors">if (top <= -1) { printf("Stack Underflow"); }</div>
+                  <div id="sm-code-pop-2" class="p-1 rounded transition-colors">else { x = stack[top]; top--; }</div>
+                </div>
+
+                <div class="pt-2 border-t border-zinc-800 flex items-center justify-between text-[10px] text-zinc-400">
+                  <span id="sm-l1-top-display" class="font-bold text-amber-300">top = 2</span>
+                  <span id="sm-l1-size-display" class="font-bold text-cyan-300">3 / 6</span>
+                </div>
+              </div>
+
+              <!-- Center Column: Vertical Spring-Loaded Stack Chamber -->
+              <div class="lg:col-span-5 flex flex-col items-center justify-center">
+                <div class="relative w-72 h-[360px] bg-slate-900/90 rounded-3xl border-4 border-slate-700 p-3 shadow-2xl flex flex-col justify-end overflow-hidden" id="sm-stack-chamber">
+
+                  <!-- Open Chamber Top Funnel (PUSH / POP Entrance) -->
+                  <div class="absolute top-0 left-0 right-0 h-10 bg-gradient-to-b from-violet-600/30 to-transparent border-b border-violet-500/40 flex items-center justify-center">
+                    <span class="text-[10px] font-mono font-black text-violet-300 uppercase tracking-widest flex items-center gap-1">
+                      <span>↓ PUSH IN</span> &bull; <span>↑ POP OUT</span>
+                    </span>
+                  </div>
+
+                  <!-- Dynamic Floating TOP Pointer Arrow -->
+                  <div id="sm-top-pointer-arrow" class="absolute -right-2 transition-all duration-300 flex items-center space-x-1.5 z-20" style="bottom: 125px;">
+                    <span id="sm-top-pointer-label" class="text-[11px] font-mono font-black text-amber-300 bg-amber-950/80 px-2 py-0.5 rounded-md border border-amber-500/50 shadow">
+                      TOP ➔ [Index 2]
+                    </span>
+                  </div>
+
+                  <!-- Spring base mechanism -->
+                  <div class="absolute bottom-2 left-6 right-6 h-3 bg-zinc-700 rounded-full border border-zinc-600"></div>
+
+                  <!-- Plates Container (Flex-col stacking upwards) -->
+                  <div id="sm-plates-container" class="space-y-2 z-10 w-full mb-3 flex flex-col-reverse justify-start">
+                    <!-- Dynamic Plates inserted here -->
+                  </div>
+
+                </div>
+
+                <div class="text-[11px] text-slate-400 mt-2 font-medium text-center">
+                  Spring-Loaded Cafeteria Dispenser: Only the top plate can be lifted!
+                </div>
+              </div>
+
+              <!-- Right Column: Interactive Mission Objectives -->
+              <div class="lg:col-span-3 bg-violet-50/70 border border-violet-200/80 rounded-2xl p-4 space-y-3">
+                <div class="flex items-center space-x-2 text-violet-900 font-extrabold text-sm">
+                  <span>🎯</span>
+                  <h4>Mission Objective</h4>
+                </div>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                  Perform <strong>5 valid operations</strong> (Push, Pop, Peek). Watch the <code class="font-mono font-bold text-violet-800">TOP</code> pointer move with every change. Click the top plate directly to POP it!
+                </p>
+                <div class="bg-white rounded-xl p-3 border border-violet-100 flex items-center justify-between">
+                  <span class="text-xs text-slate-500 font-bold">Progress:</span>
+                  <span id="sm-l1-progress" class="font-mono font-black text-violet-700 text-sm">0 / 5</span>
+                </div>
+                <div class="text-[11px] text-amber-800 bg-amber-50 p-2.5 rounded-xl border border-amber-200">
+                  💡 <strong>Tip:</strong> Clicking non-top plates triggers a <strong>LIFO Violation</strong> because stacks only allow access at the TOP!
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Bottom Action Controls Toolbar -->
+            <div class="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
+              <div class="flex flex-wrap items-center gap-2">
+
+                <!-- PUSH Group -->
+                <div class="flex items-center space-x-1.5 bg-slate-100 p-1 rounded-2xl border border-slate-200">
+                  <input type="text" id="sm-push-input" placeholder="Plate Val (e.g. 50)" class="w-36 px-3 py-2 rounded-xl text-xs font-mono font-bold bg-white border border-slate-300 focus:outline-none focus:border-violet-500">
+                  <button type="button" onclick="smPushL1()" class="px-5 py-2.5 rounded-xl bg-violet-600 hover:bg-violet-700 text-white font-extrabold text-xs flex items-center space-x-1.5 shadow transition">
+                    <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                    <span>PUSH(x)</span>
+                  </button>
+                </div>
+
+                <!-- POP Button -->
+                <button type="button" onclick="smPopL1()" class="px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-extrabold text-xs flex items-center space-x-1.5 shadow transition">
+                  <i data-lucide="arrow-up-circle" class="w-4 h-4"></i>
+                  <span>POP()</span>
+                </button>
+
+                <!-- PEEK Button -->
+                <button type="button" onclick="smPeekL1()" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-extrabold text-xs flex items-center space-x-1.5 border border-slate-300 transition">
+                  <i data-lucide="eye" class="w-4 h-4 text-violet-600"></i>
+                  <span>PEEK()</span>
+                </button>
+
+              </div>
+
+              <button type="button" onclick="smResetL1()" class="text-xs font-bold text-slate-500 hover:text-slate-800 flex items-center space-x-1">
+                <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+                <span>Reset Cafeteria</span>
+              </button>
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- LEVEL 2: POLISH NOTATION & POSTFIX LAB     -->
+        <!-- Postfix & Polish Notation Engine -->
+        <!-- ========================================== -->
+        <section id="sm-level-2" class="space-y-6 hidden">
+
+          <div class="w-full bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 space-y-6">
+
+            <!-- Header & Tab Toggle -->
+            <!-- Level 2 Quick Guide Banner -->
+            <div class="bg-gradient-to-r from-violet-50 via-purple-50 to-indigo-50 border border-violet-200/80 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-sm">
+              <div class="flex items-center space-x-3">
+                <span class="text-2xl">🧪</span>
+                <div>
+                  <h4 class="font-bold text-slate-900 text-sm">Level 2 Concept: Postfix Evaluation &amp; Polish Notations</h4>
+                  <p class="text-xs text-slate-600">Postfix (Reverse Polish) expressions place operators after operands, eliminating parentheses ambiguities. The stack holds operands until an operator pops the top two and calculates the result.</p>
+                </div>
+              </div>
+              <button type="button" onclick="smOpenConceptModal(2)" class="px-3.5 py-2 rounded-xl bg-violet-600 text-white hover:bg-violet-700 text-xs font-bold whitespace-nowrap shadow-sm flex items-center space-x-1.5 transition">
+                <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
+                <span>Level Guide</span>
+              </button>
+            </div>
+
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-slate-100 pb-4 gap-3">
+              <div>
+                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-violet-600 text-white">STAGE 2</span>
+                <h3 class="font-extrabold text-slate-900 text-lg inline ml-2">🧪 Polish Notation & Postfix Lab</h3>
+                <p class="text-xs text-slate-500 mt-0.5">Evaluation & Infix-to-Postfix conversion using an Operator Stack</p>
+              </div>
+
+              <div class="flex items-center space-x-2 bg-slate-100 p-1 rounded-2xl border border-slate-200">
+                <button type="button" id="sm-tab-eval-btn" onclick="smSwitchL2Tab('eval')" class="px-4 py-2 rounded-xl bg-violet-600 text-white font-bold text-xs shadow">
+                  Postfix Evaluator
+                </button>
+                <button type="button" id="sm-tab-conv-btn" onclick="smSwitchL2Tab('convert')" class="px-4 py-2 rounded-xl text-zinc-400 hover:text-white font-bold text-xs">
+                  Infix to Postfix
+                </button>
+              </div>
+            </div>
+
+            <!-- TAB 1: POSTFIX EVALUATOR -->
+            <div id="sm-l2-eval-section" class="space-y-6">
+
+              <!-- Controls Toolbar -->
+              <div class="flex flex-wrap items-center justify-between gap-3 bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                <div class="flex flex-wrap items-center gap-3">
+                  <span class="text-xs font-bold text-slate-700">Expression Presets:</span>
+                  <select id="sm-postfix-preset" onchange="smL2LoadPreset(parseInt(this.value))" class="px-3 py-2 rounded-xl text-xs font-mono font-bold bg-white border border-slate-300">
+                    <option value="0">"2 3 1 * + 9 -" (Result: -4)</option>
+                    <option value="1">"6 5 2 3 + 8 * + 3 + *" (Result: 288)</option>
+                    <option value="2">Classic: "5 4 + 3 2 * -" (Ans: 3)</option>
+                    <option value="3">Exponent: "8 2 / 3 2 ^ +" (Ans: 13)</option>
+                  </select>
+
+                  <div class="flex items-center space-x-1.5">
+                    <input type="text" id="sm-postfix-input" placeholder="Tokens separated by spaces" class="px-3 py-2 rounded-xl text-xs font-mono font-bold bg-white border border-slate-300 w-48">
+                    <button type="button" onclick="smL2ApplyCustom()" class="px-3 py-2 rounded-xl bg-slate-800 text-white text-xs font-bold hover:bg-slate-900">
+                      Apply
+                    </button>
+                  </div>
+                </div>
+
+                <div class="flex items-center space-x-2">
+                  <button type="button" onclick="smL2Step()" class="px-4 py-2 rounded-xl bg-violet-600 hover:bg-violet-700 text-white font-bold text-xs flex items-center space-x-1.5 shadow">
+                    <i data-lucide="step-forward" class="w-4 h-4"></i>
+                    <span>Step Forward</span>
+                  </button>
+                  <button type="button" id="sm-postfix-play-btn" onclick="smL2AutoPlay()" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs flex items-center space-x-1.5 shadow">
+                    <i data-lucide="play" class="w-4 h-4"></i>
+                    <span>Auto Play</span>
+                  </button>
+                  <button type="button" onclick="smResetL2()" class="p-2 rounded-xl bg-slate-200 text-slate-700 hover:bg-slate-300">
+                    <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Expression Scanned Tokens Stream -->
+              <div>
+                <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2">Expression Stream (Left-to-Right Scan):</span>
+                <div id="sm-l2-tokens-stream" class="flex flex-wrap items-center gap-2 p-3 bg-zinc-900 rounded-2xl border border-zinc-800 min-h-[58px]">
+                  <!-- Dynamic Tokens -->
+                </div>
+              </div>
+
+              <!-- Operand Stack & Evaluation Stage -->
+              <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+
+                <!-- Stack Tube Visualizer -->
+                <div class="md:col-span-5 bg-zinc-950 p-4 rounded-3xl border border-zinc-800 flex flex-col items-center shadow-lg">
+                  <div class="w-full flex items-center justify-between text-xs text-zinc-400 font-mono pb-2 border-b border-zinc-800">
+                    <span>OPERAND STACK</span>
+                    <span class="text-amber-400 font-bold">Stores Numbers</span>
+                  </div>
+
+                  <div id="sm-l2-operand-stack" class="w-full h-52 flex flex-col-reverse justify-start space-y-2 space-y-reverse overflow-y-auto p-2 my-2 custom-scrollbar">
+                    <!-- Numbers in stack -->
+                  </div>
+
+                  <span class="text-[10px] font-mono text-zinc-500">Operators pop 2 numbers and push the result</span>
+                </div>
+
+                <!-- Live Result & Calculation Insight -->
+                <div class="md:col-span-7 bg-slate-50 rounded-3xl p-5 border border-slate-200 flex flex-col justify-between h-full">
+                  <div>
+                    <h4 class="font-bold text-slate-900 text-sm">Evaluation Status</h4>
+                    <p class="text-xs text-slate-500 mt-1">Algorithm: If operand, push onto stack. If operator, pop two operands, calculate <code class="font-mono font-bold text-violet-700">b op a</code>, and push result back.</p>
+                  </div>
+
+                  <div class="bg-white rounded-2xl p-4 border border-slate-200 my-4 flex items-center justify-between">
+                    <div>
+                      <span class="text-xs text-slate-400 font-bold block">Current Top Answer:</span>
+                      <div id="sm-l2-result-display" class="text-3xl font-black font-mono text-amber-600">--</div>
+                    </div>
+                    <div class="text-right">
+                      <span class="text-[10px] font-mono text-slate-400">Time Complexity</span>
+                      <span class="text-xs font-mono font-bold text-emerald-600 block">O(N) Linear Time</span>
+                    </div>
+                  </div>
+
+                  <div class="text-[11px] text-zinc-500 italic">
+                    Examples: "2 3 1 * + 9 -" results in -4, "6 5 2 3 + 8 * + 3 + *" results in 288.
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Log Table -->
+              <div class="bg-zinc-900 text-white rounded-2xl p-4 border border-zinc-800 shadow-md">
+                <span class="text-xs font-mono font-bold text-amber-300 uppercase tracking-wider block mb-2">Step Execution Trace:</span>
+                <div class="max-h-48 overflow-y-auto custom-scrollbar">
+                  <table class="w-full text-left">
+                    <thead class="text-[10px] font-mono text-zinc-400 border-b border-zinc-800">
+                      <tr>
+                        <th class="py-1 px-3">Step</th>
+                        <th class="py-1 px-3">Scanned Token</th>
+                        <th class="py-1 px-3">Action Taken</th>
+                        <th class="py-1 px-3">Stack Status</th>
+                      </tr>
+                    </thead>
+                    <tbody id="sm-l2-log-body">
+                      <!-- Rows inserted dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+            </div>
+
+
+            <!-- TAB 2: INFIX TO POSTFIX CONVERTER -->
+            <div id="sm-l2-conv-section" class="space-y-6 hidden">
+
+              <div class="flex flex-wrap items-center justify-between gap-3 bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                <div class="flex items-center space-x-2">
+                  <span class="text-xs font-bold text-slate-700">Infix Expression:</span>
+                  <input type="text" id="sm-infix-input" value="M * J - ( N + D ) / F * W + Z" class="px-3 py-2 rounded-xl text-xs font-mono font-bold bg-white border border-slate-300 w-64">
+                  <button type="button" onclick="smL2LoadInfix()" class="px-3 py-2 rounded-xl bg-slate-800 text-white text-xs font-bold hover:bg-slate-900">
+                    Load
+                  </button>
+                </div>
+
+                <button type="button" onclick="smL2StepConvert()" class="px-5 py-2.5 rounded-xl bg-violet-600 hover:bg-violet-700 text-white font-bold text-xs flex items-center space-x-1.5 shadow">
+                  <i data-lucide="step-forward" class="w-4 h-4"></i>
+                  <span>Step Conversion</span>
+                </button>
+              </div>
+
+              <!-- Display Row -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-zinc-950 p-4 rounded-2xl border border-zinc-800">
+                  <span class="text-xs font-mono font-bold text-zinc-400 block mb-2">Operator Stack (Precedence: ^ > * / > + -):</span>
+                  <div id="sm-conv-op-stack" class="h-28 flex items-center space-x-2 overflow-x-auto p-2">
+                    <!-- Op stack -->
+                  </div>
+                </div>
+
+                <div class="bg-zinc-950 p-4 rounded-2xl border border-zinc-800 flex flex-col justify-between">
+                  <span class="text-xs font-mono font-bold text-zinc-400 block mb-1">Generated Postfix Output String:</span>
+                  <div id="sm-conv-postfix-out" class="text-xl font-mono font-black text-[#c8f53e] my-auto">--</div>
+                  <span class="text-[10px] font-mono text-zinc-500">Operands bypass the stack directly to output</span>
+                </div>
+              </div>
+
+              <!-- Conversion Table Trace -->
+              <div class="bg-zinc-900 text-white rounded-2xl p-4 border border-zinc-800 shadow-md">
+                <span class="text-xs font-mono font-bold text-amber-300 uppercase tracking-wider block mb-2">Conversion Table Trace (Infix | Stack | Postfix):</span>
+                <div class="max-h-52 overflow-y-auto custom-scrollbar">
+                  <table class="w-full text-left">
+                    <thead class="text-[10px] font-mono text-zinc-400 border-b border-zinc-800">
+                      <tr>
+                        <th class="py-1 px-3">Infix Char</th>
+                        <th class="py-1 px-3">Operator Stack</th>
+                        <th class="py-1 px-3">Postfix Output</th>
+                      </tr>
+                    </thead>
+                    <tbody id="sm-conv-table-body">
+                      <!-- Dynamic rows -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- LEVEL 3: SYNTAX SENTINEL (BRACKET CHECK)   -->
+        <!-- Syntax Sentinel: Balanced Brackets -->
+        <!-- ========================================== -->
+        <section id="sm-level-3" class="space-y-6 hidden">
+
+          <div class="w-full bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 space-y-6">
+
+            <!-- Level 3 Quick Guide Banner -->
+            <div class="bg-gradient-to-r from-violet-50 via-purple-50 to-indigo-50 border border-violet-200/80 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-sm">
+              <div class="flex items-center space-x-3">
+                <span class="text-2xl">🛡️</span>
+                <div>
+                  <h4 class="font-bold text-slate-900 text-sm">Level 3 Concept: Syntax Validation of Balanced Parentheses</h4>
+                  <p class="text-xs text-slate-600">Code linters and compilers use stacks to verify nested brackets <code>()[]{}</code>. Opening brackets are pushed; closing brackets check and pop the matching top bracket.</p>
+                </div>
+              </div>
+              <button type="button" onclick="smOpenConceptModal(3)" class="px-3.5 py-2 rounded-xl bg-violet-600 text-white hover:bg-violet-700 text-xs font-bold whitespace-nowrap shadow-sm flex items-center space-x-1.5 transition">
+                <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
+                <span>Level Guide</span>
+              </button>
+            </div>
+
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-slate-100 pb-4 gap-2">
+              <div>
+                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-violet-600 text-white">STAGE 3</span>
+                <h3 class="font-extrabold text-slate-900 text-lg inline ml-2">🛡️ Syntax Sentinel (Balanced Parentheses)</h3>
+                <p class="text-xs text-slate-500 mt-0.5">Validating (), {}, [] pairs using LIFO bracket matching</p>
+              </div>
+
+              <div id="sm-l3-status-badge" class="px-4 py-1.5 rounded-full text-xs font-mono font-black bg-amber-500/20 text-amber-700 border border-amber-500">
+                READY TO SCAN ⚡
+              </div>
+            </div>
+
+            <!-- Controls Toolbar -->
+            <div class="flex flex-wrap items-center justify-between gap-3 bg-slate-50 p-4 rounded-2xl border border-slate-200">
+              <div class="flex flex-wrap items-center gap-3">
+                <span class="text-xs font-bold text-slate-700">Test Cases:</span>
+                <select id="sm-bracket-preset" onchange="smL3LoadPreset(parseInt(this.value))" class="px-3 py-2 rounded-xl text-xs font-mono font-bold bg-white border border-slate-300">
+                  <option value="0">Standard Valid: "({[]})"</option>
+                  <option value="1">Complex Valid: "[()]{}{[()()]()}"</option>
+                  <option value="2">Mismatched: "[(])" (Invalid)</option>
+                  <option value="3">Unclosed: "((())" (Invalid)</option>
+                  <option value="4">Premature: "}{]" (Invalid)</option>
+                  <option value="5">Code Snippet: "if(arr[i] == (x + 1)) { return true; }"</option>
+                </select>
+
+                <div class="flex items-center space-x-1.5">
+                  <input type="text" id="sm-bracket-input" value="({[]})" class="px-3 py-2 rounded-xl text-xs font-mono font-bold bg-white border border-slate-300 w-44">
+                  <button type="button" onclick="smL3ApplyCustom()" class="px-3 py-2 rounded-xl bg-slate-800 text-white text-xs font-bold hover:bg-slate-900">
+                    Apply
+                  </button>
+                </div>
+              </div>
+
+              <div class="flex items-center space-x-2">
+                <button type="button" onclick="smL3Step()" class="px-4 py-2 rounded-xl bg-violet-600 hover:bg-violet-700 text-white font-bold text-xs flex items-center space-x-1.5 shadow">
+                  <i data-lucide="step-forward" class="w-4 h-4"></i>
+                  <span>Step Scanner</span>
+                </button>
+                <button type="button" onclick="smL3RunAll()" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs flex items-center space-x-1.5 shadow">
+                  <i data-lucide="play" class="w-4 h-4"></i>
+                  <span>Run All</span>
+                </button>
+                <button type="button" onclick="smResetL3()" class="p-2 rounded-xl bg-slate-200 text-slate-700 hover:bg-slate-300">
+                  <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Character Stream -->
+            <div>
+              <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2">Expression Token Stream:</span>
+              <div id="sm-l3-stream" class="flex flex-wrap items-center gap-2 p-3 bg-zinc-950 rounded-2xl border border-zinc-800 min-h-[58px]">
+                <!-- Stream tokens -->
+              </div>
+            </div>
+
+            <!-- Center Stage: Bracket Stack Visualizer -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+
+              <div class="md:col-span-4 bg-zinc-950 p-4 rounded-3xl border border-zinc-800 flex flex-col items-center shadow-lg">
+                <div class="w-full flex items-center justify-between text-xs text-zinc-400 font-mono pb-2 border-b border-zinc-800">
+                  <span>BRACKET STACK</span>
+                  <span class="text-amber-300 font-bold">Stores Openers</span>
+                </div>
+
+                <div id="sm-l3-stack" class="w-full h-48 flex flex-col-reverse justify-start space-y-2 space-y-reverse overflow-y-auto p-2 my-2 custom-scrollbar">
+                  <!-- Open brackets -->
+                </div>
+
+                <span class="text-[10px] font-mono text-zinc-500">Closing bracket matches & pops topmost opener</span>
+              </div>
+
+              <!-- Rules & Trace Table -->
+              <div class="md:col-span-8 bg-zinc-900 text-white rounded-3xl p-5 border border-zinc-800 shadow-md flex flex-col justify-between">
+                <div class="flex items-center justify-between border-b border-zinc-800 pb-2 mb-2">
+                  <span class="text-xs font-mono font-bold text-amber-300 uppercase">Execution Trace Table (Stack | Expression | Action):</span>
+                  <span class="text-[10px] font-mono text-zinc-400">Rule: Empty stack at end = Balanced</span>
+                </div>
+
+                <div class="max-h-52 overflow-y-auto custom-scrollbar">
+                  <table class="w-full text-left">
+                    <thead class="text-[10px] font-mono text-zinc-400 border-b border-zinc-800">
+                      <tr>
+                        <th class="py-1 px-3">Stack</th>
+                        <th class="py-1 px-3">Char</th>
+                        <th class="py-1 px-3">Action Taken</th>
+                      </tr>
+                    </thead>
+                    <tbody id="sm-l3-log-body">
+                      <!-- Dynamic rows -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- LEVEL 4: MONOTONIC MOUNTAIN (NGE & PGE)    -->
+        <!-- Monotonic Stack Algorithm -->
+        <!-- ========================================== -->
+        <section id="sm-level-4" class="space-y-6 hidden">
+
+          <div class="w-full bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 space-y-6">
+
+            <!-- Level 4 Quick Guide Banner -->
+            <div class="bg-gradient-to-r from-violet-50 via-purple-50 to-indigo-50 border border-violet-200/80 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-sm">
+              <div class="flex items-center space-x-3">
+                <span class="text-2xl">🔭</span>
+                <div>
+                  <h4 class="font-bold text-slate-900 text-sm">Level 4 Concept: Monotonic Stack (Next &amp; Previous Greater Element)</h4>
+                  <p class="text-xs text-slate-600">While brute-force nested loops take O(N²) quadratic time, maintaining a decreasing monotonic stack finds the first strictly greater neighbor in optimal <strong>O(N) linear time</strong>.</p>
+                </div>
+              </div>
+              <button type="button" onclick="smOpenConceptModal(4)" class="px-3.5 py-2 rounded-xl bg-violet-600 text-white hover:bg-violet-700 text-xs font-bold whitespace-nowrap shadow-sm flex items-center space-x-1.5 transition">
+                <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
+                <span>Level Guide</span>
+              </button>
+            </div>
+
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-slate-100 pb-4 gap-2">
+              <div>
+                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-violet-600 text-white">STAGE 4</span>
+                <h3 class="font-extrabold text-slate-900 text-lg inline ml-2">🔭 Monotonic Peak (Next & Previous Greater)</h3>
+                <p class="text-xs text-slate-500 mt-0.5">Linear time O(N) lookup using a monotonic decreasing stack</p>
+              </div>
+
+              <!-- NGE vs PGE Toggle -->
+              <div class="flex items-center space-x-2 bg-slate-100 p-1 rounded-2xl border border-slate-200">
+                <button type="button" id="sm-btn-mode-nge" onclick="smSwitchL4Mode('nge')" class="px-4 py-2 rounded-xl bg-violet-600 text-white font-bold text-xs shadow">
+                  Next Greater (NGE)
+                </button>
+                <button type="button" id="sm-btn-mode-pge" onclick="smSwitchL4Mode('pge')" class="px-4 py-2 rounded-xl text-zinc-400 hover:text-white font-bold text-xs">
+                  Previous Greater (PGE)
+                </button>
+              </div>
+            </div>
+
+            <!-- Controls Toolbar -->
+            <div class="flex flex-wrap items-center justify-between gap-3 bg-slate-50 p-4 rounded-2xl border border-slate-200">
+              <div class="flex flex-wrap items-center gap-3">
+                <span class="text-xs font-bold text-slate-700">Presets:</span>
+                <select id="sm-l4-preset" onchange="smL4LoadPreset(parseInt(this.value))" class="px-3 py-2 rounded-xl text-xs font-mono font-bold bg-white border border-slate-300">
+                  <option value="0">Example 1 (NGE): [1, 3, 2, 4] ➔ [3, 4, 4, -1]</option>
+                  <option value="1">Example 2 (NGE): [6, 8, 0, 1, 3] ➔ [8, -1, 1, 3, -1]</option>
+                  <option value="2">Example 1 (PGE): [10, 4, 2, 20, 40, 12] ➔ [-1, 10, 4, -1, -1, 40]</option>
+                  <option value="3">Example 2 (PGE): [10, 20, 30, 40] ➔ [-1, -1, -1, -1]</option>
+                </select>
+
+                <div class="flex items-center space-x-1.5">
+                  <input type="text" id="sm-l4-input" value="1, 3, 2, 4" class="px-3 py-2 rounded-xl text-xs font-mono font-bold bg-white border border-slate-300 w-44">
+                  <button type="button" onclick="smL4ApplyCustom()" class="px-3 py-2 rounded-xl bg-slate-800 text-white text-xs font-bold hover:bg-slate-900">
+                    Apply
+                  </button>
+                </div>
+              </div>
+
+              <div class="flex items-center space-x-2">
+                <button type="button" onclick="smL4Step()" class="px-4 py-2 rounded-xl bg-violet-600 hover:bg-violet-700 text-white font-bold text-xs flex items-center space-x-1.5 shadow">
+                  <i data-lucide="step-forward" class="w-4 h-4"></i>
+                  <span>Step Algorithm</span>
+                </button>
+                <button type="button" onclick="smL4RunAll()" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs flex items-center space-x-1.5 shadow">
+                  <i data-lucide="play" class="w-4 h-4"></i>
+                  <span>Run All</span>
+                </button>
+                <button type="button" onclick="smResetL4()" class="p-2 rounded-xl bg-slate-200 text-slate-700 hover:bg-slate-300">
+                  <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Mountain Bar Visualizer Stage -->
+            <div class="bg-zinc-950 rounded-3xl p-6 border border-zinc-800 shadow-xl space-y-4">
+              <div class="flex items-center justify-between text-xs text-zinc-400 font-mono">
+                <span>ARRAY HEIGHT RADAR:</span>
+                <span class="text-amber-300 font-bold">Computed Output: <span id="sm-l4-result-array" class="text-emerald-400 ml-1">[]</span></span>
+              </div>
+
+              <!-- Bar visualizer container -->
+              <div id="sm-l4-bars-container" class="flex items-end justify-center space-x-4 h-60 pt-6 px-4 overflow-x-auto custom-scrollbar">
+                <!-- Mountain bars -->
+              </div>
+            </div>
+
+            <!-- Monotonic Stack & Log Table -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+
+              <div class="md:col-span-4 bg-zinc-950 p-4 rounded-3xl border border-zinc-800 flex flex-col items-center shadow-lg">
+                <div class="w-full flex items-center justify-between text-xs text-zinc-400 font-mono pb-2 border-b border-zinc-800">
+                  <span>MONOTONIC STACK</span>
+                  <span class="text-amber-300 font-bold">Decreasing</span>
+                </div>
+
+                <div id="sm-l4-mono-stack" class="w-full h-44 flex flex-col-reverse justify-start space-y-2 space-y-reverse overflow-y-auto p-2 my-2 custom-scrollbar">
+                  <!-- Monotonic stack elements -->
+                </div>
+
+                <span class="text-[10px] font-mono text-zinc-500">Pops elements smaller than or equal to current</span>
+              </div>
+
+              <div class="md:col-span-8 bg-zinc-900 text-white rounded-3xl p-5 border border-zinc-800 shadow-md">
+                <span class="text-xs font-mono font-bold text-amber-300 uppercase tracking-wider block mb-2">Step Log Trace:</span>
+                <div class="max-h-44 overflow-y-auto custom-scrollbar">
+                  <table class="w-full text-left">
+                    <thead class="text-[10px] font-mono text-zinc-400 border-b border-zinc-800">
+                      <tr>
+                        <th class="py-1 px-3">Array Item</th>
+                        <th class="py-1 px-3">Stack Action & Answer</th>
+                      </tr>
+                    </thead>
+                    <tbody id="sm-l4-log-body">
+                      <!-- Rows -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- LEVEL 5: BASE & STRING LAB (RADIX REVERSAL) -->
+        <!-- Reversal & Radix Transformations -->
+        <!-- ========================================== -->
+        <section id="sm-level-5" class="space-y-6 hidden">
+
+          <div class="w-full bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 space-y-6">
+
+            <!-- Level 5 Quick Guide Banner -->
+            <div class="bg-gradient-to-r from-violet-50 via-purple-50 to-indigo-50 border border-violet-200/80 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-sm">
+              <div class="flex items-center space-x-3">
+                <span class="text-2xl">🔄</span>
+                <div>
+                  <h4 class="font-bold text-slate-900 text-sm">Level 5 Concept: String Reversal &amp; Radix Base Conversion</h4>
+                  <p class="text-xs text-slate-600">Because items pop in reverse order of insertion, pushing characters or mathematical division remainders and popping them produces exact reversals and base digits.</p>
+                </div>
+              </div>
+              <button type="button" onclick="smOpenConceptModal(5)" class="px-3.5 py-2 rounded-xl bg-violet-600 text-white hover:bg-violet-700 text-xs font-bold whitespace-nowrap shadow-sm flex items-center space-x-1.5 transition">
+                <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
+                <span>Level Guide</span>
+              </button>
+            </div>
+
+            <div class="border-b border-slate-100 pb-4">
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-violet-600 text-white">STAGE 5</span>
+              <h3 class="font-extrabold text-slate-900 text-lg inline ml-2">🔄 String Reversal & Radix Base Converter</h3>
+              <p class="text-xs text-slate-500 mt-0.5">Real-world algorithmic applications of the LIFO property</p>
+            </div>
+
+            <!-- Two Sub-Labs Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+              <!-- LAB A: STRING REVERSER -->
+              <div class="bg-slate-50 rounded-3xl p-5 border border-slate-200 flex flex-col justify-between space-y-4">
+                <div>
+                  <div class="flex items-center justify-between">
+                    <h4 class="font-black text-slate-900 text-sm">🔤 1. String Reversal Studio</h4>
+                    <span id="sm-l5-phase-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-violet-100 text-violet-700">
+                      PHASE 1: PUSH ➔
+                    </span>
+                  </div>
+                  <p class="text-xs text-slate-500 mt-1">Push characters one by one onto stack, then pop all characters out to reverse.</p>
+                </div>
+
+                <div class="flex items-center space-x-2">
+                  <input type="text" id="sm-str-input" value="STACK" class="px-3 py-2 rounded-xl text-xs font-mono font-bold bg-white border border-slate-300 flex-1">
+                  <button type="button" onclick="smL5LoadString()" class="px-3 py-2 rounded-xl bg-slate-800 text-white text-xs font-bold hover:bg-slate-900">
+                    Load
+                  </button>
+                  <button type="button" onclick="smL5StepString()" class="px-4 py-2 rounded-xl bg-violet-600 hover:bg-violet-700 text-white text-xs font-bold">
+                    Step
+                  </button>
+                  <button type="button" onclick="smL5RunAllString()" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold">
+                    Reverse
+                  </button>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 my-2">
+                  <div class="bg-zinc-950 p-3 rounded-2xl border border-zinc-800">
+                    <span class="text-[10px] font-mono font-bold text-zinc-400 block mb-1">Character Stack:</span>
+                    <div id="sm-l5-str-stack" class="h-32 flex flex-col-reverse justify-start space-y-1 space-y-reverse overflow-y-auto custom-scrollbar p-1">
+                      <!-- Char stack -->
+                    </div>
+                  </div>
+
+                  <div class="bg-white p-3 rounded-2xl border border-slate-200 flex flex-col justify-between">
+                    <span class="text-[10px] font-mono font-bold text-slate-400 block">Reversed String Output:</span>
+                    <div id="sm-l5-rev-out" class="text-2xl font-black font-mono text-violet-700 my-auto">--</div>
+                    <span class="text-[10px] text-slate-400">Popped LIFO elements</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- LAB B: RADIX BASE CONVERTER -->
+              <div class="bg-slate-50 rounded-3xl p-5 border border-slate-200 flex flex-col justify-between space-y-4">
+                <div>
+                  <div class="flex items-center justify-between">
+                    <h4 class="font-black text-slate-900 text-sm">🔢 2. Decimal Number Base Converter</h4>
+                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-cyan-100 text-cyan-700">
+                      REMAINDER STACK
+                    </span>
+                  </div>
+                  <p class="text-xs text-slate-500 mt-1">Repeatedly divide by base, push remainders to stack, pop in reverse order.</p>
+                </div>
+
+                <div class="flex items-center space-x-2">
+                  <input type="number" id="sm-dec-input" value="29" min="0" max="9999" class="px-3 py-2 rounded-xl text-xs font-mono font-bold bg-white border border-slate-300 w-24">
+                  <select id="sm-radix-select" class="px-3 py-2 rounded-xl text-xs font-mono font-bold bg-white border border-slate-300">
+                    <option value="2">Binary (Base 2)</option>
+                    <option value="8">Octal (Base 8)</option>
+                    <option value="16">Hexadecimal (Base 16)</option>
+                  </select>
+                  <button type="button" onclick="smL5ConvertRadix()" class="px-4 py-2 rounded-xl bg-violet-600 hover:bg-violet-700 text-white text-xs font-bold shadow">
+                    Convert
+                  </button>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 my-2">
+                  <div class="bg-zinc-950 p-3 rounded-2xl border border-zinc-800">
+                    <span class="text-[10px] font-mono font-bold text-zinc-400 block mb-1">Remainder Stack:</span>
+                    <div id="sm-l5-radix-stack" class="h-32 flex flex-col-reverse justify-start space-y-1 space-y-reverse overflow-y-auto custom-scrollbar p-1">
+                      <!-- Rem stack -->
+                    </div>
+                  </div>
+
+                  <div class="bg-white p-3 rounded-2xl border border-slate-200 flex flex-col justify-between">
+                    <span class="text-[10px] font-mono font-bold text-slate-400 block">Converted Base Output:</span>
+                    <div id="sm-l5-radix-result" class="text-2xl font-black font-mono text-cyan-600 my-auto">11101</div>
+                    <span class="text-[10px] text-slate-400">Popped in reverse order</span>
+                  </div>
+                </div>
+
+                <!-- Division Table -->
+                <div class="bg-zinc-900 rounded-xl p-2.5 max-h-24 overflow-y-auto custom-scrollbar">
+                  <table class="w-full text-left text-[11px] font-mono">
+                    <tbody id="sm-l5-radix-table">
+                      <!-- Rows -->
+                    </tbody>
+                  </table>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- LEVEL 6: DYNAMIC HEAP & CALL STACK         -->
+        <!-- Dynamic Memory & Call Stack -->
+        <!-- ========================================== -->
+        <section id="sm-level-6" class="space-y-6 hidden">
+
+          <div class="w-full bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 space-y-6">
+
+            <!-- Level 6 Quick Guide Banner -->
+            <div class="bg-gradient-to-r from-violet-50 via-purple-50 to-indigo-50 border border-violet-200/80 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-sm">
+              <div class="flex items-center space-x-3">
+                <span class="text-2xl">🔗</span>
+                <div>
+                  <h4 class="font-bold text-slate-900 text-sm">Level 6 Concept: Dynamic Heap Stacks &amp; Call Stack Recursion</h4>
+                  <p class="text-xs text-slate-600">Linked List stacks allocate dynamic nodes on the heap (malloc) with no fixed overflow limits. In programming languages, recursive functions push activation frames onto the runtime Call Stack.</p>
+                </div>
+              </div>
+              <button type="button" onclick="smOpenConceptModal(6)" class="px-3.5 py-2 rounded-xl bg-violet-600 text-white hover:bg-violet-700 text-xs font-bold whitespace-nowrap shadow-sm flex items-center space-x-1.5 transition">
+                <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
+                <span>Level Guide</span>
+              </button>
+            </div>
+
+            <div class="border-b border-slate-100 pb-4">
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-violet-600 text-white">STAGE 6</span>
+              <h3 class="font-extrabold text-slate-900 text-lg inline ml-2">🔗 Dynamic Heap Stack & Call Stack Recursion</h3>
+              <p class="text-xs text-slate-500 mt-0.5">Linked list dynamic implementation & Function Call Stack execution</p>
+            </div>
+
+            <!-- Two Sub-Panels -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+              <!-- PANEL A: LINKED LIST STACK (DYNAMIC HEAP) -->
+              <div class="bg-slate-50 rounded-3xl p-5 border border-slate-200 flex flex-col justify-between space-y-4">
+                <div>
+                  <div class="flex items-center justify-between">
+                    <h4 class="font-black text-slate-900 text-sm">☁️ 1. Dynamic Linked List Stack</h4>
+                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-violet-100 text-violet-700">
+                      HEAP MEMORY
+                    </span>
+                  </div>
+                  <p class="text-xs text-slate-500 mt-1">Each node contains <code class="font-mono text-slate-800">info</code> and <code class="font-mono text-slate-800">next*</code> pointer. Avoids static array capacity overflow!</p>
+                </div>
+
+                <div class="flex items-center space-x-2">
+                  <input type="text" id="sm-l6-input" placeholder="Node Data" class="px-3 py-2 rounded-xl text-xs font-mono font-bold bg-white border border-slate-300 flex-1">
+                  <button type="button" onclick="smL6PushLinked()" class="px-4 py-2 rounded-xl bg-violet-600 hover:bg-violet-700 text-white text-xs font-bold shadow">
+                    malloc & Push
+                  </button>
+                  <button type="button" onclick="smL6PopLinked()" class="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold shadow">
+                    Pop & free()
+                  </button>
+                </div>
+
+                <div class="bg-zinc-950 p-4 rounded-2xl border border-zinc-800">
+                  <span class="text-[10px] font-mono font-bold text-zinc-400 block mb-2">Chained Heap Nodes (Top moves to head):</span>
+                  <div id="sm-l6-nodes-container" class="h-48 overflow-y-auto custom-scrollbar p-2 space-y-2">
+                    <!-- Linked nodes -->
+                  </div>
+                </div>
+
+                <div class="text-[11px] text-zinc-500">
+                  Node structure: Each node contains info and next address. New node becomes the starting node.
+                </div>
+              </div>
+
+
+              <!-- PANEL B: RECURSION CALL STACK SIMULATOR -->
+              <div class="bg-slate-50 rounded-3xl p-5 border border-slate-200 flex flex-col justify-between space-y-4">
+                <div>
+                  <div class="flex items-center justify-between">
+                    <h4 class="font-black text-slate-900 text-sm">🔄 2. Recursion Call Stack (factorial(4))</h4>
+                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-100 text-emerald-700">
+                      ACTIVATION FRAMES
+                    </span>
+                  </div>
+                  <p class="text-xs text-slate-500 mt-1">When a recursive function calls itself, activation records push to the call stack until base condition unwinds them.</p>
+                </div>
+
+                <div class="flex items-center space-x-2">
+                  <button type="button" onclick="smL6StepRecursion()" class="px-4 py-2 rounded-xl bg-violet-600 hover:bg-violet-700 text-white text-xs font-bold shadow flex-1">
+                    Step Call Stack
+                  </button>
+                  <button type="button" onclick="smL6ResetRecursion()" class="p-2 rounded-xl bg-slate-200 text-slate-700 hover:bg-slate-300">
+                    <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                  </button>
+                </div>
+
+                <div class="bg-zinc-950 p-4 rounded-2xl border border-zinc-800">
+                  <span class="text-[10px] font-mono font-bold text-zinc-400 block mb-2">Active Call Stack Frames:</span>
+                  <div id="sm-l6-callstack-container" class="h-48 overflow-y-auto custom-scrollbar p-2 space-y-2 flex flex-col-reverse justify-start">
+                    <!-- Frames -->
+                  </div>
+                </div>
+
+                <div class="text-[11px] text-zinc-500">
+                  Call Stack Unwinding: When termination condition meets, the values pop from top of stack.
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- LEVEL 7: ARCADE BOSS QUIZ                  -->
+        <!-- Comprehensive Stack Mastery Assessment -->
+        <!-- ========================================== -->
+        <section id="sm-level-7" class="space-y-6 hidden">
+
+          <div class="w-full bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/80 space-y-6">
+
+            <!-- Level 7 Quick Guide Banner -->
+            <div class="bg-gradient-to-r from-violet-50 via-purple-50 to-indigo-50 border border-violet-200/80 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-sm">
+              <div class="flex items-center space-x-3">
+                <span class="text-2xl">🕹️</span>
+                <div>
+                  <h4 class="font-bold text-slate-900 text-sm">Level 7: Comprehensive Stack Knowledge Assessment</h4>
+                  <p class="text-xs text-slate-600">Test your practical understanding across all stack modules: LIFO ordering, overflow/underflow, postfix arithmetic, monotonic queries, and dynamic memory.</p>
+                </div>
+              </div>
+              <button type="button" onclick="smOpenConceptModal(7)" class="px-3.5 py-2 rounded-xl bg-violet-600 text-white hover:bg-violet-700 text-xs font-bold whitespace-nowrap shadow-sm flex items-center space-x-1.5 transition">
+                <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
+                <span>Level Guide</span>
+              </button>
+            </div>
+
+            <div id="sm-quiz-card-container" class="space-y-6 max-w-2xl mx-auto">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <div class="flex items-center space-x-2">
+                  <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-amber-400 text-slate-950">BOSS QUIZ</span>
+                  <span id="sm-quiz-q-num" class="font-extrabold text-slate-900 text-sm">Question 1 of 8</span>
+                </div>
+                <span class="text-xs font-mono font-bold text-violet-600">Core Concepts Mastery Assessment</span>
+              </div>
+
+              <h3 id="sm-quiz-question-text" class="text-xl sm:text-2xl font-extrabold text-slate-900 leading-snug">
+                Question loading...
+              </h3>
+
+              <div id="sm-quiz-options-container" class="space-y-3">
+                <!-- Options -->
+              </div>
+
+              <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+                <span class="text-xs text-slate-400 font-medium">Select an option to evaluate your answer</span>
+                <button type="button" id="sm-quiz-next-btn" onclick="smNextQuizQuestion()" class="px-6 py-2.5 rounded-xl bg-violet-600 hover:bg-violet-700 text-white font-bold text-xs shadow-md transition hidden">
+                  Next Question ➔
+                </button>
+              </div>
+            </div>
+
+            <!-- Quiz Results Screen -->
+            <div id="sm-quiz-results-container" class="space-y-6 max-w-xl mx-auto text-center py-8 hidden">
+              <div class="text-5xl">🏆</div>
+              <h3 class="text-3xl font-black text-slate-900 tracking-tight">QUIZ COMPLETE!</h3>
+              <p class="text-xs text-slate-600 font-medium">You have tested your comprehensive knowledge of Stack fundamentals and algorithmic concepts.</p>
+
+              <div class="grid grid-cols-2 gap-4 max-w-sm mx-auto">
+                <div class="bg-violet-50 p-4 rounded-2xl border border-violet-200">
+                  <span class="text-xs text-slate-500 font-bold block">Final Score</span>
+                  <span id="sm-final-score" class="text-3xl font-black text-violet-700 font-mono">0 PTS</span>
+                </div>
+                <div class="bg-emerald-50 p-4 rounded-2xl border border-emerald-200">
+                  <span class="text-xs text-slate-500 font-bold block">Accuracy</span>
+                  <span id="sm-final-acc" class="text-3xl font-black text-emerald-700 font-mono">100%</span>
+                </div>
+              </div>
+
+              <div class="pt-4 flex items-center justify-center space-x-3">
+                <button type="button" onclick="smInitL7Quiz()" class="px-5 py-2.5 rounded-xl bg-slate-900 text-white text-xs font-bold shadow">
+                  🔄 Retake Quiz
+                </button>
+                <button type="button" onclick="smSwitchLevel(1)" class="px-5 py-2.5 rounded-xl bg-violet-600 text-white text-xs font-bold shadow">
+                  🥞 Return to Level 1
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+        </section>
+
+      </div>
+
+      <!-- FOOTER -->
+      <footer class="mt-8 pt-4 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-2">
+        <p>&copy; 2026 Stack Master Academy &bull; LIFO Algorithm Engine Edition</p>
+        <p class="font-mono text-[10px]">Based on Linear Data Structures & Applications</p>
+      </footer>
+
+    </main>
+
+  </div>
+
+
+
   <!-- MODALS SECTION -->
 
   <!-- FIFO MODAL -->
@@ -988,6 +2344,353 @@
 
 
   <!-- TOAST CONTAINER -->
+  
+  <!-- STACK MASTER LIFO VIOLATION MODAL -->
+  <div id="sm-lifo-modal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white max-w-md w-full p-6 rounded-3xl border-2 border-rose-400 shake-error space-y-4 shadow-2xl">
+      <div class="flex items-center space-x-3 text-rose-600">
+        <span class="text-3xl">⚠️</span>
+        <h3 class="text-lg font-black text-slate-900">LIFO VIOLATION DETECTED!</h3>
+      </div>
+      <p id="sm-lifo-modal-msg" class="text-xs text-slate-700 leading-relaxed"></p>
+      <button type="button" onclick="smCloseLifoModal()" class="w-full py-3 rounded-2xl bg-slate-950 hover:bg-slate-900 text-white font-bold text-xs transition">
+        I Understand - Try Again
+      </button>
+    </div>
+  </div>
+
+  <!-- STACK MASTER VICTORY MODAL -->
+  <div id="sm-victory-modal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white max-w-md w-full p-6 rounded-3xl border-2 border-violet-500 text-center space-y-4 shadow-2xl">
+      <div class="text-4xl">🎉</div>
+      <h3 id="sm-victory-title" class="text-2xl font-black text-slate-900">LEVEL COMPLETE!</h3>
+      <p id="sm-victory-subtitle" class="text-xs text-slate-600 font-medium"></p>
+      <button type="button" id="sm-victory-action-btn" onclick="smCloseVictoryModal()" class="w-full py-3 rounded-2xl bg-violet-600 hover:bg-violet-700 text-white font-bold text-xs shadow-md transition">
+        Proceed to Next Level ➔
+      </button>
+    </div>
+  </div>
+
+  <!-- STACK MASTER CHEATSHEET MODAL -->
+  <div id="sm-cheatsheet-modal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white max-w-2xl w-full p-6 rounded-3xl space-y-5 max-h-[85vh] overflow-y-auto custom-scrollbar">
+      <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+        <h3 class="text-lg font-bold text-slate-900">📚 Stack Data Structure Cheatsheet</h3>
+        <button type="button" onclick="smToggleCheatsheet()" class="text-slate-400 hover:text-slate-900 text-xs">✕ Close</button>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+        <div class="bg-violet-50 p-3 rounded-2xl border border-violet-100">
+          <span class="font-bold text-violet-700">PUSH(x)</span>
+          <p class="text-slate-600 mt-1">Inserts item at TOP pointer. Checks overflow (top == N-1).</p>
+          <span class="font-mono text-emerald-600 font-bold block mt-2">Time: O(1)</span>
+        </div>
+        <div class="bg-rose-50 p-3 rounded-2xl border border-rose-100">
+          <span class="font-bold text-rose-700">POP()</span>
+          <p class="text-slate-600 mt-1">Deletes item from TOP pointer. Checks underflow (top == -1).</p>
+          <span class="font-mono text-emerald-600 font-bold block mt-2">Time: O(1)</span>
+        </div>
+        <div class="bg-amber-50 p-3 rounded-2xl border border-amber-100">
+          <span class="font-bold text-amber-700">PEEK()</span>
+          <p class="text-slate-600 mt-1">Retrieves topmost element without deleting it.</p>
+          <span class="font-mono text-emerald-600 font-bold block mt-2">Time: O(1)</span>
+        </div>
+      </div>
+
+      <div class="bg-zinc-900 text-white p-4 rounded-2xl font-mono text-[11px] space-y-2">
+        <div class="text-violet-400 font-bold">// ADT Stack Operations in C</div>
+        <pre class="text-zinc-300 overflow-x-auto">void push(int x) {
+    if (top >= n - 1) { printf("Stack Overflow\n"); }
+    else { stack[++top] = x; }
+}
+int pop() {
+    if (top <= -1) { printf("Stack Underflow\n"); return -1; }
+    return stack[top--];
+}</pre>
+      </div>
+
+      <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-xs space-y-2">
+        <h4 class="font-bold text-slate-900">Key Real-World Applications</h4>
+        <ul class="list-disc pl-5 space-y-1 text-slate-600">
+          <li><strong>Expression Evaluation:</strong> Postfix/Prefix evaluation without operator parentheses.</li>
+          <li><strong>Syntax Validation:</strong> Checking correctness of balanced parentheses <code>()[]{}</code>.</li>
+          <li><strong>Monotonic Queries:</strong> Next Greater Element (NGE) & Previous Greater Element (PGE) in $O(N)$.</li>
+          <li><strong>String Reversal & Radix Conversion:</strong> Decimal to Binary, Octal, Hexadecimal.</li>
+          <li><strong>Recursion & Function Call Stack:</strong> Runtime activation frames unwind on base cases.</li>
+        </ul>
+      </div>
+
+      <button type="button" onclick="smToggleCheatsheet()" class="w-full py-2.5 bg-slate-900 text-white rounded-2xl text-xs font-bold hover:bg-slate-800 transition">
+        Return to Dashboard
+      </button>
+    </div>
+  </div>
+
+
+  
+  <!-- ========================================== -->
+  <!-- STACK MASTER CONCEPT GUIDE MODAL           -->
+  <!-- Comprehensive Interactive Guide for Levels -->
+  <!-- ========================================== -->
+  <div id="sm-concept-modal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white max-w-4xl w-full p-6 sm:p-8 rounded-3xl space-y-5 max-h-[90vh] overflow-y-auto custom-scrollbar shadow-2xl border border-slate-200">
+
+      <!-- Modal Header -->
+      <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+        <div class="flex items-center space-x-2.5">
+          <span class="text-2xl">🥞</span>
+          <div>
+            <h3 class="text-lg font-black text-slate-900">Stack Master: Complete Curriculum Guide</h3>
+            <p class="text-xs text-slate-500">Comprehensive concepts, operations, time complexities, and code</p>
+          </div>
+        </div>
+        <button type="button" onclick="smCloseConceptModal()" class="text-slate-400 hover:text-slate-900 p-2 text-xs font-bold rounded-xl hover:bg-slate-100 transition">✕ Close</button>
+      </div>
+
+      <!-- Tab Switcher Navigation -->
+      <div class="flex space-x-1.5 p-1 bg-slate-100 rounded-2xl overflow-x-auto custom-scrollbar">
+        <button type="button" id="sm-concept-tab-1" onclick="smSwitchConceptTab(1)" class="flex-1 py-2 px-3 rounded-xl bg-violet-600 text-white font-bold whitespace-nowrap shadow-sm text-xs transition">L1: LIFO Core</button>
+        <button type="button" id="sm-concept-tab-2" onclick="smSwitchConceptTab(2)" class="flex-1 py-2 px-3 rounded-xl text-zinc-600 hover:text-slate-900 whitespace-nowrap text-xs transition">L2: Postfix Lab</button>
+        <button type="button" id="sm-concept-tab-3" onclick="smSwitchConceptTab(3)" class="flex-1 py-2 px-3 rounded-xl text-zinc-600 hover:text-slate-900 whitespace-nowrap text-xs transition">L3: Parentheses</button>
+        <button type="button" id="sm-concept-tab-4" onclick="smSwitchConceptTab(4)" class="flex-1 py-2 px-3 rounded-xl text-zinc-600 hover:text-slate-900 whitespace-nowrap text-xs transition">L4: Monotonic</button>
+        <button type="button" id="sm-concept-tab-5" onclick="smSwitchConceptTab(5)" class="flex-1 py-2 px-3 rounded-xl text-zinc-600 hover:text-slate-900 whitespace-nowrap text-xs transition">L5: Base &amp; String</button>
+        <button type="button" id="sm-concept-tab-6" onclick="smSwitchConceptTab(6)" class="flex-1 py-2 px-3 rounded-xl text-zinc-600 hover:text-slate-900 whitespace-nowrap text-xs transition">L6: Linked &amp; Recursion</button>
+        <button type="button" id="sm-concept-tab-7" onclick="smSwitchConceptTab(7)" class="flex-1 py-2 px-3 rounded-xl text-zinc-600 hover:text-slate-900 whitespace-nowrap text-xs transition">L7: Boss Quiz</button>
+      </div>
+
+      <!-- TAB 1 CONTENT: L1 LIFO CORE -->
+      <div id="sm-concept-content-1" class="space-y-4 text-xs">
+        <div class="bg-violet-50 p-4 rounded-2xl border border-violet-200 space-y-2">
+          <h4 class="font-bold text-violet-950 text-sm flex items-center space-x-2">
+            <span>🥞 Level 1: What is a Stack &amp; the LIFO Principle?</span>
+          </h4>
+          <p class="text-slate-700 leading-relaxed">
+            A <strong>Stack</strong> is a linear data structure that follows the <strong>LIFO (Last-In-First-Out)</strong> principle.
+            It contains only one pointer, <strong>TOP</strong>, pointing to the topmost element.
+            Whenever an element is added, it is pushed onto the top of the stack, and only the top element can be removed or peeked.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div class="bg-slate-100 p-3 rounded-2xl border border-slate-200">
+            <span class="font-bold text-violet-700 block">➕ PUSH(x)</span>
+            <p class="text-slate-600 mt-1">Inserts a new element onto the top of the stack.</p>
+            <span class="text-[10px] font-mono font-bold text-emerald-600 block mt-2">Complexity: O(1) Constant Time</span>
+          </div>
+          <div class="bg-slate-100 p-3 rounded-2xl border border-slate-200">
+            <span class="font-bold text-rose-600 block">🗑️ POP()</span>
+            <p class="text-slate-600 mt-1">Removes and returns the topmost element from the stack.</p>
+            <span class="text-[10px] font-mono font-bold text-emerald-600 block mt-2">Complexity: O(1) Constant Time</span>
+          </div>
+          <div class="bg-slate-100 p-3 rounded-2xl border border-slate-200">
+            <span class="font-bold text-amber-600 block">🔍 PEEK()</span>
+            <p class="text-slate-600 mt-1">Retrieves the topmost element without removing it.</p>
+            <span class="text-[10px] font-mono font-bold text-emerald-600 block mt-2">Complexity: O(1) Constant Time</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="bg-rose-50 p-3 rounded-2xl border border-rose-200">
+            <span class="font-bold text-rose-900 block mb-1">⚠️ Stack Overflow</span>
+            <p class="text-slate-600 text-[11px]">Occurs when calling <code class="font-mono font-bold text-slate-900">push()</code> on a fixed-capacity stack that is already full (<code class="font-mono text-rose-700">top == N - 1</code>).</p>
+          </div>
+          <div class="bg-amber-50 p-3 rounded-2xl border border-amber-200">
+            <span class="font-bold text-amber-900 block mb-1">⚠️ Stack Underflow</span>
+            <p class="text-slate-600 text-[11px]">Occurs when calling <code class="font-mono font-bold text-slate-900">pop()</code> on an empty stack (<code class="font-mono text-amber-700">top == -1</code>).</p>
+          </div>
+        </div>
+
+        <div class="bg-zinc-900 text-white p-4 rounded-2xl font-mono text-[11px] space-y-2">
+          <div class="text-violet-400 font-bold">// C Array Implementation</div>
+          <pre class="text-zinc-300 overflow-x-auto">void push(int x) {
+    if (top >= n - 1) printf("Stack Overflow\n");
+    else stack[++top] = x;
+}
+int pop() {
+    if (top <= -1) { printf("Stack Underflow\n"); return -1; }
+    return stack[top--];
+}</pre>
+        </div>
+      </div>
+
+      <!-- TAB 2 CONTENT: L2 POSTFIX LAB -->
+      <div id="sm-concept-content-2" class="space-y-4 text-xs hidden">
+        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-2">
+          <h4 class="font-bold text-slate-900 text-sm">🧪 Level 2: Expression Evaluation &amp; Polish Notations</h4>
+          <p class="text-slate-600 leading-relaxed">
+            In human arithmetic (Infix), operators appear between operands (e.g., <code>A + B * C</code>) and require precedence rules and parentheses. Compilers convert these into <strong>Postfix (Reverse Polish)</strong> notation where operators follow their operands (e.g., <code>A B C * +</code>), enabling unambiguous linear-time evaluation using a single stack.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div class="bg-slate-100 p-3 rounded-2xl border border-slate-200">
+            <span class="font-bold text-sky-700 block">Infix Notation</span>
+            <p class="text-slate-600 text-[11px] mt-1">Operator is between operands. Easy for humans, requires parentheses.</p>
+            <span class="text-[10px] font-mono font-bold text-slate-500 block mt-1">Example: A + B</span>
+          </div>
+          <div class="bg-slate-100 p-3 rounded-2xl border border-slate-200">
+            <span class="font-bold text-violet-700 block">Postfix Notation</span>
+            <p class="text-slate-600 text-[11px] mt-1">Operator comes after operands. Evaluated with an operand stack.</p>
+            <span class="text-[10px] font-mono font-bold text-slate-500 block mt-1">Example: A B +</span>
+          </div>
+          <div class="bg-slate-100 p-3 rounded-2xl border border-slate-200">
+            <span class="font-bold text-amber-700 block">Prefix (Polish)</span>
+            <p class="text-slate-600 text-[11px] mt-1">Operator comes before operands. Scanned from right to left.</p>
+            <span class="text-[10px] font-mono font-bold text-slate-500 block mt-1">Example: + A B</span>
+          </div>
+        </div>
+
+        <div class="bg-violet-50 p-4 rounded-2xl border border-violet-200 space-y-2">
+          <h5 class="font-bold text-violet-950">Postfix Evaluation Algorithm:</h5>
+          <ol class="list-decimal pl-5 space-y-1 text-slate-700 text-[11px]">
+            <li>Scan expression tokens from left to right.</li>
+            <li>If an operand (number) is encountered, push it onto the stack.</li>
+            <li>If an operator is encountered, pop two operands from the stack: <strong>A</strong> (top) and <strong>B</strong> (second).</li>
+            <li>Evaluate <code>B op A</code> and push the computed result back onto the stack.</li>
+            <li>When the expression ends, the sole remaining element in the stack is the final answer!</li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- TAB 3 CONTENT: L3 BALANCED PARENTHESES -->
+      <div id="sm-concept-content-3" class="space-y-4 text-xs hidden">
+        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-2">
+          <h4 class="font-bold text-slate-900 text-sm">🛡️ Level 3: Syntax Sentinel (Checking Correctness of Parentheses)</h4>
+          <p class="text-slate-600 leading-relaxed">
+            Balanced parentheses refer to an expression in which all opening and closing brackets <code>()</code>, <code>{}</code>, <code>[]</code> are properly matched and nested. A balanced expression ensures code can be compiled without syntax errors.
+          </p>
+        </div>
+
+        <div class="bg-slate-100 p-4 rounded-2xl border border-slate-200 space-y-2">
+          <h5 class="font-bold text-slate-900">How the Algorithm Works:</h5>
+          <ul class="list-disc pl-5 space-y-1 text-slate-700 text-[11px]">
+            <li>Iterate through the string character by character.</li>
+            <li>When an opening bracket <code>(</code>, <code>{</code>, <code>[</code> is encountered: push it onto the stack.</li>
+            <li>When a closing bracket <code>)</code>, <code>}</code>, <code>]</code> is encountered:
+              <ul class="list-circle pl-5 mt-1 space-y-0.5">
+                <li>If the stack is empty ➔ Unbalanced (closing bracket without opener).</li>
+                <li>Compare with the top element of the stack. If they form a matching pair, pop the top element!</li>
+                <li>If they do not match ➔ Unbalanced (bracket type mismatch).</li>
+              </ul>
+            </li>
+            <li>At the end of traversal, if the stack is completely empty, the expression is <strong>Balanced</strong>! If elements remain, it is <strong>Unbalanced</strong>.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- TAB 4 CONTENT: L4 MONOTONIC PEAK -->
+      <div id="sm-concept-content-4" class="space-y-4 text-xs hidden">
+        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-2">
+          <h4 class="font-bold text-slate-900 text-sm">🔭 Level 4: Monotonic Stack (Next &amp; Previous Greater Element)</h4>
+          <p class="text-slate-600 leading-relaxed">
+            <strong>Next Greater Element (NGE):</strong> For an element x in an array, find the first element to its right that is strictly greater than x. If none exists, its NGE is -1.
+            <br>
+            <strong>Previous Greater Element (PGE):</strong> The first element to its left that is strictly greater than x. If none exists, its PGE is -1.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="bg-emerald-50 p-3 rounded-2xl border border-emerald-200 space-y-1">
+            <span class="font-bold text-emerald-950">Why Use a Monotonic Stack?</span>
+            <p class="text-slate-700 text-[11px]">A naive approach requires nested loops taking <strong>O(N²) quadratic time</strong>. By maintaining elements in monotonic order, each element is pushed and popped at most once, reducing runtime to <strong>O(N) linear time</strong>!</p>
+          </div>
+          <div class="bg-violet-50 p-3 rounded-2xl border border-violet-200 space-y-1">
+            <span class="font-bold text-violet-950">Worked Example</span>
+            <p class="text-slate-700 text-[11px]">For array <code>[1, 3, 2, 4]</code>:
+              <br>&bull; NGE for 1 is 3
+              <br>&bull; NGE for 3 is 4
+              <br>&bull; NGE for 2 is 4
+              <br>&bull; NGE for 4 is -1
+              <br>Result: <code>[3, 4, 4, -1]</code>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 5 CONTENT: L5 BASE & STRING LAB -->
+      <div id="sm-concept-content-5" class="space-y-4 text-xs hidden">
+        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-2">
+          <h4 class="font-bold text-slate-900 text-sm">🔄 Level 5: String Reversal &amp; Radix Base Conversion</h4>
+          <p class="text-slate-600 leading-relaxed">
+            The inherent LIFO property makes Stacks the ideal data structure for operations that require reverse output.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="bg-violet-50 p-3 rounded-2xl border border-violet-200 space-y-1">
+            <span class="font-bold text-violet-950">1. String Reversal</span>
+            <p class="text-slate-700 text-[11px]">Push all characters of a string into the stack one by one. Then pop every character out from the stack. The characters emerge in exact reverse order (e.g., "STACK" ➔ "KCATS").</p>
+          </div>
+          <div class="bg-cyan-50 p-3 rounded-2xl border border-cyan-200 space-y-1">
+            <span class="font-bold text-cyan-950">2. Decimal Number Base Conversion</span>
+            <p class="text-slate-700 text-[11px]">To convert a decimal integer to Binary, Octal, or Hexadecimal, repeatedly divide by the base and push the remainder into the stack. When the number reaches 0, popping the stack yields the converted number digits from most to least significant!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 6 CONTENT: L6 LINKED LIST & RECURSION -->
+      <div id="sm-concept-content-6" class="space-y-4 text-xs hidden">
+        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-2">
+          <h4 class="font-bold text-slate-900 text-sm">🔗 Level 6: Dynamic Linked List Stacks &amp; Call Stack Recursion</h4>
+          <p class="text-slate-600 leading-relaxed">
+            Exploring dynamic memory allocation on the heap and how operating systems execute recursive functions.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="bg-slate-100 p-4 rounded-2xl border border-slate-200 space-y-2">
+            <h5 class="font-bold text-violet-700">Linked List Implementation</h5>
+            <p class="text-slate-600 text-[11px]">
+              Instead of using a fixed array, linked lists allocate memory dynamically on the heap. Each node has two parts: <code>info</code> (user data) and <code>next</code> (pointer to successor node).
+              Pushing creates a node and sets <code>newNode->next = top; top = newNode;</code>.
+              Popping updates <code>top = top->next;</code>.
+            </p>
+            <span class="text-[10px] font-mono font-bold text-emerald-600 block">No fixed capacity overflow limit!</span>
+          </div>
+
+          <div class="bg-slate-100 p-4 rounded-2xl border border-slate-200 space-y-2">
+            <h5 class="font-bold text-emerald-700">Recursion &amp; The Call Stack</h5>
+            <p class="text-slate-600 text-[11px]">
+              When a function calls itself repeatedly, it uses the system <strong>Call Stack</strong>. Each invocation pushes a stack frame with local variables. When the base condition is reached, the stack frames pop in reverse order, unwinding and returning results up the call chain.
+            </p>
+            <span class="text-[10px] font-mono font-bold text-slate-500 block">Example: factorial(4) unwinding</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 7 CONTENT: L7 BOSS QUIZ -->
+      <div id="sm-concept-content-7" class="space-y-4 text-xs hidden">
+        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-2">
+          <h4 class="font-bold text-slate-900 text-sm">🎮 Level 7: Arcade Boss Quiz Assessment</h4>
+          <p class="text-slate-600 leading-relaxed">
+            The final boss assessment tests your practical mastery of all Stack concepts covered across Levels 1 through 6.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div class="bg-amber-50 p-3 rounded-2xl border border-amber-200 space-y-1">
+            <span class="font-bold text-amber-900">❤️ 3 Heart Lives</span>
+            <p class="text-slate-600 text-[11px]">Incorrect answers cost 1 life heart. Maintain high precision to achieve a Grandmaster ranking!</p>
+          </div>
+          <div class="bg-emerald-50 p-3 rounded-2xl border border-emerald-200 space-y-1">
+            <span class="font-bold text-emerald-900">🔥 Streak Multiplier</span>
+            <p class="text-slate-600 text-[11px]">Consecutive correct answers earn bonus streak points (+25 PTS per active streak).</p>
+          </div>
+          <div class="bg-violet-50 p-3 rounded-2xl border border-violet-200 space-y-1">
+            <span class="font-bold text-violet-900">🏆 8 Core Questions</span>
+            <p class="text-slate-600 text-[11px]">Covering LIFO, Top pointer, Overflow/Underflow, Postfix, NGE, Parentheses, and Linked Lists.</p>
+          </div>
+        </div>
+      </div>
+
+      <button type="button" onclick="smCloseConceptModal()" class="w-full py-2.5 bg-violet-600 hover:bg-violet-700 text-white rounded-2xl text-xs font-bold transition shadow-md">
+        Return to Dashboard
+      </button>
+
+    </div>
+  </div>
+
+
   <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col space-y-2 pointer-events-none"></div>
 
 <script>
@@ -2474,14 +4177,24 @@
     // INITIALIZATION ON PAGE LOAD
     // ==========================================
     window.addEventListener('DOMContentLoaded', () => {
+      // Initialize Queue Master
       resetL1();
       resetL2();
       resetL3();
       resetL4();
-      switchLevel(1);
+
+      // Check URL hash for direct routing, otherwise show landing hub
+      if (window.location.hash === '#queue') {
+        launchQueueGame();
+      } else if (window.location.hash === '#stack') {
+        launchStackGame();
+      } else {
+        returnToLanding();
+      }
       refreshIcons();
     });
   </script>
 
+<script src="stack.js"></script>
 </body>
 </html>
