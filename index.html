@@ -154,7 +154,7 @@
 <body class="p-2 sm:p-4 min-h-screen flex items-center justify-center selection:bg-slate-900 selection:text-[#c8f53e]">
 
   <!-- FLUX SAAS MAIN APPLICATION WINDOW FRAME -->
-  
+
   <!-- ========================================== -->
   <!-- MAIN LANDING SCREEN: DATA STRUCTURE REALMS -->
   <!-- ========================================== -->
@@ -210,7 +210,7 @@
             </div>
             <div class="flex items-center space-x-1.5">
               <span class="text-violet-400 font-bold">✓</span>
-              <span>L2: Polish & Postfix</span>
+              <span>L2: Polish &amp; Postfix</span>
             </div>
             <div class="flex items-center space-x-1.5">
               <span class="text-violet-400 font-bold">✓</span>
@@ -222,11 +222,11 @@
             </div>
             <div class="flex items-center space-x-1.5">
               <span class="text-violet-400 font-bold">✓</span>
-              <span>L5: String & Base Radix</span>
+              <span>L5: String &amp; Base Radix</span>
             </div>
             <div class="flex items-center space-x-1.5">
               <span class="text-violet-400 font-bold">✓</span>
-              <span>L6: Dynamic Heap & CallStack</span>
+              <span>L6: Dynamic Heap &amp; CallStack</span>
             </div>
           </div>
         </div>
@@ -287,7 +287,7 @@
             </div>
             <div class="flex items-center space-x-1.5">
               <span class="text-[#c8f53e] font-bold">✓</span>
-              <span>Formulas & Cheatsheet</span>
+              <span>Formulas &amp; Cheatsheet</span>
             </div>
           </div>
         </div>
@@ -308,7 +308,7 @@
         <span class="text-xl">⚖️</span>
         <div>
           <h4 class="font-bold text-white text-sm">Linear Data Structures Comparison</h4>
-          <p class="text-[11px] text-zinc-400">Stack (LIFO) uses 1 pointer (TOP). Queue (FIFO) uses 2 pointers (FRONT & REAR).</p>
+          <p class="text-[11px] text-zinc-400">Stack (LIFO) uses 1 pointer (TOP). Queue (FIFO) uses 2 pointers (FRONT &amp; REAR).</p>
         </div>
       </div>
       <div class="flex items-center space-x-2 font-mono text-[11px]">
@@ -324,7 +324,7 @@
     <!-- ========================================== -->
     <!-- LEFT SIDEBAR NAVIGATION (FLUX DARK THEME)  -->
     <!-- ========================================== -->
-    <aside class="w-full lg:w-72 bg-[#18181b] text-white p-6 flex flex-col justify-between border-r border-[#27272a] flex-shrink-0">
+    <aside aria-label="Queue Master Navigation Sidebar" class="w-full lg:w-72 bg-[#18181b] text-white p-6 flex flex-col justify-between border-r border-[#27272a] flex-shrink-0">
 
       <div class="space-y-6">
         <!-- App Logo Header -->
@@ -344,7 +344,7 @@
         </div>
 
         <!-- Navigation Tabs List -->
-        <nav class="space-y-1.5 pt-2">
+        <nav aria-label="Queue Modules Navigation" class="space-y-1.5 pt-2">
           <div class="text-[10px] font-bold text-zinc-500 uppercase tracking-wider px-3 mb-2">Queue Modules</div>
 
           <button type="button" id="nav-lvl1" onclick="switchLevel(1)" class="w-full px-4 py-3 rounded-2xl transition-all flex items-center justify-between bg-[#27272a] text-white font-bold border border-[#3f3f46] shadow-sm">
@@ -417,7 +417,7 @@
     <!-- ========================================== -->
     <!-- RIGHT MAIN CONTENT PANEL (FLUX LIGHT THEME) -->
     <!-- ========================================== -->
-    <main class="flex-1 bg-[#f4f4f6] text-slate-900 p-6 flex flex-col justify-between overflow-y-auto custom-scrollbar">
+    <main aria-label="Queue Master Main Stage" class="flex-1 bg-[#f4f4f6] text-slate-900 p-6 flex flex-col justify-between overflow-y-auto custom-scrollbar">
 
       <div class="space-y-6">
 
@@ -909,7 +909,7 @@
     <!-- ========================================== -->
     <!-- STACK LEFT SIDEBAR NAVIGATION              -->
     <!-- ========================================== -->
-    <aside class="w-full lg:w-72 bg-[#18181b] text-white p-6 flex flex-col justify-between border-r border-[#27272a] flex-shrink-0">
+    <aside aria-label="Stack Master Navigation Sidebar" class="w-full lg:w-72 bg-[#18181b] text-white p-6 flex flex-col justify-between border-r border-[#27272a] flex-shrink-0">
 
       <div class="space-y-6">
         <!-- Logo -->
@@ -929,7 +929,7 @@
         </div>
 
         <!-- Navigation Tabs List -->
-        <nav class="space-y-1.5 pt-2">
+        <nav aria-label="Stack Curriculum Navigation" class="space-y-1.5 pt-2">
           <div class="text-[10px] font-bold text-zinc-500 uppercase tracking-wider px-3 mb-2">Stack Curriculum</div>
 
           <button type="button" id="sm-nav-lvl1" onclick="smSwitchLevel(1)" class="w-full px-4 py-3 rounded-2xl transition-all flex items-center justify-between bg-violet-600 text-white font-bold border border-violet-400 shadow-md">
@@ -943,7 +943,7 @@
           <button type="button" id="sm-nav-lvl2" onclick="smSwitchLevel(2)" class="w-full px-4 py-3 rounded-2xl transition-all flex items-center justify-between text-zinc-400 hover:text-white hover:bg-zinc-800/60 font-medium">
             <span class="flex items-center space-x-3">
               <i data-lucide="calculator" class="w-4 h-4"></i>
-              <span class="text-sm">L2: Polish & Postfix</span>
+              <span class="text-sm">L2: Polish &amp; Postfix</span>
             </span>
           </button>
 
@@ -964,14 +964,14 @@
           <button type="button" id="sm-nav-lvl5" onclick="smSwitchLevel(5)" class="w-full px-4 py-3 rounded-2xl transition-all flex items-center justify-between text-zinc-400 hover:text-white hover:bg-zinc-800/60 font-medium">
             <span class="flex items-center space-x-3">
               <i data-lucide="repeat" class="w-4 h-4"></i>
-              <span class="text-sm">L5: Base & String Lab</span>
+              <span class="text-sm">L5: Base &amp; String Lab</span>
             </span>
           </button>
 
           <button type="button" id="sm-nav-lvl6" onclick="smSwitchLevel(6)" class="w-full px-4 py-3 rounded-2xl transition-all flex items-center justify-between text-zinc-400 hover:text-white hover:bg-zinc-800/60 font-medium">
             <span class="flex items-center space-x-3">
               <i data-lucide="cpu" class="w-4 h-4"></i>
-              <span class="text-sm">L6: Dynamic & CallStack</span>
+              <span class="text-sm">L6: Dynamic &amp; CallStack</span>
             </span>
           </button>
 
@@ -996,7 +996,7 @@
             </div>
             <div>
               <h4 class="font-black text-base leading-tight">Stack Cheatsheet</h4>
-              <p class="text-xs text-violet-200 font-medium mt-1">LIFO properties, C code, & formulas.</p>
+              <p class="text-xs text-violet-200 font-medium mt-1">LIFO properties, C code, &amp; formulas.</p>
             </div>
             <button type="button" onclick="smToggleCheatsheet()" class="w-full py-2.5 bg-slate-950 text-white rounded-xl text-xs font-bold hover:bg-slate-900 transition flex items-center justify-center space-x-1.5 shadow-md">
               <i data-lucide="file-text" class="w-3.5 h-3.5 text-violet-400"></i>
@@ -1017,7 +1017,7 @@
     <!-- ========================================== -->
     <!-- STACK RIGHT MAIN CONTENT PANEL             -->
     <!-- ========================================== -->
-    <main class="flex-1 bg-[#f4f4f6] text-slate-900 p-6 flex flex-col justify-between overflow-y-auto custom-scrollbar">
+    <div role="region" aria-label="Stack Master Main Stage" class="flex-1 bg-[#f4f4f6] text-slate-900 p-6 flex flex-col justify-between overflow-y-auto custom-scrollbar">
 
       <div class="space-y-6">
 
@@ -1075,7 +1075,7 @@
             <div class="flex items-center justify-between text-xs font-bold text-slate-700">
               <span class="flex items-center space-x-1.5">
                 <i data-lucide="layers" class="w-4 h-4 text-violet-500"></i>
-                <span id="sm-top-card1-title">Stack Memory & Top</span>
+                <span id="sm-top-card1-title">Stack Memory &amp; Top</span>
               </span>
               <span id="sm-top-card1-badge" class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-violet-100 text-violet-700 border border-violet-200">ACTIVE</span>
             </div>
@@ -1106,7 +1106,7 @@
             </div>
 
             <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-              <span id="sm-top-card2-foot">Push, Pop & Peek Operations</span>
+              <span id="sm-top-card2-foot">Push, Pop &amp; Peek Operations</span>
             </div>
           </div>
 
@@ -1183,7 +1183,7 @@
                   <div id="sm-code-push-2" class="p-1 rounded transition-colors">else { top++; stack[top] = x; }</div>
 
                   <div class="text-violet-400 font-bold pt-2 border-t border-zinc-800">/* POP Operation */</div>
-                  <div id="sm-code-pop-1" class="p-1 rounded transition-colors">if (top <= -1) { printf("Stack Underflow"); }</div>
+                  <div id="sm-code-pop-1" class="p-1 rounded transition-colors">if (top &lt;= -1) { printf("Stack Underflow"); }</div>
                   <div id="sm-code-pop-2" class="p-1 rounded transition-colors">else { x = stack[top]; top--; }</div>
                 </div>
 
@@ -1205,7 +1205,7 @@
                   </div>
 
                   <!-- Dynamic Floating TOP Pointer Arrow -->
-                  <div id="sm-top-pointer-arrow" class="absolute -right-2 transition-all duration-300 flex items-center space-x-1.5 z-20" style="bottom: 125px;">
+                  <div id="sm-top-pointer-arrow" class="absolute -right-2 transition-all duration-300 flex items-center space-x-1.5 z-20 bottom-[125px]">
                     <span id="sm-top-pointer-label" class="text-[11px] font-mono font-black text-amber-300 bg-amber-950/80 px-2 py-0.5 rounded-md border border-amber-500/50 shadow">
                       TOP ➔ [Index 2]
                     </span>
@@ -1311,8 +1311,8 @@
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-slate-100 pb-4 gap-3">
               <div>
                 <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-violet-600 text-white">STAGE 2</span>
-                <h3 class="font-extrabold text-slate-900 text-lg inline ml-2">🧪 Polish Notation & Postfix Lab</h3>
-                <p class="text-xs text-slate-500 mt-0.5">Evaluation & Infix-to-Postfix conversion using an Operator Stack</p>
+                <h3 class="font-extrabold text-slate-900 text-lg inline ml-2">🧪 Polish Notation &amp; Postfix Lab</h3>
+                <p class="text-xs text-slate-500 mt-0.5">Evaluation &amp; Infix-to-Postfix conversion using an Operator Stack</p>
               </div>
 
               <div class="flex items-center space-x-2 bg-slate-100 p-1 rounded-2xl border border-slate-200">
@@ -1356,7 +1356,7 @@
                     <i data-lucide="play" class="w-4 h-4"></i>
                     <span>Auto Play</span>
                   </button>
-                  <button type="button" onclick="smResetL2()" class="p-2 rounded-xl bg-slate-200 text-slate-700 hover:bg-slate-300">
+                  <button type="button" onclick="smResetL2()" aria-label="Reset Postfix Evaluator" title="Reset Postfix Evaluator" class="p-2 rounded-xl bg-slate-200 text-slate-700 hover:bg-slate-300">
                     <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
                   </button>
                 </div>
@@ -1560,7 +1560,7 @@
                   <i data-lucide="play" class="w-4 h-4"></i>
                   <span>Run All</span>
                 </button>
-                <button type="button" onclick="smResetL3()" class="p-2 rounded-xl bg-slate-200 text-slate-700 hover:bg-slate-300">
+                <button type="button" onclick="smResetL3()" aria-label="Reset Syntax Sentinel" title="Reset Syntax Sentinel" class="p-2 rounded-xl bg-slate-200 text-slate-700 hover:bg-slate-300">
                   <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
                 </button>
               </div>
@@ -1587,7 +1587,7 @@
                   <!-- Open brackets -->
                 </div>
 
-                <span class="text-[10px] font-mono text-zinc-500">Closing bracket matches & pops topmost opener</span>
+                <span class="text-[10px] font-mono text-zinc-500">Closing bracket matches &amp; pops topmost opener</span>
               </div>
 
               <!-- Rules & Trace Table -->
@@ -1646,7 +1646,7 @@
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-slate-100 pb-4 gap-2">
               <div>
                 <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-violet-600 text-white">STAGE 4</span>
-                <h3 class="font-extrabold text-slate-900 text-lg inline ml-2">🔭 Monotonic Peak (Next & Previous Greater)</h3>
+                <h3 class="font-extrabold text-slate-900 text-lg inline ml-2">🔭 Monotonic Peak (Next &amp; Previous Greater)</h3>
                 <p class="text-xs text-slate-500 mt-0.5">Linear time O(N) lookup using a monotonic decreasing stack</p>
               </div>
 
@@ -1689,7 +1689,7 @@
                   <i data-lucide="play" class="w-4 h-4"></i>
                   <span>Run All</span>
                 </button>
-                <button type="button" onclick="smResetL4()" class="p-2 rounded-xl bg-slate-200 text-slate-700 hover:bg-slate-300">
+                <button type="button" onclick="smResetL4()" aria-label="Reset Monotonic Stack" title="Reset Monotonic Stack" class="p-2 rounded-xl bg-slate-200 text-slate-700 hover:bg-slate-300">
                   <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
                 </button>
               </div>
@@ -1731,7 +1731,7 @@
                     <thead class="text-[10px] font-mono text-zinc-400 border-b border-zinc-800">
                       <tr>
                         <th class="py-1 px-3">Array Item</th>
-                        <th class="py-1 px-3">Stack Action & Answer</th>
+                        <th class="py-1 px-3">Stack Action &amp; Answer</th>
                       </tr>
                     </thead>
                     <tbody id="sm-l4-log-body">
@@ -1773,7 +1773,7 @@
 
             <div class="border-b border-slate-100 pb-4">
               <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-violet-600 text-white">STAGE 5</span>
-              <h3 class="font-extrabold text-slate-900 text-lg inline ml-2">🔄 String Reversal & Radix Base Converter</h3>
+              <h3 class="font-extrabold text-slate-900 text-lg inline ml-2">🔄 String Reversal &amp; Radix Base Converter</h3>
               <p class="text-xs text-slate-500 mt-0.5">Real-world algorithmic applications of the LIFO property</p>
             </div>
 
@@ -1903,8 +1903,8 @@
 
             <div class="border-b border-slate-100 pb-4">
               <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-violet-600 text-white">STAGE 6</span>
-              <h3 class="font-extrabold text-slate-900 text-lg inline ml-2">🔗 Dynamic Heap Stack & Call Stack Recursion</h3>
-              <p class="text-xs text-slate-500 mt-0.5">Linked list dynamic implementation & Function Call Stack execution</p>
+              <h3 class="font-extrabold text-slate-900 text-lg inline ml-2">🔗 Dynamic Heap Stack &amp; Call Stack Recursion</h3>
+              <p class="text-xs text-slate-500 mt-0.5">Linked list dynamic implementation &amp; Function Call Stack execution</p>
             </div>
 
             <!-- Two Sub-Panels -->
@@ -1925,10 +1925,10 @@
                 <div class="flex items-center space-x-2">
                   <input type="text" id="sm-l6-input" placeholder="Node Data" class="px-3 py-2 rounded-xl text-xs font-mono font-bold bg-white border border-slate-300 flex-1">
                   <button type="button" onclick="smL6PushLinked()" class="px-4 py-2 rounded-xl bg-violet-600 hover:bg-violet-700 text-white text-xs font-bold shadow">
-                    malloc & Push
+                    malloc &amp; Push
                   </button>
                   <button type="button" onclick="smL6PopLinked()" class="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold shadow">
-                    Pop & free()
+                    Pop &amp; free()
                   </button>
                 </div>
 
@@ -1961,7 +1961,7 @@
                   <button type="button" onclick="smL6StepRecursion()" class="px-4 py-2 rounded-xl bg-violet-600 hover:bg-violet-700 text-white text-xs font-bold shadow flex-1">
                     Step Call Stack
                   </button>
-                  <button type="button" onclick="smL6ResetRecursion()" class="p-2 rounded-xl bg-slate-200 text-slate-700 hover:bg-slate-300">
+                  <button type="button" onclick="smL6ResetRecursion()" aria-label="Reset Call Stack Recursion" title="Reset Call Stack Recursion" class="p-2 rounded-xl bg-slate-200 text-slate-700 hover:bg-slate-300">
                     <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
                   </button>
                 </div>
@@ -2069,10 +2069,10 @@
       <!-- FOOTER -->
       <footer class="mt-8 pt-4 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-2">
         <p>&copy; 2026 Stack Master Academy &bull; LIFO Algorithm Engine Edition</p>
-        <p class="font-mono text-[10px]">Based on Linear Data Structures & Applications</p>
+        <p class="font-mono text-[10px]">Based on Linear Data Structures &amp; Applications</p>
       </footer>
 
-    </main>
+    </div>
 
   </div>
 
@@ -2344,7 +2344,7 @@
 
 
   <!-- TOAST CONTAINER -->
-  
+
   <!-- STACK MASTER LIFO VIOLATION MODAL -->
   <div id="sm-lifo-modal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white max-w-md w-full p-6 rounded-3xl border-2 border-rose-400 shake-error space-y-4 shadow-2xl">
@@ -2404,7 +2404,7 @@
     else { stack[++top] = x; }
 }
 int pop() {
-    if (top <= -1) { printf("Stack Underflow\n"); return -1; }
+    if (top &lt;= -1) { printf("Stack Underflow\n"); return -1; }
     return stack[top--];
 }</pre>
       </div>
@@ -2414,9 +2414,9 @@ int pop() {
         <ul class="list-disc pl-5 space-y-1 text-slate-600">
           <li><strong>Expression Evaluation:</strong> Postfix/Prefix evaluation without operator parentheses.</li>
           <li><strong>Syntax Validation:</strong> Checking correctness of balanced parentheses <code>()[]{}</code>.</li>
-          <li><strong>Monotonic Queries:</strong> Next Greater Element (NGE) & Previous Greater Element (PGE) in $O(N)$.</li>
-          <li><strong>String Reversal & Radix Conversion:</strong> Decimal to Binary, Octal, Hexadecimal.</li>
-          <li><strong>Recursion & Function Call Stack:</strong> Runtime activation frames unwind on base cases.</li>
+          <li><strong>Monotonic Queries:</strong> Next Greater Element (NGE) &amp; Previous Greater Element (PGE) in $O(N)$.</li>
+          <li><strong>String Reversal &amp; Radix Conversion:</strong> Decimal to Binary, Octal, Hexadecimal.</li>
+          <li><strong>Recursion &amp; Function Call Stack:</strong> Runtime activation frames unwind on base cases.</li>
         </ul>
       </div>
 
@@ -2427,7 +2427,6 @@ int pop() {
   </div>
 
 
-  
   <!-- ========================================== -->
   <!-- STACK MASTER CONCEPT GUIDE MODAL           -->
   <!-- Comprehensive Interactive Guide for Levels -->
@@ -2507,7 +2506,7 @@ int pop() {
     else stack[++top] = x;
 }
 int pop() {
-    if (top <= -1) { printf("Stack Underflow\n"); return -1; }
+    if (top &lt;= -1) { printf("Stack Underflow\n"); return -1; }
     return stack[top--];
 }</pre>
         </div>

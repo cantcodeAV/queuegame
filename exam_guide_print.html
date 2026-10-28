@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ALGO CRAFT - Practical Exam &amp; Viva Master Guide</title>
+<style>
+  @page {
+    size: A4;
+    margin: 14mm 12mm 14mm 12mm;
+  }
+  @media print {
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .page-break { page-break-before: always; }
+    .no-break { break-inside: avoid; page-break-inside: avoid; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+    color: #1e293b;
+    background: #ffffff;
+    line-height: 1.5;
+    font-size: 10pt;
+    margin: 0;
+    padding: 0;
+  }
+  .header-card {
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #31104b 100%);
+    color: white;
+    padding: 22px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+  }
+  .header-badge {
+    display: inline-block;
+    background: #c8f53e;
+    color: #0f172a;
+    font-weight: 800;
+    font-size: 8pt;
+    padding: 3px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+  }
+  h1 { font-size: 19pt; font-weight: 900; margin: 0 0 6px 0; color: #ffffff; letter-spacing: -0.5px; }
+  .subtitle { font-size: 10pt; color: #cbd5e1; margin: 0; font-weight: 400; }
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    font-size: 8.5pt;
+  }
+  .meta-item strong { display: block; color: #a78bfa; font-size: 7.5pt; text-transform: uppercase; }
+  .meta-item span { color: #f8fafc; font-weight: 600; }
+  
+  h2 {
+    color: #0f172a;
+    font-size: 13pt;
+    font-weight: 800;
+    border-bottom: 2px solid #8b5cf6;
+    padding-bottom: 5px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  h3 {
+    color: #4338ca;
+    font-size: 10.5pt;
+    font-weight: 700;
+    margin-top: 12px;
+    margin-bottom: 5px;
+  }
+  p { margin: 0 0 7px 0; text-align: justify; }
+  ul, ol { margin: 0 0 9px 0; padding-left: 20px; }
+  li { margin-bottom: 3px; }
+  
+  .card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-bottom: 10px;
+  }
+  .card-title {
+    font-weight: 700;
+    font-size: 10pt;
+    color: #1e293b;
+    margin-bottom: 4px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .tag {
+    font-size: 7pt;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: monospace;
+  }
+  .tag-purple { background: #ede9fe; color: #6d28d9; border: 1px solid #ddd6fe; }
+  .tag-green { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+  .tag-amber { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+  
+  .callout {
+    border-left: 4px solid #8b5cf6;
+    background: #f5f3ff;
+    padding: 9px 12px;
+    border-radius: 0 8px 8px 0;
+    margin: 8px 0;
+    font-size: 9pt;
+  }
+  .callout-title { font-weight: 800; color: #5b21b6; margin-bottom: 2px; }
+  
+  .callout-warn {
+    border-left-color: #f59e0b;
+    background: #fffbeb;
+  }
+  .callout-warn .callout-title { color: #b45309; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+    font-size: 8.5pt;
+  }
+  th, td {
+    border: 1px solid #cbd5e1;
+    padding: 6px 9px;
+    text-align: left;
+  }
+  th {
+    background: #f1f5f9;
+    font-weight: 700;
+    color: #0f172a;
+  }
+  tr:nth-child(even) { background: #f8fafc; }
+  
+  code {
+    background: #f1f5f9;
+    color: #be185d;
+    font-family: Consolas, Monaco, monospace;
+    font-size: 8pt;
+    padding: 1px 4px;
+    border-radius: 3px;
+  }
+  pre {
+    background: #0f172a;
+    color: #f8fafc;
+    padding: 8px 10px;
+    border-radius: 6px;
+    font-family: Consolas, Monaco, monospace;
+    font-size: 7.8pt;
+    overflow-x: auto;
+    margin: 6px 0;
+  }
+
+  .qa-box {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-left: 3.5px solid #6366f1;
+    border-radius: 6px;
+    padding: 8px 11px;
+    margin-bottom: 8px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+  }
+  .question {
+    font-weight: 700;
+    color: #1e1b4b;
+    font-size: 9pt;
+    margin-bottom: 3px;
+  }
+  .answer {
+    color: #334155;
+    font-size: 8.5pt;
+  }
+  .answer p { margin-bottom: 3px; }
+</style>
+</head>
+<body>
+
+<!-- COVER / HEADER -->
+<div class="header-card">
+  <div class="header-badge">COLLEGE PRACTICAL EXAM &amp; VIVA MASTER GUIDE</div>
+  <h1>ALGO CRAFT: Data Structure Arena</h1>
+  <p class="subtitle">Complete Architectural Walkthrough, Algorithm Breakdowns &amp; Top 25 Viva Questions with Answers</p>
+  <div class="meta-grid">
+    <div class="meta-item"><strong>Domain</strong><span>Linear Data Structures</span></div>
+    <div class="meta-item"><strong>Structures Covered</strong><span>Stacks &amp; Queues (LIFO / FIFO)</span></div>
+    <div class="meta-item"><strong>Implementation</strong><span>Pure Vanilla JS + Tailwind + Web Audio</span></div>
+    <div class="meta-item"><strong>Author / Candidate</strong><span>Jayesh</span></div>
+  </div>
+</div>
+
+<!-- SECTION 1 -->
+<h2>1. Executive Summary &amp; Technical Architecture</h2>
+<p>
+  <strong>ALGO CRAFT: Data Structure Arena</strong> is an educational gamified web application built to master linear data structures through physical real-world simulations, runtime pointer visualizations, and live execution tracing.
+</p>
+<div class="card">
+  <div class="card-title"><span>Key Architectural Components</span><span class="tag tag-purple">Architecture</span></div>
+  <ul>
+    <li><strong>Landing Hub (<code>#landing-hub</code>):</strong> The gateway screen presenting both realms with module breakdowns.</li>
+    <li><strong>Dual Realms:</strong>
+      <ul>
+        <li><strong>Stack Master (LIFO Realm):</strong> 7 modules tracking single pointer <code>TOP</code>.</li>
+        <li><strong>Queue Master (FIFO Realm):</strong> 5 modules tracking dual pointers <code>FRONT</code> and <code>REAR</code>.</li>
+      </ul>
+    </li>
+    <li><strong>Top Switcher Toolbar:</strong> Quick toggle buttons allowing instant transitions between games without state loss.</li>
+    <li><strong>Synthesized Audio Engine:</strong> Uses browser Web Audio API (<code>AudioContext</code>, oscillators) to generate acoustic tones for push, pop, enqueue, dequeue, peek, and error events offline with zero MP3 dependencies.</li>
+  </ul>
+</div>
+
+<!-- SECTION 2 -->
+<h2>2. Queue Master (FIFO Realm) — Module Breakdown</h2>
+<p>
+  A <strong>Queue</strong> is a linear data structure adhering to the <strong>First-In, First-Out (FIFO)</strong> principle: the first element inserted is the first one removed. Insertion happens at the <code>REAR</code> (Enqueue) and deletion occurs at the <code>FRONT</code> (Dequeue). Both operations operate in <strong>O(1) constant time</strong>.
+</p>
+
+<div class="card no-break">
+  <div class="card-title"><span>Level 1: The FIFO Factory (Conveyor Belt)</span><span class="tag tag-green">Level 1</span></div>
+  <p><strong>Analogy:</strong> Industrial conveyor belt dispatching shipping packages.</p>
+  <p><strong>Mechanism:</strong> Packages are added to the rear and dispatched from the front. Clicking non-front packages triggers a <strong>FIFO Violation Modal</strong>, reinforcing that intermediate random extraction is forbidden in queues.</p>
+</div>
+
+<div class="card no-break">
+  <div class="card-title"><span>Level 2: Theme Park Cashier (Linear Array Queue &amp; False Overflow)</span><span class="tag tag-green">Level 2</span></div>
+  <p><strong>Capacity:</strong> Fixed static array with <code>MAX = 5</code>.</p>
+  <p><strong>Boundary Conditions:</strong></p>
+  <ul>
+    <li><strong>Queue Overflow:</strong> When <code>rear == MAX - 1</code> and an enqueue operation is attempted.</li>
+    <li><strong>Queue Underflow:</strong> When the queue is empty (<code>front == -1</code> or <code>front &gt; rear</code>) and dequeue is attempted.</li>
+  </ul>
+  <div class="callout callout-warn">
+    <div class="callout-title">Crucial Exam Topic: The False Overflow Phenomenon</div>
+    In a standard linear array queue, dequeuing elements shifts the <code>front</code> pointer forward, leaving empty memory slots at the beginning. When <code>rear == MAX - 1</code>, no new items can be enqueued even if previous slots are empty. This is known as <strong>False Overflow</strong> (or memory wastage), which circular queues solve.
+  </div>
+</div>
+
+<div class="card no-break">
+  <div class="card-title"><span>Level 3: Traffic Control &amp; Emergency Room (Queue Variants)</span><span class="tag tag-green">Level 3</span></div>
+  <p>Level 3 contrasts three major queue paradigms:</p>
+  <ol>
+    <li><strong>Standard Linear Queue:</strong> Cars lined up at a one-way traffic light.</li>
+    <li><strong>Circular Queue:</strong> Solves False Overflow via <strong>Modulo Arithmetic</strong>:
+      <pre>rear = (rear + 1) % MAX;   // Wrap-around Enqueue
+front = (front + 1) % MAX; // Wrap-around Dequeue
+Full Condition: (rear + 1) % MAX == front
+Empty Condition: front == -1</pre>
+    </li>
+    <li><strong>Priority Queue:</strong> Elements have priority ranks (High: 🚑 Ambulance, Med: 🚌 City Bus, Low: 🚗 Sedan). Dequeue always extracts the highest priority element first, overriding strict arrival time.</li>
+  </ol>
+</div>
+
+<div class="card no-break">
+  <div class="card-title"><span>Level 4: Train Switchyard (Double-Ended Queue / Deque)</span><span class="tag tag-green">Level 4</span></div>
+  <p>A generalized linear list allowing insertion and deletion from <strong>both ends</strong>:</p>
+  <ul>
+    <li><code>addFirst()</code> &amp; <code>addLast()</code> (Push Front / Push Rear)</li>
+    <li><code>removeFirst()</code> &amp; <code>removeLast()</code> (Pop Front / Pop Rear)</li>
+  </ul>
+  <p><strong>CS Variants:</strong> <em>Input-Restricted Deque</em> (insertion at one end, deletion at both) and <em>Output-Restricted Deque</em> (deletion at one end, insertion at both).</p>
+</div>
+
+<div class="card no-break">
+  <div class="card-title"><span>Level 5: Queue Trivia Arcade</span><span class="tag tag-green">Level 5</span></div>
+  <p>Interactive 5-question viva test assessing FIFO terminology, modulo math, error conditions, and time complexities with heart lives and sound effects.</p>
+</div>
+
+<div class="page-break"></div>
+
+<!-- SECTION 3 -->
+<h2>3. Stack Master (LIFO Realm) — Module Breakdown</h2>
+<p>
+  A <strong>Stack</strong> is a linear data structure following the <strong>Last-In, First-Out (LIFO)</strong> principle: the most recently inserted element is always the first one to be removed. All insertions and deletions take place at a single end called <code>TOP</code>. All core operations run in <strong>O(1) constant time</strong>.
+</p>
+
+<div class="card no-break">
+  <div class="card-title"><span>Level 1: The LIFO Cafeteria (Core Stack Fundamentals)</span><span class="tag tag-purple">Level 1</span></div>
+  <p><strong>Analogy:</strong> Spring-loaded cafeteria plate dispenser.</p>
+  <p><strong>Boundary Conditions:</strong></p>
+  <ul>
+    <li><strong>Stack Overflow:</strong> <code>top &gt;= MAX - 1</code> (Array mode <code>MAX = 6</code>).</li>
+    <li><strong>Stack Underflow:</strong> <code>top == -1</code>.</li>
+    <li><strong>LIFO Violation:</strong> Clicking lower plates triggers an alert explaining that middle plates cannot be accessed directly without popping the top elements first.</li>
+  </ul>
+</div>
+
+<div class="card no-break">
+  <div class="card-title"><span>Level 2: Polish Notation &amp; Postfix Lab</span><span class="tag tag-purple">Level 2</span></div>
+  <p><strong>Sub-Module A (Postfix Expression Evaluator):</strong></p>
+  <ul>
+    <li>Scan tokens left to right. Operands are pushed to the stack.</li>
+    <li>When an operator is encountered, pop B then A, compute A op B, and push result back.</li>
+    <li>Example: <code>"2 3 1 * + 9 -"</code> &rarr; 3 &times; 1 = 3 &rarr; 2 + 3 = 5 &rarr; 5 - 9 = -4. Result: <strong>-4</strong>.</li>
+  </ul>
+  <p><strong>Sub-Module B (Infix to Postfix Shunting-Yard Converter):</strong></p>
+  <ul>
+    <li>Precedence rules: <code>^</code> (exponent) &gt; <code>* /</code> &gt; <code>+ -</code>.</li>
+    <li>Parentheses handling: <code>(</code> is pushed; <code>)</code> pops operators to output until <code>(</code> is reached.</li>
+  </ul>
+</div>
+
+<div class="card no-break">
+  <div class="card-title"><span>Level 3: Syntax Sentinel (Balanced Parentheses &amp; Brackets)</span><span class="tag tag-purple">Level 3</span></div>
+  <p>Validates matching brackets for <code>()</code>, <code>{}</code>, <code>[]</code>. Scans string left to right; pushes opening brackets; for closing brackets, pops and verifies matching pair. Detects premature underflow, type mismatch, and unclosed brackets. Features a live execution trace table.</p>
+</div>
+
+<div class="card no-break">
+  <div class="card-title"><span>Level 4: Monotonic Mountain (Next &amp; Previous Greater Element)</span><span class="tag tag-purple">Level 4</span></div>
+  <p>Reduces finding Next Greater Element (NGE) from $O(N^2)$ brute force to <strong>$O(N)$ linear time</strong> using a Monotonic Decreasing Stack. Elements smaller than current are popped because they cannot be the next greater for any element to the left.</p>
+</div>
+
+<div class="card no-break">
+  <div class="card-title"><span>Level 5: Base &amp; String Transformer</span><span class="tag tag-purple">Level 5</span></div>
+  <ul>
+    <li><strong>String Reversal:</strong> Pushing characters to stack and popping them reverses the sequence in $O(N)$ time.</li>
+    <li><strong>Radix Converter:</strong> Repeatedly divides decimal $N$ by target base $B$, pushes remainder $N \pmod B$, then pops from MSB to LSB.</li>
+  </ul>
+</div>
+
+<div class="card no-break">
+  <div class="card-title"><span>Level 6: Dynamic Heap &amp; Call Stack Recursion</span><span class="tag tag-purple">Level 6</span></div>
+  <ul>
+    <li><strong>Linked List Stack:</strong> Nodes <code>[info | next*]</code> dynamically allocated via <code>malloc()</code>; eliminates fixed array overflow limits.</li>
+    <li><strong>Call Stack Recursion:</strong> Visualizes <code>factorial(4)</code>. Pushes activation frames during recursive calls ($n=4 \to n=3 \to n=2 \to n=1$), then unwinds returning calculated values on base case.</li>
+  </ul>
+</div>
+
+<div class="card no-break">
+  <div class="card-title"><span>Level 7: Stack Arcade Boss Quiz &amp; Cheatsheet</span><span class="tag tag-purple">Level 7</span></div>
+  <p>8-question comprehensive boss quiz testing theoretical and practical stack knowledge with celebratory confetti and formula cheatsheet.</p>
+</div>
+
+<div class="page-break"></div>
+
+<!-- SECTION 4 -->
+<h2>4. Top 25 Data Structure Viva Questions &amp; Answers</h2>
+
+<div class="qa-box no-break">
+  <div class="question">Q1: Fundamental difference between Stack and Queue?</div>
+  <div class="answer">A Stack is a LIFO (Last-In, First-Out) structure where insertions and deletions happen at a single end (TOP). A Queue is a FIFO (First-In, First-Out) structure where insertions occur at the REAR and deletions occur at the FRONT.</div>
+</div>
+
+<div class="qa-box no-break">
+  <div class="question">Q2: What are Stack Overflow and Underflow conditions?</div>
+  <div class="answer">Overflow occurs when pushing to a full stack (<code>top &gt;= MAX - 1</code> in 0-indexed array). Underflow occurs when popping from an empty stack (<code>top == -1</code>).</div>
+</div>
+
+<div class="qa-box no-break">
+  <div class="question">Q3: What is "False Overflow" in a Linear Queue?</div>
+  <div class="answer">In a linear queue, when items are dequeued, <code>front</code> moves forward leaving empty slots at the start. If <code>rear == MAX - 1</code>, further enqueuing fails even though unused memory exists. Solved by Circular Queues.</div>
+</div>
+
+<div class="qa-box no-break">
+  <div class="question">Q4: Circular Queue Full and Empty conditions?</div>
+  <div class="answer">Empty: <code>front == -1</code>. Full: <code>(rear + 1) % MAX == front</code>. Modulo arithmetic wraps pointers around to reuse vacated memory.</div>
+</div>
+
+<div class="qa-box no-break">
+  <div class="question">Q5: Time complexity of Push, Pop, Enqueue, and Dequeue?</div>
+  <div class="answer">All four operations run in <strong>O(1) constant time</strong> because elements are accessed directly via index pointers without element shifting.</div>
+</div>
+
+<div class="qa-box no-break">
+  <div class="question">Q6: Why convert Infix expressions to Postfix?</div>
+  <div class="answer">Infix requires precedence rules and parentheses. Postfix (Reverse Polish) eliminates parentheses and operator ambiguity, allowing compilers to evaluate expressions in a single $O(N)$ linear pass.</div>
+</div>
+
+<div class="qa-box no-break">
+  <div class="question">Q7: How to evaluate a Postfix expression with a Stack?</div>
+  <div class="answer">Scan left to right. Push operands. For operator op, pop $B = \text{pop}()$, $A = \text{pop}()$, compute $A \text{ op } B$, and push result back. Note operand order: $A - B$ and $A / B$.</div>
+</div>
+
+<div class="qa-box no-break">
+  <div class="question">Q8: How does balanced bracket validation work?</div>
+  <div class="answer">Push opening brackets <code>( { [</code>. For closing brackets, check if stack is empty (premature underflow) or top doesn't match (type mismatch). At end of string, stack must be completely empty.</div>
+</div>
+
+<div class="qa-box no-break">
+  <div class="question">Q9: What is a Monotonic Stack and its complexity for Next Greater Element?</div>
+  <div class="answer">A stack maintained in strictly sorted order. For NGE, a monotonic decreasing stack scans right-to-left, popping smaller elements, reducing complexity from $O(N^2)$ brute force to <strong>$O(N)$ linear time</strong>.</div>
+</div>
+
+<div class="qa-box no-break">
+  <div class="question">Q10: What is a Double-Ended Queue (Deque)?</div>
+  <div class="answer">A queue allowing insertion and deletion at both ends: <code>insertFront()</code>, <code>insertRear()</code>, <code>deleteFront()</code>, <code>deleteRear()</code>.</div>
+</div>
+
+<div class="qa-box no-break">
+  <div class="question">Q11: Input-Restricted vs. Output-Restricted Deque?</div>
+  <div class="answer">Input-restricted allows insertion at only one end, but deletion at both. Output-restricted allows deletion at only one end, but insertion at both.</div>
+</div>
+
+<div class="qa-box no-break">
+  <div class="question">Q12: How is a Priority Queue implemented efficiently?</div>
+  <div class="answer">Most efficiently implemented via a <strong>Binary Heap</strong> (Min-Heap / Max-Heap) with $O(\log N)$ enqueue and $O(\log N)$ dequeue. Unsorted arrays require $O(N)$ dequeue.</div>
+</div>
+
+<div class="qa-box no-break">
+  <div class="question">Q13: Array Stack vs. Linked List Stack?</div>
+  <div class="answer">Array stack has fixed size, no pointer memory overhead, and cache locality. Linked stack has dynamic sizing (no overflow), but consumes extra memory for <code>next*</code> pointers.</div>
+</div>
+
+<div class="qa-box no-break">
+  <div class="question">Q14: How does recursion relate to the Call Stack?</div>
+  <div class="answer">Each recursive call pushes an Activation Record (stack frame with parameters, local variables, and return address). When the base case triggers, frames pop off (unwinding). Infinite recursion triggers Stack Overflow.</div>
+</div>
+
+<div class="qa-box no-break">
+  <div class="question">Q15: How to convert Decimal to Binary using a Stack?</div>
+  <div class="answer">Divide decimal number by 2 repeatedly. Push remainder (<code>N % 2</code>) onto stack. Update <code>N = N / 2</code> until 0. Pop stack: popped bits yield the binary number from MSB to LSB.</div>
+</div>
+
+<div class="qa-box no-break">
+  <div class="question">Q16: How to implement a Queue using two Stacks?</div>
+  <div class="answer">Use <code>Stack1</code> for enqueue ($O(1)$ push). For dequeue: if <code>Stack2</code> is empty, pop all elements from <code>Stack1</code> into <code>Stack2</code> (reversing order to FIFO), then pop from <code>Stack2</code>. Amortized $O(1)$ time.</div>
+</div>
+
+<div class="qa-box no-break">
+  <div class="question">Q17: How to implement a Stack using two Queues?</div>
+  <div class="answer">For push(x): enqueue $x$ to empty <code>Q2</code>, dequeue all elements from <code>Q1</code> and enqueue into <code>Q2</code>, then swap names of <code>Q1</code> and <code>Q2</code>. Pop is then $O(1)$ dequeue from <code>Q1</code>.</div>
+</div>
+
+<div class="qa-box no-break">
+  <div class="question">Q18: What is Prefix notation for (A + B) * C?</div>
+  <div class="answer">Prefix: <code>* + A B C</code>. Postfix: <code>A B + C *</code>.</div>
+</div>
+
+<div class="qa-box no-break">
+  <div class="question">Q19: How many elements can be stored in a circular queue of size N?</div>
+  <div class="answer">At most $N - 1$ elements if one empty slot is reserved to differentiate between full (<code>(rear+1)%N == front</code>) and empty (<code>front == -1</code>).</div>
+</div>
+
+<div class="qa-box no-break">
+  <div class="question">Q20: Difference between peek() and pop()?</div>
+  <div class="answer"><code>peek()</code> inspects the top element without removing it (pointer unchanged). <code>pop()</code> returns the top element and removes it (decrements <code>top</code>).</div>
+</div>
+
+<div class="qa-box no-break">
+  <div class="question">Q21: Name 4 real-world applications of Stacks.</div>
+  <div class="answer">1. Undo/Redo operations (Ctrl+Z). 2. Browser Back/Forward navigation. 3. Compiler syntax parsing and expression evaluation. 4. Function call stack memory management.</div>
+</div>
+
+<div class="qa-box no-break">
+  <div class="question">Q22: Name 4 real-world applications of Queues.</div>
+  <div class="answer">1. CPU process scheduling (Round Robin). 2. Printer print job spooling. 3. Breadth-First Search (BFS) graph traversal. 4. Async message queues (Kafka, RabbitMQ).</div>
+</div>
+
+<div class="qa-box no-break">
+  <div class="question">Q23: Why use Web Audio API instead of audio files?</div>
+  <div class="answer">Web Audio synthesizes frequencies mathematically in-browser via oscillators. It eliminates network lag, prevents 404 missing asset errors, requires zero bandwidth, and operates completely offline.</div>
+</div>
+
+<div class="qa-box no-break">
+  <div class="question">Q24: Space complexity of Array Stack vs. Linked Stack?</div>
+  <div class="answer">Array Stack: $O(MAX)$ pre-allocated space. Linked Stack: $O(K)$ space where $K$ is active elements, plus 8 bytes pointer overhead per node.</div>
+</div>
+
+<div class="qa-box no-break">
+  <div class="question">Q25: What live demonstrations can you show the examiner?</div>
+  <div class="answer">1. Stack Overflow: push 6 plates, attempt 7th to show overflow alert. 2. LIFO / FIFO Violation: click lower plate or rear package to show violation alert. 3. Circular Queue: show <code>rear</code> wrapping around index 4 to 0. 4. Postfix Evaluation: step through <code>"2 3 1 * + 9 -"</code>.</div>
+</div>
+
+<!-- SECTION 5 -->
+<h2>5. Rapid-Fire Reference Matrix</h2>
+<table class="no-break">
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Stack (LIFO)</th>
+      <th>Queue (FIFO)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Core Principle</strong></td>
+      <td>Last-In, First-Out</td>
+      <td>First-In, First-Out</td>
+    </tr>
+    <tr>
+      <td><strong>Insertion End</strong></td>
+      <td>TOP</td>
+      <td>REAR (Enqueue)</td>
+    </tr>
+    <tr>
+      <td><strong>Deletion End</strong></td>
+      <td>TOP</td>
+      <td>FRONT (Dequeue)</td>
+    </tr>
+    <tr>
+      <td><strong>Pointers Needed</strong></td>
+      <td>1 pointer (<code>top</code>)</td>
+      <td>2 pointers (<code>front</code>, <code>rear</code>)</td>
+    </tr>
+    <tr>
+      <td><strong>Empty Condition</strong></td>
+      <td><code>top == -1</code></td>
+      <td><code>front == -1</code> or <code>front &gt; rear</code></td>
+    </tr>
+    <tr>
+      <td><strong>Full Condition (Array)</strong></td>
+      <td><code>top == MAX - 1</code></td>
+      <td><code>rear == MAX - 1</code> (Linear) / <code>(rear+1)%MAX == front</code> (Circular)</td>
+    </tr>
+    <tr>
+      <td><strong>Time Complexities</strong></td>
+      <td>Push / Pop: <strong>O(1)</strong></td>
+      <td>Enqueue / Dequeue: <strong>O(1)</strong></td>
+    </tr>
+    <tr>
+      <td><strong>Graph Traversal</strong></td>
+      <td>Depth-First Search (DFS)</td>
+      <td>Breadth-First Search (BFS)</td>
+    </tr>
+  </tbody>
+</table>
+
+</body>
+</html>
